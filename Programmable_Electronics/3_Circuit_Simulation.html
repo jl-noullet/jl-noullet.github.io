@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+ <link rel="stylesheet" href="polycop.css" />
+ <title>Circuit Simulation</title>
+</head>
+<body>
+<div class="large">
+<center>
+<h1>3. Circuit Simulation</h1>
+</center>
+<p>Before the advent of the integrated circuit technology, engineers used to develop their designs by means of prototype which they could fine tune on the laboratory bench.<br> They were helped by adjustable components (resistors, potentiometers, capacitors, inductors), and replacing a component, moving some connexion or even rebuilding a prototype was affordable.</p>
+
+<p>In the other hand, an integrated circuit cannot be mofified and sending a design to manufacturing is a huge money investment, and implies a significant delay. (Laser trim is usable to make fine calibration adjustments for precision integrated circuits but is not suitable for fixing design errors.)</p>
+
+<p>So there was a very strong demand for a simulating solution, and this led to the development of the most successful simulation program in computer history, named SPICE (Simulation Program with Integrated Circuit Emphasis), which was relased by the University of California, Berkeley in 1975, as an open-source project.<br>
+Since then, generations of programmers improved the program, building many variants, but the core algorithm remains the same.</p>
+<h2>3.1 What all SPICE simulators have in common</h2>
+<ul><li>Lumped elements circuits (nodes and branches)</li>
+<li>Solution of non-linear equations by means of numerical approximations</li>
+<li>Circuit described in a text files, called netlists, referencing component models also described in text</li>
+<li>Results provided in raw form</li>
+<li>Hierarchical description possible, by means of subcircuits</li>
+<li>A reference node or "ground" must be specified</li>
+<li>Signal sources described as regular circuit elements</li>
+<li>Three fundamental simulation modes :
+ <ul><li><b>Transient analysis</b> : voltages and currents are computed as discrete functions of time, for a finite duration starting from an pre-defined initial state</li>
+ <li><b>DC analysis</b> : voltage and currents are computed for a steady state, time does not appear in calculation. The calculation may be repeated for a finite number of values of one parameter or more.</li>
+ <li><b>AC analysis</b> : frequency domain analysis : complex voltages and currents are computed as discrete functions of frequency. This is known as "small signal analysis" since it requires every non-linear element to be represented by a linear approximation, valid only for "small" signal amplitudes.</li>
+</ul></li>
+<li>The user needs to be aware of stability and convergence issues</li>
+</ul>
+<h3>3.1.1 Transient analysis</h3>
+<p>Before starting the transient simulation, the program automatically runs a DC analysis in order to determine the initial value of each voltage and current.<br>
+It happens sometimes that this fails, if the circuit is unstable (like an ascillator), or has too many possible steady states (like a digital sequential system).
+In these cases, the initial state determination must be helped, explicitely or by means of the signal sources.</p>
+<p>The only mandatory parameter the user has to specify is the duration or "stop time".</p>
+<p>Another important parameter is the "maximum timestep".<br>
+For efficiency reasons, the timestep or interval between successive computed instants is dynamically adjusted by the program.</br>
+But it may happen that "smoother" results are desired, in this case a maximum timestep may be specified, at the expense of more computation time.<br>
+Conversely, it may happen that the automatic timestep approaches zero and the simulation stalls. In this case the circuit needs to be fixed.</p>
+<h3>3.1.2 Signal sources for transient analysis</h3>
+<p><b>IMPORTANT</b> : no instantaneous variation of signal (ideal step function) should be specified, this does not exist in the real world and would prevent the algorithm convergence.</p>
+<p>There are several ways to specify a signal source (either voltage or current) as a function of time for transient analysis, two of these deserve a special attention:
+<ul><li>The <b>pulse source</b>, which creates a periodic pulse defined by two voltages and 5 relative time values <b>td, tr, tf, pw et period</b>.
+<img src="pulse.gif"><br>
+A source of frequent errors with the pulse is the fact that the pulse duration <b>pw</b> is specified after the fall time <b>tf</b>, which is counter-intuitive</li>
+<li>The <b>piecewise linear source (PWL)</b>, which is defined by an indefinite list of couples of signal value and absolute time value<br>
+The PWL source is much more general, but requires more parameters than the pulse source in simple cases.</li>
+</ul>
+
+
+
+ 
+
+
+
+
+
+ 
+</div>
+</body>
+</html>
