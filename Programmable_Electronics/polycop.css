@@ -1,0 +1,9 @@
+.bk { page-break-before: always; }
+h2 { margin-top: 40px; color: blue }
+h3 { margin-top: 30px; color: blue }
+h4 { background-color:#dfd; }
+.large { margin: 0 auto; border-radius: 8px; width: 800px; padding-left: 10px; padding-right: 8px; padding-bottom: 8px; background-color:#FFFFFF; }
+td { vertical-align: top; }
+table.bw { border: 2px solid black; border-collapse:collapse; }
+table.bw td { border: 1px solid green; padding: 3px 8px 3px 10px; }
+.gris { background-color: #ddd }

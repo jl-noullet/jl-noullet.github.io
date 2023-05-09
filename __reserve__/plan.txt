@@ -16,7 +16,7 @@
 		analysis modes
 		signal sources
 		convergence issues
-	3.3 LTSPICE in practice
+	3.2 LTSPICE in practice
 	3.4 simulation examples
 
 4. The Oscilloscope

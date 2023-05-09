@@ -13,17 +13,18 @@
 </center>
 <p>Before the advent of the integrated circuit technology, engineers used to develop their designs by means of prototype which they could fine tune on the laboratory bench.<br> They were helped by adjustable components (resistors, potentiometers, capacitors, inductors), and replacing a component, moving some connexion or even rebuilding a prototype was affordable.</p>
 
-<p>In the other hand, an integrated circuit cannot be mofified and sending a design to manufacturing is a huge money investment, and implies a significant delay. (Laser trim is usable to make fine calibration adjustments for precision integrated circuits but is not suitable for fixing design errors.)</p>
+<p>In the other hand, an integrated circuit cannot be modified and sending a design to manufacturing is a huge money investment, and implies a significant delay. (Laser trim is usable to make fine calibration adjustments for precision integrated circuits but is not suitable for fixing design errors.)</p>
 
 <p>So there was a very strong demand for a simulating solution, and this led to the development of the most successful simulation program in computer history, named SPICE (Simulation Program with Integrated Circuit Emphasis), which was relased by the University of California, Berkeley in 1975, as an open-source project.<br>
 Since then, generations of programmers improved the program, building many variants, but the core algorithm remains the same.</p>
+
 <h2>3.1 What all SPICE simulators have in common</h2>
 <ul><li>Lumped elements circuits (nodes and branches)</li>
 <li>Solution of non-linear equations by means of numerical approximations</li>
 <li>Circuit described in a text files, called netlists, referencing component models also described in text</li>
 <li>Results provided in raw form</li>
 <li>Hierarchical description possible, by means of subcircuits</li>
-<li>A reference node or "ground" must be specified</li>
+<li>A mandatory reference node or "ground"</li>
 <li>Signal sources described as regular circuit elements</li>
 <li>Three fundamental simulation modes :
  <ul><li><b>Transient analysis</b> : voltages and currents are computed as discrete functions of time, for a finite duration starting from an pre-defined initial state</li>
@@ -32,6 +33,7 @@ Since then, generations of programmers improved the program, building many varia
 </ul></li>
 <li>The user needs to be aware of stability and convergence issues</li>
 </ul>
+
 <h3>3.1.1 Transient analysis</h3>
 <p>Before starting the transient simulation, the program automatically runs a DC analysis in order to determine the initial value of each voltage and current.<br>
 It happens sometimes that this fails, if the circuit is unstable (like an ascillator), or has too many possible steady states (like a digital sequential system).
@@ -41,20 +43,116 @@ In these cases, the initial state determination must be helped, explicitely or b
 For efficiency reasons, the timestep or interval between successive computed instants is dynamically adjusted by the program.</br>
 But it may happen that "smoother" results are desired, in this case a maximum timestep may be specified, at the expense of more computation time.<br>
 Conversely, it may happen that the automatic timestep approaches zero and the simulation stalls. In this case the circuit needs to be fixed.</p>
+
 <h3>3.1.2 Signal sources for transient analysis</h3>
 <p><b>IMPORTANT</b> : no instantaneous variation of signal (ideal step function) should be specified, this does not exist in the real world and would prevent the algorithm convergence.</p>
 <p>There are several ways to specify a signal source (either voltage or current) as a function of time for transient analysis, two of these deserve a special attention:
-<ul><li>The <b>pulse source</b>, which creates a periodic pulse defined by two voltages and 5 relative time values <b>td, tr, tf, pw et period</b>.
+<ul><li>The <b>pulse source</b>, which creates a periodic pulse defined by two voltages and 5 relative time values <b>td, tr, tf, pw and period</b><br>.
 <img src="pulse.gif"><br>
 A source of frequent errors with the pulse is the fact that the pulse duration <b>pw</b> is specified after the fall time <b>tf</b>, which is counter-intuitive</li>
 <li>The <b>piecewise linear source (PWL)</b>, which is defined by an indefinite list of couples of signal value and absolute time value<br>
 The PWL source is much more general, but requires more parameters than the pulse source in simple cases.</li>
 </ul>
 
+<h3>3.1.3 DC analysis</h3>
+<p>A frequent use of the DC analysis is making characteristic curves or static transfer functions similar to those printed in components datasheets.
+For this purpose, the simulator permits to sweep the value of a signal source, which in fact is repeating the DC analysis for a finite number of values of the chosen
+source. This is specified in the analysis directive, overriding the source description.</p>
+<p>In addition, it is possible to request a repetition of this sweep for a limited set of values of a second source or parameter.</p>
+
+<h3>3.1.4 AC analysis</h3>
+<p>The main use of the AC analysis is the production of "Bode plots", which are curves with :
+<ul><li>on the horizontal axis, the frequency of the signal, with a logarithmic scale</li>
+<li>on the vertical axis, the relative magnitude of the signal expressed in dB (which is another kind of logarithmic scale),
+and the phase of the signal in degrees</li>
+</ul>
+<p>For this purpose, the user needs to specify an AC value and an AC phase for each source in the circuit, in addition to the DC value which is used to compute the steady state of the circuit. In simple cases, an AC value of 1 and a phase of 0 are convenient.<br>
+Note: the AC value is an abstract reference, it does not need to be "small" and it does not interfere with the fact that we are doing a "small signal analysis".</p>
+
+<h3>3.1.5 Digital Circuits</h3>
+<p>It is possible to <a href="https://www.youtube.com/watch?v=kmUjuGaF8ew">simulate</a> digital circuits with SPICE, but to check a logic design it is more efficient to calculate only a boolean value for each node rather than a voltage, so many digital or logic simulators have been developed.<br>
+For this purpose, two hardware description languages have been created, named VHDL and Verilog (one would have been sufficient, there are two for historical reasons).<br>
+These languages are also used to drive logic optimizers, in the context of FPGA and digital integrated circuits design.</p>    
+
+<h2>3.2 LTSPICE in practice</h2>
+<p>LTSPICE is a modern SPICE simulator which was created by a semiconductor company called Linear Technology, later acquired by a company called Analog Devices.
+So nowadays (in 2023) LTSPICE is freely offered by <a href="https://www.analog.com/en/design-center/design-tools-and-calculators/ltspice-simulator.html">Analog Devices</a></p>
+<p>LTSPICE offers in a single application program:
+<ul><li>a simple schematic editor, with hierarchical capability</li>
+<li>an improved SPICE simulation engine, with added behavioral modeling capabilities</li>
+<li>a graphic waveform viewer</li>
+</ul>
+<h3>3.2.1 The schematic editor</h3>
+<p>The operation of the editor is pretty obvious.<br>
+Notice that the right mouse button allows to abort the current command and otherwise gives access to a context menu.<br>
+There is no "Edit" menu with "copy, paste, delete", instead in the toolbar there is a copy button (which, in fact, duplicates) and a delete button (scissors)</p>  
+<h4>Components libraries</h4>
+<p>the toolbar has buttons for some frequently used components like ground, resistors, capacitors, etc... , then every other component can be found in the components libraries (the button representing a logic AND gate, quite misleading).<br>
+Note that the independant voltage source (providing DC, pulse, PWM, etc...) is simply  named "voltage".</p>
+<h4>Labels</h4>
+<p>In order to be able to find the desired nodes for plotting, it is recommended to put a label on each one (the button representing a sign).<br>
+Note that unconnected wires bearing the same label are simulated as a single net, this may be used to simplify the drawing of common signals like power supplies.</p>
+<h4>Simulation commands and other SPICE directives</h4>
+<p>The simulation commands are stored on the schematic in text form, using the legacy SPICE syntax. They can be generated easily using the Edit Simulation Command in the Simulate menu. Other SPICE directive can be placed using the lasp button ".op" of the toolbar.</p>
+<h4>>Hierarchical design</h4>
+<p>To create a cell or subcircuit to place into a hierarchical schematic, do the following :
+<ol><li>create the schematic of the cell as a regular schematic</li>
+<li>define each terminal of the cell by placing a label on the relevant node, with Port Type set as Input, Ouput or Bi-Direct</li>
+<li>after saving the schematic, select Open this Sheet's Symbol in the hierarchy menu, the program will propose to generate a symbol, accept</li>
+<li>if desired, modify the outline of the symbol and the placement of the pins</li>
+</ol>
+Then the new symbol is available to be inserted in a higher level schematic, it can be found in the component library, after changing the top directory to the relevant location.</p>
+
+<h3>3.2.2 Behavioral modeling</h3>
+<p>The component named <b>bv</b> is a configurable voltage source, the value of which can be defined as an <a href="ltspice_b_element.pdf">arbitrary function</a> of time, node voltages, device currents, including time derivative and time integral of these voltages and currents.<br>
+Likewise, the component named <b>bi</b> is a configurable current source</p>
+<p>Note: the simulator is able to remove any discontinuity of the model by smoothing the function, but it is advisable to favor continuous functions</p>
+
+<h3>3.2.3 Waveform viewer</h3>
+<p>When a simulation ends, the waveform viewer opens an empty black window. Then signals can be added usind Add Trace in the context menu.</p>
+<p>Signals are overlayed in the same horizontal strip. To view them separately, create more strips with Add Plot Pane</p>
+<p>A cursor can be added by clicking on a signal name, then it can be dragged horizontally. A second cursor can be added by clicking again on the same name</p>
+
+<h2>3.3 Simulation examples</h2>
+
+<h3>3.3.1 Transient simulation example</h3>
+<p>In this example, we consider the RC circuit, which is a classical illustration of a system governed by a differential equation of the first order.<br>
+The circuit is made of R1 and C1, it is operated with a voltage step of 1 Volt generated by V1, its output is labelled as Vc.</p>
+<p>For illustration, another voltage source V2 generates a voltage Vtang, the plot of which is supposed to be tangent to Vc, according to the theory.</p> 
+<img src="RC_sch.png">
+<a href="RC.asc">LTSPICE source file</a>
+<h4>Plot of the voltage Vc across C1 :</h3>
+<img src="RC1.png">
+We observe a function Vc(t) = Vstep * ( 1 - exp(t/Tau) ).
+The <b>time constant</b> Tau is a characteristic parameter of the circuit
+<ul>
+<li>Tau = R * C (R being the effective resistance viewed from C)</li>
+<li>Tau is the inverse of the slope of the curve at the start point</li>
+<li>Tau is the time it takes to reach the asymptotic value multiplied par 1 - 1/e (approx. 0.632)</li>
+<li>Tau is related to Th, the time it takes to reach half the asymptotic value :<br>
+Th = Tau * ln(2) (approx. Tau * 0.693)</li>
+</ul>
+<h4>We can also observe the current through the resistor:</h4>
+(or the voltage across the resistor which is similar)
+<img src="RC2.png">
+
+<h3>3.3.2 AC simulation example</h3>
+<p>Based on the same example, the AC simulation produces the Bode plot of Vc and I(R1).<br>
+The simulation command .ac dec 100 1 100k specifies 100 points per decade, from 1Hz up to 100kHz</p>
+<img src="RC3.png">
+<p>Considering Vc as the output, this circuit is the simplest low-pass filter (first order)<br>
+The cutoff frequency (in rad/s) is 1/Tau.<br>
+Likewise, I(R1) expose a high-pass filter function with the same cutoff frequency.<br>
+By permutation of R1 and C1, a high pass filter with a voltage output could be obtained</p>
+
+<h3>3.3.3 DC simulation example</h3>
 
 
- 
-
+<h3>Theory links :</h3>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/RC_circuit">RC circuit</a></li>
+<li><a href="https://en.wikipedia.org/wiki/RC_time_constant">Time constant</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Bode_plot">Bode plot</a></li>
 
 
 
