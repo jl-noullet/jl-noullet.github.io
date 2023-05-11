@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+ <link rel="stylesheet" href="polycop.css" />
+ <title>The Oscilloscope</title>
+</head>
+<body>
+<div class="large">
+<center>
+<h1>4. The Oscilloscope</h1>
+</center>
+<p>The oscilloscope is an measurement instrument, the purpose of which is to display a signal as a function of time.<br>
+Before it became available, such displays could be obtained by mechanical or electro-mechanical instruments like the analog pen plotter and the oscillograph.<br>
+The invention of the cathode ray tube (CRT) allowed to build an electronic instrument with a much wider bandwidth : the oscilloscope.</p>
+
+<img src="crt_oscilloscope_diagram.png">
+<ul><li>the vertical axis "Y" displays the value of the amplified input voltage, with a precise scale (Volts/division)</li>
+<li>the horizontal axis "X", being driven by a ramp signal, represents the time with a precise scale (seconds/division)<br>
+the periodic ramp signal must be synchonized with the input signal in order to maintain a readable image</li>
+</ul> 
+<p>Basic CRT oscilloscope could display only periodic signal due to their lack of memory.<br>
+Storage oscilloscope, with an electrostatic memory built inside the CRT, were able to store a single sweep for examination, but these were very expensive.</p>
+
+<p>Digital storage oscilloscope (DSOs) convert, store, process and display the signal in digital form, offering a similar service at a much lower price.<br>
+However the basic concepts have not changed since the analog era, and the functional diagram reproduces the same signal paths.<p>
+
+<h2>4.1 The standard benchtop oscilloscope</h2>
+<img src="tektronix_TDS220.png">
+<p>Legacy analog oscilloscope had one knob for each parameter and one push button for each option - this was very user-friendly but expensive and bulky.<br>Modern instrument have knobs for the most frequently used parameters, and buttons for selecting on-screen menus for less frequent adjustments. Pocket instruments may have as little as one single knob and four buttons.</p>
+<p>In the standard layout controls are normally distributed in 4 zones:</p>
+<ul><li>Vertical : input channels</li>
+<li>Horizontal : time base</li>
+<li>Trigger : synchronization of the horizontal sweeping</li>
+<li>Utilities : display options, measurements, cursors</li>
+</ul>
+<h3>4.1.1 Vertical controls</h3>
+<p>There is one vertical control panel for each input channel, in the example above we have a 2-channel oscilloscope. Each channel has a coaxial input connector, the most common type is the BNC connector.</p>
+<p>Two main knobs are always present : the vertical scale (Volts/div) and the vertical position. In spite of being digitally handled, these buttons control analog circuits : the gain of the input amplifier and the offset voltage which is added to the signal before the analog-to-digital conversion (ADC).</p>
+<p>Other controls are possibly carried over an on-screen menu :</p>
+<ul><li>Channel On/Off</li>
+<li>Coupling (DC/AC) switch : DC is the "normal" option. The AC position inserts a capacitor in the input signal path, in order to remove the DC component. This is very useful when people need to observe small variations (AC) of a signal having a large quiescent value (DC)</li>
+<li>X1/X10 switch : this switch allows to make the displayed value of the vertical scale consistent with the type of probe in use. It has no effect on the signal path.</li>
+<li>Low pass filter : used to remove high frequency noise</li>
+</ul>
+<h3>4.1.2 Horizontal controls</h3>
+<p>Two main knobs are always present : the horizontal scale (seconds/div) and the horizontal position.</p>
+<p>The horizontal scale controls the sampling period, which is the time interval between consecutive analog-to-digital conversions (this is derived from the number of samples per division, which is not usually accessible to the user)</p>
+<p>The horizontal position controls the position of the trigger instant on the horizontal space, this instant is made visible by an arrow normally placed on the top edge of the graphics window area, unless it is outside this window.<br>
+Note: if the sample memory contents were displayed simply from the beginning to the end, the trigger instant would be stuck to the left edge of the graphics like in legacy oscilloscopes. A special memory management scheme called "circular buffer" allows to move this instant, actually displaying samples which were acquired before the trigger event.</p>
+<h3>4.1.3 Trigger controls</h3>
+<p>The main knob is the level control, which determines the threshold voltage. A trigger event is generated when the signal crosses this threshold in a determined direction (rising or falling). This level is made visible by an arrow normally placed on the right edge of the graphics window area, unless it is outside this window.</p>
+<p>Other controls are possibly carried over an on-screen menu :</p>
+<ul><li>Source : one channel may be chosen as a source for the trigger signal, alternately an auxiliary signal input may be used as an external trigger source</li>
+<li>Slope or Edge: the rising edge or the falling edge</li>
+<li>Sweeping mode :<ul>
+<li>Normal : each time the sweeping reaches the end of the window, the process is paused, waiting for the next trigger event.<br>
+Note: if the signal does not cross the trigger threshold, the display remains frozen.</li>
+<li>Auto : After a limited waiting time, the sweeping is forced to restart instead of remaining frozen, in order to let the user keep an eye on the signal while adjusting the trigger parameters</li>
+<li>Single : after a single triggered sweep, the display remains frozen until the user manually restarts the process, by pushing the Run/Stop button</li></ul></li>
+</ul>
+<p>The Run/Stop button is used to pause the sweeping, or to restart it, notably in the case of the single sweep mode.</p>
+<h3>4.1.4 Utilities</h3>
+<p>These are miscellaneous functions which may include :</p>
+<ul><li>Measurements : the instrument displays measurements computed from the contents of the sample memory, like peak values, average value, RMS value, peak-to-peak amplitude, estimated frequency, etc...</li>
+<li>Cursors or Markers : the instrument lets the user draw cursors on the graphics and read their positions and distances</li>
+<li>Signal processing functions, like averaging consecutive sweeps in order to remove noise, or computing a spectrum using Fourier Transform (FFT)</li>
+<li>Display preferences</li>
+</ul>
+
+<h2>4.2 The PC-based oscilloscope</h2>
+<p>Another approch permitted by the digital technology is to make a "black box" containing the specific hardware like input amplifiers with gain control, ADCs, sample memory, trigger detectors, time base, and to connect this to a standard computer where the user interface and graphics display will take place.</p>
+<h3>4.2.1 Pros and Cons</h3>
+<ul><li>Benefits :<ul><li>lower cost</li>
+<li>possible extension of graphics capabilities, resolution, colors etc...</li>
+<li>easier post-processing and archiving of results, including custom software development</li>
+<li>possible inclusion of other instruments in the same black box, example: a signal generator</li>
+</ul></li>
+<li>Disadvantages:<ul><li>no knob, all parameters in menus, this ends up requiring more actions from the user for a given task in a professional context</li>
+<li>more sophisticated user interface may be confusing for the new user</li>
+<li>screen updated with a noticeable latency (delay)</li> 
+<li>occupation of more space on the laboratory bench</li>
+</ul></li>
+</ul>
+<h3>4.2.2 An example : the Picoscope</h3>
+<p>The <a href="https://www.picotech.com">Picoscope</a> is a black box with coaxial BNC inputs for the signals, and a USB connexion to the computer. It comes with a specific application software, which presents the 4 control zones of a standard digital oscilloscope described above.</p>
+
+<h3>Theory links :</h3>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Circular_buffer">Circular Buffer</a></li>
+
+
+
+ 
+</div>
+</body>
+</html>
