@@ -31,6 +31,8 @@ Since then, generations of programmers improved the program, building many varia
  <li><b>DC analysis</b> : voltage and currents are computed for a steady state, time does not appear in calculation. The calculation may be repeated for a finite number of values of one parameter or more.</li>
  <li><b>AC analysis</b> : frequency domain analysis : complex voltages and currents are computed as discrete functions of frequency. This is known as "small signal analysis" since it requires every non-linear element to be represented by a linear approximation, valid only for "small" signal amplitudes.</li>
 </ul></li>
+<li>Number formats : suffixes like  <b>f, p, n, u, m, k, meg, g, t</b> may be used for femto, pico, nano, micro, milli, kilo, mega, giga, tera. They must be appended to the number with no space.<br>
+Warning: a frequent user error is to use M for mega, while the simulator understands it as milli.</li>
 <li>The user needs to be aware of stability and convergence issues</li>
 </ul>
 
@@ -85,7 +87,7 @@ So nowadays (in 2023) LTSPICE is freely offered by <a href="https://www.analog.c
 <h3>3.2.1 The schematic editor</h3>
 <p>The operation of the editor is pretty obvious.<br>
 Notice that the right mouse button allows to abort the current command and otherwise gives access to a context menu.<br>
-There is no "Edit" menu with "copy, paste, delete", instead in the toolbar there is a copy button (which, in fact, duplicates) and a delete button (scissors)</p>  
+There is no "Edit" menu with "copy, paste, delete", instead in the toolbar there is a copy button (which, in fact, duplicates) and a delete button (scissors)</p>
 <h4>Components libraries</h4>
 <p>the toolbar has buttons for some frequently used components like ground, resistors, capacitors, etc... , then every other component can be found in the components libraries (the button representing a logic AND gate, quite misleading).<br>
 Note that the independant voltage source (providing DC, pulse, PWM, etc...) is simply  named "voltage".</p>
@@ -93,7 +95,10 @@ Note that the independant voltage source (providing DC, pulse, PWM, etc...) is s
 <p>In order to be able to find the desired nodes for plotting, it is recommended to put a label on each one (the button representing a sign).<br>
 Note that unconnected wires bearing the same label are simulated as a single net, this may be used to simplify the drawing of common signals like power supplies.</p>
 <h4>Simulation commands and other SPICE directives</h4>
-<p>The simulation commands are stored on the schematic in text form, using the legacy SPICE syntax. They can be generated easily using the Edit Simulation Command in the Simulate menu. Other SPICE directive can be placed using the lasp button ".op" of the toolbar.</p>
+<p>The simulation commands are stored on the schematic in text form, using the legacy SPICE syntax.<br>
+They can be generated easily using the Edit Simulation Command in the Simulate menu.</p>
+<p>Other SPICE directives, known as "dot commands" because they begin with a '.' character, can be placed using the last button ".op" of the toolbar.</p>
+<p>A notable example is the <b>.step</b> directive which can be used to iterate a simulation (of any type) for different values of a component parameter</p>
 <h4>Hierarchical design</h4>
 <p>To create a cell or subcircuit to place into a hierarchical schematic, do the following :
 <ol><li>create the schematic of the cell as a regular schematic</li>
@@ -164,7 +169,7 @@ We observe that the maximum power dissipated in the transistor exceeds the stati
 <li><a href="https://en.wikipedia.org/wiki/RC_time_constant">Time constant</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Bode_plot">Bode plot</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Bipolar_junction_transistor">Bipolar Junction Transistor</a></li>
-
+</ul>
 
 
  

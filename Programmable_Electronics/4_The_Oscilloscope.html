@@ -27,7 +27,7 @@ Storage oscilloscope, with an electrostatic memory built inside the CRT, were ab
 However the basic concepts have not changed since the analog era, and the functional diagram reproduces the same signal paths.<p>
 
 <h2>4.1 The standard benchtop oscilloscope</h2>
-<img src="tektronix_TDS220.png">
+<img src="tektronix_tds220.png">
 <p>Legacy analog oscilloscope had one knob for each parameter and one push button for each option - this was very user-friendly but expensive and bulky.<br>Modern instrument have knobs for the most frequently used parameters, and buttons for selecting on-screen menus for less frequent adjustments. Pocket instruments may have as little as one single knob and four buttons.</p>
 <p>In the standard layout controls are normally distributed in 4 zones:</p>
 <ul><li>Vertical : input channels</li>
@@ -78,18 +78,63 @@ Note: if the signal does not cross the trigger threshold, the display remains fr
 <li>possible inclusion of other instruments in the same black box, example: a signal generator</li>
 </ul></li>
 <li>Disadvantages:<ul><li>no knob, all parameters in menus, this ends up requiring more actions from the user for a given task in a professional context</li>
-<li>more sophisticated user interface may be confusing for the new user</li>
+<li>more sophisticated user interface wich may be confusing for the new user</li>
 <li>screen updated with a noticeable latency (delay)</li> 
 <li>occupation of more space on the laboratory bench</li>
 </ul></li>
 </ul>
 <h3>4.2.2 An example : the Picoscope</h3>
 <p>The <a href="https://www.picotech.com">Picoscope</a> is a black box with coaxial BNC inputs for the signals, and a USB connexion to the computer. It comes with a specific application software, which presents the 4 control zones of a standard digital oscilloscope described above.</p>
+<img src="picoscope_7.png">
+<p>On the screen image above, one can see :</p>
+<ul><li>Run/Stop button : the green button on the top left corner, which turns red when the acquisition is paused</li>
+<li>Vertical : along the left border, the channel buttons, labelled from A to D<br>
+pressing one of these buttons causes the corresponding channel menu to be displayed,<br>
+the '-' and '+' allow a quicker change of the vertical scale setting</li>
+<li>Horizontal : on the top border, the "Scope" button giving access to the timebase menu,<br>
+the '-' and '+' allow a quicker change of the seconds/div setting</li>
+<li>Trigger : on the top border, the "Trigger" button giving access to the trigger menu,<br>
+the '-' and '+' allow a quicker change of the trigger level setting</li>
+<li>Utilities : among many utilities, the Measurements and the Rulers (cursors) give services similar to their counterpart on the benchtop oscilloscope</li>
+</ul>
+<p>The user must be aware of some disturbing differences with respect to the standard oscilloscope:</p>
+<ul>
+<li>the vertical scale is represented as a full range (exemple +-50mV) instead of volts/div</li>
+<li>there is no vertical position control, it is replaced by an offset setting in the Display tab of the vertical menu, it is expressed in % instead of volts, its range is restricted to +-90%</li>
+<li>the trigger level and trigger horizontal position are represented together by a diamond shaped symbol in the middle of the graphics instead of the arrows along the sides</li>
+<li>the trigger level is restricted to the vertical range</li>
+<li>the trigger instant is expressed in % instead of seconds and is restricted to acquisition time span</li>
+</ul>
+<p>IMPORTANT WARNING : PC based oscilloscope offer some king of zooming on the displayed graphics. This should not be confused with actions on the vertical and horizontal acquisition scales:
+<ul><li>Zooming changes only the way stored data are displayed</li>
+<li>Changing the acquisition scales is taken into account at the next acquisition, the resolution of which is then modified, possibly offering more detail</li>
+</ul>
+
+<h2>4.3 The oscilloscope probe</h2>
+<p>A measurement instrument should have a minimal impact on the system under test, for this reason the input current of the oscilloscope probe should be minimized. A widespread solution is the "X10" probe :</p>
+<img src="oscilloscope_probe.jpg" width="50%">
+<p>The probe attenuates the signal by a factor of 10, so the signal is actually multiplied by 0.1, while the Volts/Div setting is multiplied by 10, whence the "X10" label.<br>
+The attenuation being done by a voltage divider, the input resistance is multiplied by 10, resulting in an input current divided by 10.</p>
+<img src="oscilloscope_probe_sch.png">
+<p>The oscilloscope channel exposes a standard input resistance of 1 MOhm (1000000 Ohms), so putting a 9 MOhms resistor in series makes a voltage divider, dividing the signal by 10.<br>
+This attenuation may be disabled by a switch short-circuiting this resistor.</p>
+<p>In high frequencies, the capacitances interfere with the signal attenuation ratio, so the C1 capacitor is inserted in the probe tip in order to make a capacitive voltage divider together with C2 = C_cable + C_adj + C_input.<br>
+C_adj is an adjustable capacitor allowing to precisely match the capacitive attenuation with the resistive attenuation of 1/10.</p>
+
+<h2>4.4 The aliasing issue</h2>
+<p>Digital instruments periodically sample the signal. The sampling theory (Nyquist–Shannon theorem) states that the sampling frequency should be greater than twice the signal frequency.</p>
+<p>If the original signal frequency exceeds half the sampling frequency, an alteration known as "aliasing" causes the sampled signal to expose a wrong frequency. This is also known as "stroboscopic effect" or "wagon-whell effect"</p>
+<p>If a periodic signal is observed with a seconds/div setting which is thousands times greater than the signal period, the digital oscilloscope may display the signal with an totally wrong apparent frequency, with no kind of warning</p>
+<p>If the signal frequency is totally unknown, it is advisable to start observing it with the smallest seconds/div setting and then increasing it until obtaining a convenient display.</p> 
+
 
 <h3>Theory links :</h3>
 <ul>
+<li><a href="tyco_oscilloscope_course.pdf">the Oscilloscope Course by Tyco</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Circular_buffer">Circular Buffer</a></li>
-
+<li><a href="https://en.wikipedia.org/wiki/Stroboscopic_effect">Stroboscopic effect</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Nyquist%E2%80%93Shannon_sampling_theorem">Sampling Theory</a></li>
+</ul>
 
 
  
