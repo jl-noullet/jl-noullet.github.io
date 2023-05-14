@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+ <link rel="stylesheet" href="polycop.css" />
+ <title>The Microcontroller</title>
+</head>
+<body>
+<div class="large">
+<center>
+<h1>5. The Microcontroller</h1>
+</center>
+<p>A microcontroller is a computer on a chip, designed to work with a minimal number of external components - in fact some can work with no external component at all.</p>
+<p>Microcontrollers are manufactured to be embedded in products which are no perceived as computers by the end-user.<br>
+Due to their low cost and the flexibility of software solutions, they make an increasing fraction of the electronic hardware in general.</p> 
+
+<p>Like every computer, a microcontroller is a digital system, made of logic gates and memories, themselves made of transistors.<br>
+While desktop computers may also contain electro-magnetic devices like hard discs and electro-optical devices like CD/DVD units, microcontrollers are just highly complex fabrics of transistors, containing millions of them.</p>
+
+<h2>5.1 Binary words and memory addresses</h2>
+
+<h3>5.1.1 Words</h3>
+<p>Internally, computer work on binary data or bits.<br>
+Since working on one bit at a time would be inefficient, data are organized in binary words, which are fixed size collections of bits. For interoperability reasons, the word size is frequently a multiple of 8 bits.</p>
+<p>An 8-bit binary word is an octet or byte.</p>
+
+<h3>5.1.2 Numbers</h3>
+<p>A binary word may represent a number, for this purpose a weight is assigned to each bit:</p>
+<ul><li>the bit with the smallest weight (which is 1), is the LSB (Least Significant Bit)</li>
+<li>the bit with the greatest weight is the MSB (Most Significant Bit)</li>
+</ul>
+<p>Signed integer number representation in computers normally uses the <a href="https://en.wikipedia.org/wiki/Two%27s_complement">two's complement</a> scheme, while fractionnal numbers said <a href="https://en.wikipedia.org/wiki/IEEE_754">floating point numbers</a> are represented by words divided in three fields: sign bit, exponent and mantissa.</p>
+<p>Reading binary data is uneasy for humans, so developers prefer to use base-16 or <a href="https://en.wikipedia.org/wiki/Hexadecimal">hexadecimal</a> numbers to represent binary words comfortably in documentation and programs.</p>
+
+<h3>5.1.3 Text</h3>
+
+<p>A binary word may be used to represent a text character. It appears that 8 bits are sufficient for representing the letters used by latin alphabets,
+so the starting point was a code known as <a href="https://en.wikipedia.org/wiki/ASCII">ASCII</a>, representing all the characters of an american typewriter (for which 7 bits would have been sufficient).<br>
+Several solutions were proposed to extend this code to non-latin languages, the most successful being UTF-8, which uses a variable-length code, compatible with ASCII.</p>
+<p>A piece of text is represented as a sequence of bytes, called a string. It is a common practice to use the zero byte (null character) to mark the end of the string.</p>
+
+<h3>5.1.4 Addresses</h3>
+<p>In computer memory, data words are stored in 1D-arrays, which can be considered as tables where each line contains a binary word.<br>
+The lines are numbered in sequence, and their numbers are called the addresses, which are themselves handled in binary form<p>
+<p>Many computers can read or write words which are larger than 8 bits, but to preserve the capability or writing or reading single bytes, the adresses are always byte addresses.</p>
+
+<h3>5.1.5 Instructions</h3>
+<p>Programs in machine code are sequences of instructions coded and stored as compact binary words. The code is architecture-specific and not readable by humans.<br>When the instruction word size is fixed, the archicture is called RISC (Reduced Instruction Set Computer), otherwise it is called CISC (Complex Instruction Set Computer).</p>
+<ul><li>Programs written in languages like assembly, C, C++, Java are translated into binary code in advance, by a program called compiler (or assembler).</li>
+<li>Programs written in scripting languages like bash, javascript, python, php are translated during execution, by a program called interpreter</li>
+</ul>
+
+<h2>5.2 Microcontroller architecture</h2>
+
+<p>The main modules inside a microcontroller are :</p>
+<ul><li>the CPU (Central Processing Unit),<br>which processes binary words that it reads and writes from memory and peripheral through the bus</li>
+<li>the non-volatile memory, sometimes called ROM or flash memory or program memory,<br>which contains programs and constant data</li>
+<li>the volatile memory, generally called RAM or data memory, which contains the temporary data</li>
+<li>the peripherals, which permit communication with the outer world in various forms</li>
+<li>the bus lines which support the communication between these modules</li>
+</ul>
+
+The parameters that characterize a microcontroller type are:
+<ul><li>the CPU family, which determines the instructions encoding and the performance level</li>
+<li>the word size, either 8 bits, 16 bits, 32 bits or 64 bits,<br>
+this is the typical data word that the CPU can process at once, but the definition of this parameter is not uniform, for example an 8-bit microcontrollers may use 16-bit addresses and 12-bit instructions, but performs calculations on 8-bit data only</li>
+<li>the RAM size</li>
+<li>the program memory (flash) size</li>
+<li>the maximum clock frequency</li>
+<li>the capability of the peripheral modules</li>
+</ul>
+
+<h2>5.2.1 CPU features</h2>
+<p>The CPU contains a small number of registers which can store temporary data words which are accessed directly by instructions, without the need of an address.<br>
+Some of these have a special role, like keeping the next instruction address or the return address of a subroutine.</p>
+<p>The CPU contains an ALU (Arithmetic and Logic Unit), which in the simplest form performs addition, subtraction and boolean and shift operations.<br>
+In this case, more complex operations like multiplication and division are performed by software, by combining the simpler operations.<br>
+More advanced CPUs can perform multiplication and division in a single instruction, and high-end CPUs have the hardware floating point capability.</p> 
+<h2>5.2.2 RAM memory</h2>
+<p>Microcontrollers use static RAM, which is fast and consumes little power, but is limited to smaller capacities than the dynamic RAM used in desktop computers.</p>
+<p>RAM is volatile, which means that the data it contains are lost each time the power is switched off.</p>
+<p>The fact of being volatile is a disvantage, but this memory is much faster than non-volatile memories in particular when writing.</p> 
+<p>In architectures where the data memory and the program memory are entirely separated ("Harward architectures"), the RAM is simply called "data memory".</p>
+ 
+
+
+
+<h3>Documents links :</h3>
+<ul>
+https://en.wikipedia.org/wiki/ASCII
+https://en.wikipedia.org/wiki/UTF-8
+https://en.wikipedia.org/wiki/Binary_number
+https://en.wikipedia.org/wiki/Hexadecimal
+https://en.wikipedia.org/wiki/Two%27s_complement
+https://en.wikipedia.org/wiki/IEEE_754
+<li><a href="https://en.wikipedia.org/wiki/Microcontroller">Microcontroller</a></li>
+</ul>
+
+
+ 
+</div>
+</body>
+</html>
