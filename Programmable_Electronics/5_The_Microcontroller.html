@@ -18,6 +18,8 @@ Due to their low cost and the flexibility of software solutions, they make an in
 <p>Like every computer, a microcontroller is a digital system, made of logic gates and memories, themselves made of transistors.<br>
 While desktop computers may also contain electro-magnetic devices like hard discs and electro-optical devices like CD/DVD units, microcontrollers are just highly complex fabrics of transistors, containing millions of them.</p>
 
+<p>Having no operating system, a microcontroller executes constantly the only program its memory contains, however it is able to execute many tasks concurrently (in parallel).</p>
+
 <h2>5.1 Binary words and memory addresses</h2>
 
 <h3>5.1.1 Words</h3>
@@ -53,6 +55,7 @@ The lines are numbered in sequence, and their numbers are called the addresses, 
 
 <h2>5.2 Microcontroller architecture</h2>
 
+<img src="microcontroller_diagram.png">
 <p>The main modules inside a microcontroller are :</p>
 <ul><li>the CPU (Central Processing Unit),<br>which processes binary words that it reads and writes from memory and peripheral through the bus</li>
 <li>the non-volatile memory, sometimes called ROM or flash memory or program memory,<br>which contains programs and constant data</li>
@@ -71,30 +74,149 @@ this is the typical data word that the CPU can process at once, but the definiti
 <li>the capability of the peripheral modules</li>
 </ul>
 
-<h2>5.2.1 CPU features</h2>
+<h3>5.2.1 CPU features</h3>
 <p>The CPU contains a small number of registers which can store temporary data words which are accessed directly by instructions, without the need of an address.<br>
 Some of these have a special role, like keeping the next instruction address or the return address of a subroutine.</p>
 <p>The CPU contains an ALU (Arithmetic and Logic Unit), which in the simplest form performs addition, subtraction and boolean and shift operations.<br>
-In this case, more complex operations like multiplication and division are performed by software, by combining the simpler operations.<br>
+In this case, more complex operations like multiplication and division are performed by software, by combining simpler operations.<br>
 More advanced CPUs can perform multiplication and division in a single instruction, and high-end CPUs have the hardware floating point capability.</p> 
-<h2>5.2.2 RAM memory</h2>
-<p>Microcontrollers use static RAM, which is fast and consumes little power, but is limited to smaller capacities than the dynamic RAM used in desktop computers.</p>
+<h3>5.2.2 RAM memory</h3>
+<p>Microcontrollers use static RAM (SRAM), which is fast and consumes little power, but is limited to smaller capacities than the dynamic RAM (DRAM) used in desktop computers.</p>
 <p>RAM is volatile, which means that the data it contains are lost each time the power is switched off.</p>
 <p>The fact of being volatile is a disvantage, but this memory is much faster than non-volatile memories in particular when writing.</p> 
 <p>In architectures where the data memory and the program memory are entirely separated ("Harward architectures"), the RAM is simply called "data memory".</p>
  
+<h3>5.2.3 FLASH memory</h3>
+<p>Microcontrollers need some non-volatile memory to have some program ready to execute immediately after power-up.<br>
+Non volatile memory can be :</p>
+<ul><li>pure ROM (Read Only Memory) also named OTP (One Time Programmable) memory</li>
+<li>EEPROM (Electrically Erasable and Programmable ROM) which can be written but is treated as ROM by the application programs</li>
+<li>FLASH memory, which is just a high density EEPROM where erasing is done one large blocks instead of single words</li>
+</ul>
+<p>In modern microcontrollers, programs are generally stored in flash memory. The CPU can read this memory, but not write into it.<br>
+Writing requires either an external hardware or a dedicated peripheral, and takes much more time than a regular memory access.</p>
+<p>A small amount of OTP-ROM is sometimes present to store the program which is used to write programs into the flash memory under control of the development computer. Such a program is called bootloader</p> 
+
+<h3>5.2.4 Peripherals</h3>
+<p>There are many types of specialized peripherals, here are the most common.</p>
+<p>The CPU communicates with the peripheral by means of specialized registers which have a dedicated address space besides the main memories.</p>
+
+<h4>GPIO: General Purpose Input-Output</h4>
+<p>Each pin involved in GPIO can be programmed as a logic input or a logic output, and then handles one bit at a time under program control.</p>
+<p>Logic 1 or "true" is represented by a high voltage, close to the power supply voltage (most often 3.3 Volts), while logic 0 or "false" is represented by a voltage close to zero (ground).</p>
+<p>GPIO pins can source or sink a limited current, 4 mA to 20 mA depending on the model</p>
+
+<h4>Serial communication interfaces : SPI, I2C, UART</h4>
+<p>Serial communication involves the transmission of all the bits of each word in sequence, one after the other, in order to minimize the cost of wiring.</p>
+<p>SPI, I2C and UART are used for board area communication and differ by the number of wires used and the attainable speed, while USB is suitable for room area communication and Ethernet for building area communication</p>
+
+<table class="bw">
+<tr><td></td><td></td><td>data<br>wires</td><td>clock<br>wires</td><td>select<br>wires</td><td>total wires<br>incl. gnd</td><td>typ. speed</td></tr>
+<tr><td>SPI</td><td>Serial Peripheral Interface</td><td>2</td><td>1</td><td>1+</td><td>6</td><td>25 Mbits/s</td></tr>
+<tr><td>I2C<br>TWI</td><td>Inter-Integrated Circuit<br>Two Wire Interface</td><td>1</td><td>1</td><td>0</td><td>3</td><td>400 kbits/s</td></tr>
+<tr><td>UART</td><td>Universal Asynchronous Receiver-Transmitter</td><td>2</td><td>0</td><td>0</td><td>3</td><td>115200 Bauds</td></tr>
+</table>
+
+<p>SPI and I2C require one master device initiating the transfers and providing the clock, and one or more slaves, <br>
+while UART is a point-to-point connexion needing an application defined protocol</p>
+
+<p>SPI uses 2 unidirectional data lines MOSI (Master Out Slave In) and MISO (Master In Slave Out), and one separate SS (Slave Select) for each slave device</p>
+<img src="SPI_single_slave.png">
+<p>I2C has one bidirectional data line SDA, and uses special patterns S (Start) and P (stop) to mark the block limits</p>
+
+<img src="I2C_transfer_simplified.png">
+
+<p>UART transmits blocks of one byte, inserted between a "start" bit (always zero) and a "stop bit" (always 1).<br>
+The start bit leading edge causes the synchronisation of the receiver clock, which is used to sample the data bits.<br>
+The receiver clock frequency must match the transmitter clock frequency with a sufficient accuracy (~2%).<br>
+This frequency is historically called the "Baud rate".</p>
+<img src="uart_signal.png">
+<p>For building area communication, the UART signals are amplified to higher voltages (RS232) or differential signals (RS485).<br>
+RS232 is obsolete but RS485 is still used for industrial equipments</p>  
+
+<h4>TIMER: Time keeping and PWM signal generation</h4>
+<p>A timer is a digital binary counter driven by a periodic signal (the CPU clock or a signal derived from it by frequency division).<br>
+It provides a high resolution time measurement (microseconds) and can generate periodic binary signals of arbitrary period and arbitrary pulse width (period and pulse width being multiples of the clock period).</p>
+<img src="pwm_from_sinewave.png">
+<p>The pulse width may be modulated in real time to produce a PWM signal (Pulse Width Modulation).<br>
+The average value of the PWM signal is proportional to the function used to modulate the pulse width.<br>
+This makes a convenient way to generate a slowly varying analog signal using a single digital pin, and to control a power device with reduced losses compared to a continous control.</p>
+
+<h4>ADC and DAC</h4>
+<p>The ADC (Analog to Digital Converter) produces a binary number proportional to the voltage received on a pin.</p>
+<p>The conversion is not continuous and must be started periodically by software, or directly by a timer.</p>
+<p>The DAC (Digital to Analog Converter) produces the inverse service. Notice that a timer in PWM mode also makes a digital to analog conversion, but a dedicated DAC is preferred when a wide bandwidth is needed.</p>
+
+<h4>RTC : Real Time Clock</h4>
+<p>The RTC keeps the time and date even when the main power supply is off, having a separate power supply.<br>Like watches, the RTC has a very low power need, being able to run for years on a small battery.</p>
+<p>The RTC modules frequently contain a small amount of memory called the backup RAM, which keep application data when the microcontroller is off</p>
+   
+<h3>5.2.5 Interrupts</h3>
+<p>The CPU may accept an interrupt signal from some peripherals. When this happens, the CPU completes the current instruction and then leaves the current instruction sequence and jumps to a specific interrupt service routine subroutine or interrupt handler, in order to perform some action required by the peripheral which emitted the interrupt request.</p>
+<p>When the end of the interrupt routine is reached, the CPU returns to the instruction sequence which was interrupted. To ensure that the interrupted task is not disturbed by this process, a context saving sequence is strictly applied before entering the interrupt routine, and a matching context restoring sequence is applied upon return, by hardware and software combined.</p>
+<h4>Interrupt vectoring</h4>
+<p>An interrupt controller may be used to manage several sources of interrupt requests, and associate a dedicated interrupt routine and a priority level for each of these sources. This is called interrupt vectoring.<br>
+<h4>Interrupt nesting</h4>
+The interrupt controller may also manage the interruption of an interrupt routine by another interrupt of higher priority, this is called interrupt nesting.</p>
+<h4>Multitasking</h4>
+<p>Interrupts are essentiel to the implementation of multitasking, in large computers as well as in microcontrollers.</p> 
+<p>In desktop computers, interrupts are managed by the operating system in a manner which is transparent for the application programs.<br>
+<p>On microcontroller, managing interrupts is the developer's business</p>
+
+<h2>5.3 Working with the Arduino</h2>
+<p>Arduino is the name of an Italian private company which made a successful attempt to enable non-professionals to learn electronics through embedded computing, and produce some home-made microcontroller based applications.</p>
+<p>In this context, Arduino produced a minimal development platform, based on a moderate cost microcontroller board and a user-friendly free development software.<br>
+When people talk about "The Arduino" they refer to the board, or to the microcontroller itself.</p>
+<p>While some choices made by Arduino are highly questionable, the benefit of this project is a worldwide acceleration of the DIY (Do-It-Yourself) microcontroller development activity. Notably many competing manufacturers put higher performance, lower cost boards on the market, while the open source community produced alternate software solutions.</p>
+
+<h3>5.3.1 The Arduino Uno hardware</h3>
+<p>The Uno is the first Arduino board and the most famous. While its technology was nearly outdated when it was introduced, it is still produced.</p>
+<p>The board is equipped with two microcontrollers :</p>
+<ul><li>the target microcontroller, which executes the user's programs and exposes 22 I/O pins for external wiring</li>
+<li>the USB gateway microcontroller, which acts like a bridge between the target microcontroller's UART and the host computer's USB port</li>
+</ul>
+<p>On delivery, the target microcontroller flash memory contains already a small bootloader program, which is ready to receive program data via the UART and write them into the remaining space in the flash memory. The gateway microcontroller contains the USB-UART bridge software.</p>
+
+<p>The USB communication protocol is extremely complex and having the USB port on the target microcontroller would not have left sufficient resources for the user programs. In the other hand, the UART-based bootloader is lightweight.</p>
+
+<p>The target microcontroller is an ATmega328P made by ATMEL (now belonging to Microchip), with the following characteristics:</p>
+<ul><li>8-bit AVR RISC CPU, 16MHz clock</li>
+<li>32 kbytes of flash memory</li>
+<li>1 kbyte of EEPROM memory</li>
+<li>2 kbytes of RAM memory</li>
+<li>Harvard architecture : Flash and RAM accessed in parallel</li>
+<li>Vectored interrupts (26 vectors)</li>
+<li>Three timers with 2 PWM channels each</li>
+<li>One SPI port, with an 8-bit shift register</li>
+<li>One UART</li>
+<li>One 2-wire Serial Interface (I2S)</li>
+
+</ul>
+
+ 
+
+
+
+
+
+ 
+
 
 
 
 <h3>Documents links :</h3>
 <ul>
-https://en.wikipedia.org/wiki/ASCII
-https://en.wikipedia.org/wiki/UTF-8
-https://en.wikipedia.org/wiki/Binary_number
-https://en.wikipedia.org/wiki/Hexadecimal
-https://en.wikipedia.org/wiki/Two%27s_complement
-https://en.wikipedia.org/wiki/IEEE_754
-<li><a href="https://en.wikipedia.org/wiki/Microcontroller">Microcontroller</a></li>
+https://en.wikipedia.org/wiki/Pulse-width_modulation
+<li><a href="https://en.wikipedia.org/wiki/Serial_Peripheral_Interface">en.wikipedia.org/wiki/Serial_Peripheral_Interface</a></li>
+<li><a href="https://en.wikipedia.org/wiki/I%C2%B2C">en.wikipedia.org/wiki/I²C</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Universal_asynchronous_receiver-transmitter">en.wikipedia.org/wiki/Universal_asynchronous_receiver-transmitter</a></li>
+<li><a href="https://en.wikipedia.org/wiki/ASCII">en.wikipedia.org/wiki/ASCII</a></li>
+<li><a href="https://en.wikipedia.org/wiki/UTF-8">en.wikipedia.org/wiki/UTF-8</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Binary_number">en.wikipedia.org/wiki/Binary_number</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Hexadecimal">en.wikipedia.org/wiki/Hexadecimal</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Two%27s_complement">en.wikipedia.org/wiki/Two%27s_complement</a></li>
+<li><a href="https://en.wikipedia.org/wiki/IEEE_754">en.wikipedia.org/wiki/IEEE_754</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Microcontroller">en.wikipedia.org/wiki/Microcontroller</a></li>
 </ul>
 
 
