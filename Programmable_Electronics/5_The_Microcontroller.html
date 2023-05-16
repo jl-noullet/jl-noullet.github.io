@@ -159,9 +159,10 @@ This makes a convenient way to generate a slowly varying analog signal using a s
 <h4>Interrupt nesting</h4>
 The interrupt controller may also manage the interruption of an interrupt routine by another interrupt of higher priority, this is called interrupt nesting.</p>
 <h4>Multitasking</h4>
-<p>Interrupts are essentiel to the implementation of multitasking, in large computers as well as in microcontrollers.</p> 
-<p>In desktop computers, interrupts are managed by the operating system in a manner which is transparent for the application programs.<br>
-<p>On microcontroller, managing interrupts is the developer's business</p>
+<p>Interrupts are essentiel to the implementation of multitasking, in computers of any size as well as in microcontrollers.</p>
+<ul><li>In personal computers, interrupts are managed by the operating system in a manner which is transparent for the application programs</li>
+<li>On microcontroller, managing interrupts is the developer's business</li>
+</ul>
 
 <h2>5.3 Working with the Arduino</h2>
 <p><a href="https://www.arduino.cc/">Arduino</a> is the name of an Italian private company which made a successful attempt to enable non-professionals to learn electronics through embedded computing, and produce some home-made microcontroller based applications.</p>
@@ -213,27 +214,58 @@ The IDE contains the following software components :</p>
 <li>A serial monitor, which is a terminal allowing to exchange text messages with a user program running on the target microcontroller</li>
 <li>A serial plotter, which draws graphics from the data it receives from the target microcontroller</li>
 </ul>
-<p>With the intention of keeping things apparently simple, the IDE comes with the following limitations :</p>
+<p>With the intention of keeping things apparently simple, the IDE ('legacy version') comes with the following limitations :</p>
 <ul><li>Splitting the source code into more than one file is not encouraged</li>
 <li>Browsing the source code over multiple files is not supported, but a context sensitive help is available for Arduino library functions</li>
 <li>Build steps are hidden, unless switched to "verbose" in the preferences</li>
 <li>No incremental build</li>
 <li>No debugger</li>
 </ul>
-<p>However, the system is more open that it seems at first sight. With some efforts it is possible to use legacy text formatting from C standard libraries (printf), split the source code, do direct access to the peripherals, and use interrupts</p>
+<p>However, the system is more open that it seems at first sight. With some efforts it is possible to split the source code, use legacy C text formatting (snprintf), perform direct access to the peripheral registers, and use interrupts (all this thanks to the <a href="https://www.nongnu.org/avr-libc/user-manual/modules.html">avr-libc</a> library)</p>
+
+<p>The C/C++ standards require a main() function with 2 optional arguments, returning an int.<br>
+This is not adapted to the microcontroller, where the program cannot receive any argument and must never return.<br>
+For this reason, the Arduino IDE expects the main program file to contain instead a setup() function and a loop() function.<br>
+The setup() function is called once, then the loop() function call is repeated indefinitely.<br>
+(These calls are included in a main() function created automatically by the Arduino build system).</p>
+
+<p>Arduino jargon:</p>
+<table class="bw">
+<tr><td><i>Arduino term</i></td><td><i>actual meaning</i></td></tr>
+<tr><td>Arduino language</td><td>C++, with specific libraries</td></tr>
+<tr><td>sketch</td><td>a project for Arduino, in fact a directory containing<br>a single .ino source file and some documentation</td></tr>
+<tr><td>file extension .ino</td><td>file extension .cpp</td></tr>
+<tr><td>Verify</td><td>compile and link</td></tr>
+<tr><td>Upload</td><td>compile and link then upload</td></tr>
+<tr><td>analogRead()</td><td>start an ADC conversion, wait for completion, return value</td></tr>
+<tr><td>analogWrite()</td><td>first time, start a timer as PWM generator on that pin,<br>else update pulse width</td></tr>
+<tr><td>attachInterrupt()</td><td>configure an external interrupt linked to one pin</td></tr>
+</table>
+ 
+<h3>5.3.3 The microcontroller as a PC peripheral</h3>
 <p>The USB to UART bridge which is on the Uno board is viewed by the host computer as a CDC (Communication Device Class) USB device.<br>
 This means that any program running on the host computer may dialog with the target microcontroller, using the standard serial communication interface of the computer (the COM ports in Windows, the TTYs on Linux).</p> 
 
-<p>main function hacking:</p>
+<p>The serial plotter has some interesting undocumented properties, here are some tips:<br>
+<ul><li>to plot N curves :
+<ul><li>send an initial text line with N words, to be displayed as labels for the curves</li>
+<li>then send text lines, each one containing N numbers (separated by spaces or commas),<br>
+each line will append a new segment to each of the N curves, and increments X by one unit</li>
+</ul></li>
+<li>horizontal scale : the X unit is always 1/500th of the window width, the first 500 lines fill the window, then the curves are scrolled</li>
+<li>vertical scale : is automatically adjusted,<br>
+to keep it stable, plot two additional curves with constant Ymin and Ymax values, then they will "frame" the graphics</li>
+<li>to plot variables in real time, send lines periodically with a constant period, (delay function, or better, timer interrupt)</li>
+<li>to plot calculated curves, send exactly 500 lines, then pause to freeze the graphics</li>
+<li>to send a command to the board, use the bottom area of the serial plotter. The serial monitor is not compatible with the plotter.</li>
+</ul> 
 
+<p>Note: each time the serial monitor or the serial plotter is started, the target microcontroller is reset.</p>
 
-
-<h3>Documents links :</h3>
+<h3>Document links :</h3>
 <ul>
-Arduino_UNO-TH_Rev3e_schematic.pdf
-https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/ATmega48A-PA-88A-PA-168A-PA-328-P-DS-DS40002061B.pdf
-
-https://en.wikipedia.org/wiki/Pulse-width_modulation
+<li><a href="https://en.wikipedia.org/wiki/Microcontroller">en.wikipedia.org/wiki/Microcontroller</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Pulse-width_modulation">en.wikipedia.org/wiki/Pulse-width_modulation</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Serial_Peripheral_Interface">en.wikipedia.org/wiki/Serial_Peripheral_Interface</a></li>
 <li><a href="https://en.wikipedia.org/wiki/I%C2%B2C">en.wikipedia.org/wiki/I²C</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Universal_asynchronous_receiver-transmitter">en.wikipedia.org/wiki/Universal_asynchronous_receiver-transmitter</a></li>
@@ -243,7 +275,9 @@ https://en.wikipedia.org/wiki/Pulse-width_modulation
 <li><a href="https://en.wikipedia.org/wiki/Hexadecimal">en.wikipedia.org/wiki/Hexadecimal</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Two%27s_complement">en.wikipedia.org/wiki/Two%27s_complement</a></li>
 <li><a href="https://en.wikipedia.org/wiki/IEEE_754">en.wikipedia.org/wiki/IEEE_754</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Microcontroller">en.wikipedia.org/wiki/Microcontroller</a></li>
+<li><a href="Arduino_UNO-TH_Rev3e_schematic.pdf">Arduino UNO schematic</a></li>
+<li><a href="https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/ATmega48A-PA-88A-PA-168A-PA-328-P-DS-DS40002061B.pdf">ATmega328</a></li>
+<li><a href="https://www.nongnu.org/avr-libc/user-manual/modules.html">www.nongnu.org/avr-libc/user-manual/modules.html</a></li>
 </ul>
 
 
