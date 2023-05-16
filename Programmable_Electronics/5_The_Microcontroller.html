@@ -164,23 +164,26 @@ The interrupt controller may also manage the interruption of an interrupt routin
 <p>On microcontroller, managing interrupts is the developer's business</p>
 
 <h2>5.3 Working with the Arduino</h2>
-<p>Arduino is the name of an Italian private company which made a successful attempt to enable non-professionals to learn electronics through embedded computing, and produce some home-made microcontroller based applications.</p>
+<p><a href="https://www.arduino.cc/">Arduino</a> is the name of an Italian private company which made a successful attempt to enable non-professionals to learn electronics through embedded computing, and produce some home-made microcontroller based applications.</p>
 <p>In this context, Arduino produced a minimal development platform, based on a moderate cost microcontroller board and a user-friendly free development software.<br>
 When people talk about "The Arduino" they refer to the board, or to the microcontroller itself.</p>
 <p>While some choices made by Arduino are highly questionable, the benefit of this project is a worldwide acceleration of the DIY (Do-It-Yourself) microcontroller development activity. Notably many competing manufacturers put higher performance, lower cost boards on the market, while the open source community produced alternate software solutions.</p>
 
 <h3>5.3.1 The Arduino Uno hardware</h3>
 <p>The Uno is the first Arduino board and the most famous. While its technology was nearly outdated when it was introduced, it is still produced.</p>
+<img src="Arduino_Uno_pinout.png" width="100%">
 <p>The board is equipped with two microcontrollers :</p>
 <ul><li>the target microcontroller, which executes the user's programs and exposes 22 I/O pins for external wiring</li>
 <li>the USB gateway microcontroller, which acts like a bridge between the target microcontroller's UART and the host computer's USB port</li>
 </ul>
 <p>On delivery, the target microcontroller flash memory contains already a small bootloader program, which is ready to receive program data via the UART and write them into the remaining space in the flash memory. The gateway microcontroller contains the USB-UART bridge software.</p>
 
-<p>The USB communication protocol is extremely complex and having the USB port on the target microcontroller would not have left sufficient resources for the user programs. In the other hand, the UART-based bootloader is lightweight.</p>
+<p>Why 2 microcontrollers? The USB communication protocol is extremely complex and having the USB port on the target microcontroller would not have left sufficient resources for the user programs. In the other hand, the UART-based bootloader is lightweight.</p>
 
 <p>The target microcontroller is an ATmega328P made by ATMEL (now belonging to Microchip), with the following characteristics:</p>
-<ul><li>8-bit AVR RISC CPU, 16MHz clock</li>
+<ul><li>8-bit AVR RISC CPU</li>
+<li>5 Volts power supply and I/O</li>
+<li>16MHz clock</li>
 <li>32 kbytes of flash memory</li>
 <li>1 kbyte of EEPROM memory</li>
 <li>2 kbytes of RAM memory</li>
@@ -189,23 +192,47 @@ When people talk about "The Arduino" they refer to the board, or to the microcon
 <li>Three timers with 2 PWM channels each</li>
 <li>One SPI port, with an 8-bit shift register</li>
 <li>One UART</li>
-<li>One 2-wire Serial Interface (I2S)</li>
-
+<li>One I2S "2-wire Serial Interface"</li>
+<li>One ADC, 10 bits resolution, 15 ksamp/s</li>
 </ul>
 
+<p>The Uno board exposes a proprietary connector layout for which many accessory boards, called "shields", were developed.</p>
+<p>The Uno board can be powered by the USB (5 Volts nominal, 4.5 Volts min.) or by an external supply from 6 to 14 Volts, thanks to a 5 Volts voltage regulator. The board also has a 3.3 Volts regulator for the needs of shields.
+
+<p>Note: Around year 2000 the standard supply voltage for microcontrollers was shifted from 5 Volts to 3.3 Volts, this change was also applied to every digital chip communicating with SPI, I2C, UART.<br>
+The ATmega328P could run from 3.3 Volts at a reduced clock frequency, but Arduino chose to stick to 5 Volts. For this reason, the accessory boards or "shields" frequently include voltage translator ICs to ensure compatibility with 3.3V chips.</p>
  
+<h3>5.3.2 The Arduino software</h3>
 
+<p>Arduino proposes an IDE (Integrated Development Environment) running on a host computer (Windows, Mac OS, Linux).<br>
+This IDE is free and open-source, being based on existing open-source projects, mainly the <a href="https://github.com/WiringProject/Wiring">wiring IDE</a> and the <a href="https://gcc.gnu.org/">GCC compiler</a>, which is a C/C++ toolchain.<br>
+The IDE contains the following software components :</p>
+<ul><li>A simple text editor with syntax highlighting</li>
+<li>A build system which is aware of the Arduino libraries and performs some text pre-processing before calling the GCC compiler and linker</li>
+<li>An uploader utility, which communicates with the target microcontroller's bootloader via the USB link and the USB to UART bridge</li>
+<li>A serial monitor, which is a terminal allowing to exchange text messages with a user program running on the target microcontroller</li>
+<li>A serial plotter, which draws graphics from the data it receives from the target microcontroller</li>
+</ul>
+<p>With the intention of keeping things apparently simple, the IDE comes with the following limitations :</p>
+<ul><li>Splitting the source code into more than one file is not encouraged</li>
+<li>Browsing the source code over multiple files is not supported, but a context sensitive help is available for Arduino library functions</li>
+<li>Build steps are hidden, unless switched to "verbose" in the preferences</li>
+<li>No incremental build</li>
+<li>No debugger</li>
+</ul>
+<p>However, the system is more open that it seems at first sight. With some efforts it is possible to use legacy text formatting from C standard libraries (printf), split the source code, do direct access to the peripherals, and use interrupts</p>
+<p>The USB to UART bridge which is on the Uno board is viewed by the host computer as a CDC (Communication Device Class) USB device.<br>
+This means that any program running on the host computer may dialog with the target microcontroller, using the standard serial communication interface of the computer (the COM ports in Windows, the TTYs on Linux).</p> 
 
-
-
-
- 
-
+<p>main function hacking:</p>
 
 
 
 <h3>Documents links :</h3>
 <ul>
+Arduino_UNO-TH_Rev3e_schematic.pdf
+https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/ATmega48A-PA-88A-PA-168A-PA-328-P-DS-DS40002061B.pdf
+
 https://en.wikipedia.org/wiki/Pulse-width_modulation
 <li><a href="https://en.wikipedia.org/wiki/Serial_Peripheral_Interface">en.wikipedia.org/wiki/Serial_Peripheral_Interface</a></li>
 <li><a href="https://en.wikipedia.org/wiki/I%C2%B2C">en.wikipedia.org/wiki/I²C</a></li>
