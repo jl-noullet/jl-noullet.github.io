@@ -35,7 +35,7 @@ Since then, generations of programmers improved the program, building many varia
 Warning: a frequent user error is to use M for mega, while the simulator understands it as milli.</li>
 <li>The user needs to be aware of stability and convergence issues</li>
 </ul>
-
+<img src="SPICE_modes.png">
 <h3>3.1.1 Transient analysis</h3>
 <p>Before starting the transient simulation, the program automatically runs a DC analysis in order to determine the initial value of each voltage and current.<br>
 It happens sometimes that this fails, if the circuit is unstable (like an ascillator), or has too many possible steady states (like a digital sequential system).
@@ -127,7 +127,7 @@ The circuit is made of R1 and C1, it is operated with a voltage step of 1 Volt g
 <img src="RC_sch.png">
 <a href="RC.asc">LTSPICE source file</a>
 <h4>Plot of the voltage Vc across C1 :</h3>
-<img src="RC1.png">
+<img class="wide" src="RC1.png">
 We observe a function Vc(t) = Vstep * ( 1 - exp(t/Tau) ).
 The <b>time constant</b> Tau is a characteristic parameter of the circuit
 <ul>
@@ -139,12 +139,12 @@ Th = Tau * ln(2) (approx. Tau * 0.693)</li>
 </ul>
 <h4>We can also observe the current through the resistor:</h4>
 (or the voltage across the resistor which is similar)
-<img src="RC2.png">
+<img class="wide" src="RC2.png">
 
 <h3>3.3.2 AC simulation example</h3>
 <p>Based on the same example, the AC simulation produces the Bode plot of Vc and I(R1).<br>
 The simulation command .ac dec 100 1 100k specifies 100 points per decade, from 1Hz up to 100kHz</p>
-<img src="RC3.png">
+<img class="wide" src="RC3.png">
 <p>Considering Vc as the output, this circuit is the simplest low-pass filter (first order)<br>
 The cutoff frequency (in rad/s) is 1/Tau.<br>
 Likewise, I(R1) expose a high-pass filter function with the same cutoff frequency.<br>
@@ -160,7 +160,7 @@ The transistor base current is driven by the simulation directive, from 0 to 0.5
 <p>Two behavioral voltage sources are added in order to compute the power dissipated in the transistor and in the load.<br>
 Note: the voltages at nodes P_Q1 and P_R1 represent watts of power.<br>
 We observe that the maximum power dissipated in the transistor exceeds the static power limit of this transistor (625mW), so this circuit is suitable for switching the load on and off but not for varying its power continuously.</p>
-<img src="bc547_load.png">
+<img class="wide" src="bc547_load.png">
 
 
 <h3>Theory links :</h3>

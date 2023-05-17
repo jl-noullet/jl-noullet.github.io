@@ -1,6 +1,7 @@
 .bk { page-break-before: always; }
 body { background-color: #eee; }
-img { display: block; margin: 24px 0px }
+img { display: block; margin: 20px 0px 20px 24px }
+img.wide { margin-left: 0px }					
 h2 { margin-top: 40px; color: blue }
 h3 { margin-top: 30px; color: blue }
 h4 { background-color:#dfd; }
