@@ -25,23 +25,43 @@
 <p>So the analogy between voltage and altitude or pressure, seems very consistent with the vocabulary, coming together with the analogy between electric current and fluid flow</p>
 <p>To make the analogy work, we need first to state that the fluid density and the gravitational acceleration are fixed.<br>
 Then we may represent the potential as a pressure or as a height, and the flow as a volume flow or a mass flow, these choices are arbitrary.<br>
-The table below is established with height and mass flow as fundamental quantities, and kgf as force unit (apologies to Mr Newton) in order to keep the equations simpler</p>
+
+<h3>2.1.1 Legacy analogy</h3>
+<p>The first table "legacy" is established with height and mass flow as fundamental quantities,<br>
+with kgf as force unit (apologies to Mr Newton) in order to keep the equations simpler</p>
 
 <table class="bw">
-<tr><td><i>Hydraulic domain</i></td><td><i>Electrical domain</i></td></tr>     
+<tr><td><i>Hydraulic domain (legacy units)</i></td><td><i>Electrical domain</i></td></tr>     
 <tr><td>Pressure (m) h</td><td>Voltage (V) V</td></tr>     
 <tr><td>Flow (kg/s) f</td><td>Current (A) I</td></tr>     
 <tr><td>Quantity of fluid (kg) M = f*t</td><td>Electric Charge (C) Q = I*t</td></tr>     
-<tr><td>Energy (kgf.m) W = M*h</td><td>Energy (J) W = V*Q = V*I*t</td></tr>     
-<tr><td>Power (kgf.m/s) P = h*f</td><td>Power (W) P = V*I = W/t</td></tr>     
-<tr><td>Tank area (kgf/m) A = M/h</td><td>Capacitance (F) C = Q/V = I/(dV/dT)</td></tr>     
-<tr><td>Kinetic pipe () j = h/(df/dt)</td><td>Inductance (H) L = V/(dI/dt)</td></tr>     
-<tr><td></td><td>Energy in capacitor (J) W = ½*C*V²</td></tr>     
-<tr><td></td><td>Energy in inductor (J) W = ½*L*I²</td></tr>     
-<tr><td></td><td>Resistor(Ω) R = V/I</td></tr>     
+<tr><td>Energy (kgf.m) W = M*h = h*f*t</td><td>Energy (J) W = V*Q = V*I*t</td></tr>     
+<tr><td>Power (kgf.m/s) P = h*f = W/t</td><td>Power (W) P = V*I = W/t</td></tr>     
+<tr><td>Tank "area" (kgf/m) A = M/h</td><td>Capacitance (F) C = Q/V = I/(dV/dT)</td></tr>     
+<tr><td>Inertial pipe j = h/(df/dt)</td><td>Inductance (H) L = V/(dI/dt)</td></tr>     
+<tr><td>Restriction r = h/f</td><td>Resistor(Ω) R = V/I</td></tr>     
 </table>
+<p>The restriction (e.g. a nearly closed valve), as an analog of the resistor, is less intuitive than other elements because it is not obvious that it converts mechanical energy into heat.<br>
+In fact it does, but the heat is immediateley carried away by the fluid so we do not observe a local temperature increase at the valve itself.</p> 
 
+<h3>2.1.2 SI analogy <img src="si.jpg"></h3>
+<p>This second table "SI units" is established with pressure and mass flow as fundamental quantities,<br>
+wich the help of two constant coefficients :</p>
+<ul><li>The gravity coefficient (acceleration) g (M/s²)</li>
+<li>The density of the fluid d (kg/m<sup>3</sup>)</li>
+</ul>
 
+<table class="bw">
+<tr><td><i>Hydraulic domain (SI units)</i></td><td><i>Electrical domain</i></td></tr>     
+<tr><td>Pressure (P) ρ</td><td>Voltage (V) V</td></tr>     
+<tr><td>Flow (kg/s) f</td><td>Current (A) I</td></tr>     
+<tr><td>Quantity of fluid (kg) M = ρ*t</td><td>Electric Charge (C) Q = I*t</td></tr>     
+<tr><td>Energy (J) W = M*ρ = ρ*f*t</td><td>Energy (J) W = V*Q = V*I*t</td></tr>     
+<tr><td>Power (W) P = ρ*f = W/t</td><td>Power (W) P = V*I = W/t</td></tr>     
+<tr><td>Tank area (m²) A = M/ρ</td><td>Capacitance (F) C = Q/V = I/(dV/dT)</td></tr>     
+<tr><td>Inertial pipe (m<sup>-1</sup>) j = ρ/(df/dt)</td><td>Inductance (H) L = V/(dI/dt)</td></tr>     
+<tr><td>Restriction () r = ρ/f</td><td>Resistor(Ω) R = V/I</td></tr>     
+</table>
 
 
 
@@ -49,7 +69,8 @@ The table below is established with height and mass flow as fundamental quantiti
 <ul>
 https://en.wikipedia.org/wiki/Voltage
 https://en.wikipedia.org/wiki/Capacitance
-
+https://www.nist.gov/pml/owm/metric-si/si-units
+https://en.wikipedia.org/wiki/International_System_of_Units
 <li><a href=""></a></li>
 </ul>
 
