@@ -78,16 +78,66 @@ wich the help of two constant coefficients :</p>
 <p>With the valve closed, the tank are filled with h1 > h2. Then at time 0 the valve is fully opened. The fluid flows to the right, until h2 = h1. At that point the potential difference is zero, but all the energy is now stored as kinetic energy in the pipe, allowing h2 to become higher than h1, causing a deceleration of the flow, and so on.</p> 
 
 <h3>2.1.4 Other basic hydraulic circuits</h3>
+<img src="hydraulic_circuits.png">
+<p>From the left to the right:</p>
+<ul><li>a closed circuit: the generator-motor combination :
+<ul><li>the first bucket elevator behaves like an electric generator: it generates hydraulic power from mechanical power</li>
+<li>the second one behaves like a motor, it converts hydraulic power back to mechanical power, available at the shaft of its lower pulley (a variant of the well-known water wheel)</li>
+</ul></li>
+<li>the series combination: the height (or pressure) add, while the flow is common, like in series electric circuits where the voltages add while the current is common</li>
+<li>the parallel combination: the flows add, while the height is common, like in parallel electric circuits where the currents add while the voltage is common</li>
+</ul>
 
 <h2>2.2 The Mechanical Analogies</h2>
 
-<h3>2.2.1 The Mechanical Analogy of the first kind</h3>
+<h3>2.2.1 The Mechanical analogy of the first kind</h3>
+<p>This analogy is close to the hydraulic analogy previously presented, with force replacing pressure and velocity replacing fluid flow.<br>It is well known from the analogy between the spring-mass resonator and the RLC circuit.</p> 
+<table class="bw">
+<tr><td><i>Mechanical domain (first variant)</i></td><td><i>Electrical domain</i></td></tr>     
+<tr><td>Force (N) F</td><td>Voltage (V) V</td></tr>     
+<tr><td>Velocity (m/s) v</td><td>Current (A) I</td></tr>     
+<tr><td>Dispacement (m) x = v*t</td><td>Electric Charge (C) Q = I*t</td></tr>     
+<tr><td>Work (J) W = F*x = F*v*t</td><td>Energy (J) W = V*Q = V*I*t</td></tr>     
+<tr><td>Power (W) P = F*v = W/t</td><td>Power (W) P = V*I = W/t</td></tr>     
+<tr><td>Viscous friction (Ns/m) D = F/v</td><td>Resistor(Ω) R = V/I</td></tr>     
+<tr><td>Spring flexibility (m/N) 1/k = x/F<br>(k is the stiffness)</td><td>Capacitance (F) C = Q/V = I/(dV/dT)</td></tr>     
+<tr><td>Mass (kg) M = F/(dv/dt) = F/γ<br>(γ is the acceleration)</td><td>Inductance (H) L = V/(dI/dt)</td></tr>     
+<tr><td>Elastic energy (J) W = ½*(1/k)*F² = ½*k*x²</td><td>Energy in capacitor (J) W = ½*C*V²</td></tr>     
+<tr><td>Kinetic energy (J) W = ½*M*v²</td><td>Energy in inductor (J) W = ½*L*I²</td></tr>     
+</table>
+<h3>2.2.2 The mass-spring resonator</h3>
+<div class="boite">
+<div class="rightim">
+<img src="mass_spring_damper.png">
+<img src="RLC.png">
+</div>
+<p>Everytime something is vibrating, the spring-mass system is involved. Since every physical system loses energy by some way, we should consider a mass-spring-damper system, the analogue of the RLC circuit</p>
 
-<h3>2.2.2 The Rotational variant</h3>
+<p>The theoretical diagrams use to represent the damper as piston in a cylinder with some leakage. This comes from the dampers used to shorten unwanted resonance of many mechanical systems, like the suspension of a car.</p>
+<p>This damping is called "viscous friction" because it involves a fluid (liquid or gas), providing a linear (proportional) action like its analogue, the resistor. (Solid friction is more difficult to model, being strongly non-linear).<br>Friction with the air contributes to the damping of every vibration.</p>
+<p>When it is not too much damped, the system has a resonating frequency<br>
+ω = sqrt(k/M) = sqrt(1/L*C) in rad/s<br>
+(multiply by 2Π for converting to Herz)</p>
+<p>Note: on the mechanical drawing, the damper and the spring look like they are in parallel. In fact the three elements share the same displacement x (analogue of current) while the forces (analogue of voltage) are added, so this is equivalent to electric elements in series.</p>  
+</div>
 
-<h3>2.2.3 The mass-spring resonator</h3>
+<h3>2.2.3 The rotational variant</h3>
+<div class="boite">
+<img class="rightim" src="balance_wheel.jpg">
+<p>A similar mechanical analogy can be defined for rotating mechanisms : </p>
+<ul><li>force is replaced by torque</li>
+<li>velocity is replaced by rotational speed (angular velocity)</li>
+<li>displacement is replaced by angle</li>
+<li>and so on</li>
+</ul>
+<p>A familiar example of a rotational resonator is the balance wheel used in mechanical watches and clocks.<br>
+With minimal damping, the frequency of its oscillation is precise enough to be the reference for time measurement. The mechanism called escapement provides just enough energy to compensate the damping caused by friction.<br>
+Similarly, LC oscillators are composed of a RLC resonator associated with a feedback circuitry which provides energy to compensate the losses.</p>
+</div>
 
-<h3>2.2.4 The Mechanical Analogy of the second kind</h3>
+
+
+<h3>2.2.4 The Mechanical analogy of the second kind</h3>
 
 <h3>Document links :</h3>
 <ul>
