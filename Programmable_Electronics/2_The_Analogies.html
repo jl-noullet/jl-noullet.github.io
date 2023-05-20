@@ -100,7 +100,7 @@ wich the help of two constant coefficients :</p>
 <tr><td>Work (J) W = F*x = F*v*t</td><td>Energy (J) W = V*Q = V*I*t</td></tr>     
 <tr><td>Power (W) P = F*v = W/t</td><td>Power (W) P = V*I = W/t</td></tr>     
 <tr><td>Viscous friction (Ns/m) D = F/v</td><td>Resistor(Ω) R = V/I</td></tr>     
-<tr><td>Spring flexibility (m/N) 1/k = x/F<br>(k is the stiffness)</td><td>Capacitance (F) C = Q/V = I/(dV/dT)</td></tr>     
+<tr><td>Spring compliance (m/N) 1/k = x/F<br>(k is the stiffness)</td><td>Capacitance (F) C = Q/V = I/(dV/dT)</td></tr>     
 <tr><td>Mass (kg) M = F/(dv/dt) = F/γ<br>(γ is the acceleration)</td><td>Inductance (H) L = V/(dI/dt)</td></tr>     
 <tr><td>Elastic energy (J) W = ½*(1/k)*F² = ½*k*x²</td><td>Energy in capacitor (J) W = ½*C*V²</td></tr>     
 <tr><td>Kinetic energy (J) W = ½*M*v²</td><td>Energy in inductor (J) W = ½*L*I²</td></tr>     
@@ -135,10 +135,25 @@ With minimal damping, the frequency of its oscillation is precise enough to be t
 Similarly, LC oscillators are composed of a RLC resonator associated with a feedback circuitry which provides energy to compensate the losses.</p>
 </div>
 
-
-
 <h3>2.2.4 The Mechanical analogy of the second kind</h3>
+<p>The equations of electricity (viewed as a systems described by differential equations of the second degree) have a remarkable symmetry.<br>
+The two fundamental quantities V and I have symmetrical roles, like L and C do. This symmetry is sometimes called "duality".</p>
+<p>This is formally applicable to the mechanical domain as well, but swapping force and velocity has no pratical interest. However, describing a second kind of mechanical-electrical analogy where V and I are swapped may make sense.</p>
 
+<table class="bw">
+<tr><td><i>Mechanical domain (2nd variant)</i></td><td><i>Electrical domain</i></td></tr>
+<tr><td>Velocity (m/s) v</td><td>Voltage (V) V</td></tr>
+<tr><td>Force (N) F</td><td>Current (A) I</td></tr>
+<tr><td>Impulse (Ns) I = F*t</td><td>Electric Charge (C) Q = I*t</td></tr>
+<tr><td>Dispacement (m) x = v*t</td><td>Magnetic flux (Wb) Φ such as V = dΦ/dt</td></tr>
+<tr><td>Work (J) W = F*v*t</td><td>Energy (J) W = V*Q = V*I*t</td></tr>
+<tr><td>Power (W) P = F*v = W/t</td><td>Power (W) P = V*I = W/t</td></tr>
+<tr><td>Viscous friction (m/Ns) d = v/F</td><td>Resistor(Ω) R = V/I</td></tr>
+<tr><td>Mass (kg) M = F/(dv/dt) = F/γ<br>(γ is the acceleration)</td><td>Capacitance (F) C = Q/V = I/(dV/dT)</td></tr>
+<tr><td>Spring compliance (m/N) 1/k = x/F<br>(k is the stiffness)</td><td>Inductance (H) L = V/(dI/dt)</td></tr>
+</table>
+
+    
 <h3>Document links :</h3>
 <ul>
 https://en.wikipedia.org/wiki/Voltage
