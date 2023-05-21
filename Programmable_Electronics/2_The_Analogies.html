@@ -51,31 +51,30 @@ This is a little harder to figure out, since the heat is immediateley carried aw
 </div>
 
 <h3>2.1.2 SI analogy</h3>
-<p>This second table "SI units" is established with pressure and mass flow as fundamental quantities,<br>
-wich the help of two constant coefficients :</p>
-<ul><li>The gravity coefficient (acceleration) g (M/s²)</li>
-<li>The density of the fluid d (kg/m<sup>3</sup>)</li>
-</ul>
+<p>This second table example "SI units" is established with pressure and volume flow as fundamental quantities :</p>
+
 <div class="boite">
 <a class="rightim" href="NIST_SI_units.png"><img src="si.jpg"></a>
 <table class="bw">
 <tr><td><i>Hydraulic domain (SI units)</i></td><td><i>Electrical domain</i></td></tr>     
-<tr><td>Pressure (P) ρ = h*d*g</td><td>Voltage (V) V</td></tr>     
-<tr><td>Flow (kg/s) f</td><td>Current (A) I</td></tr>     
-<tr><td>Quantity of fluid (kg) M = f*t</td><td>Electric Charge (C) Q = I*t</td></tr>     
-<tr><td>Energy (J) W = ρ*M/d = ρ*f*t/d</td><td>Energy (J) W = V*Q = V*I*t</td></tr>     
-<tr><td>Power (W) P = ρ*f/d = W/t</td><td>Power (W) P = V*I = W/t</td></tr>     
-<tr><td>Restriction (m<sup>-1</sup>s<sup>-1</sup>) R = ρ/f</td><td>Resistor(Ω) R = V/I</td></tr>     
-<tr><td>Tank area (m<sup>2</sup>) A = g*M/ρ</td><td>Capacitance (F) C = Q/V = I/(dV/dT)</td></tr>     
-<tr><td>Inertial pipe (m<sup>-1</sup>) j = ρ/(df/dt)</td><td>Inductance (H) L = V/(dI/dt)</td></tr>     
+<tr><td>Pressure (P) ρ</td><td>Voltage (V) V</td></tr>     
+<tr><td>Flow (m<sup>3</sup>/s) f</td><td>Current (A) I</td></tr>     
+<tr><td>Quantity of fluid (m<sup>3</sup>) V = f*t</td><td>Electric Charge (C) Q = I*t</td></tr>     
+<tr><td>Energy (J) W = ρ*V = ρ*f*t</td><td>Energy (J) W = V*Q = V*I*t</td></tr>     
+<tr><td>Power (W) P = f/d = W/t</td><td>Power (W) P = V*I = W/t</td></tr>     
+<tr><td>Restriction (Ps/m<sup>3</sup>) R = ρ/f</td><td>Resistor(Ω) R = V/I</td></tr>     
+<tr><td>Tank "area" (m<sup>3</sup>/P) A = V/ρ</td><td>Capacitance (F) C = Q/V = I/(dV/dT)</td></tr>     
+<tr><td>Inertial pipe (Ps<sup>2</sup>/m<sup>3</sup>) j = ρ/(df/dt)</td><td>Inductance (H) L = V/(dI/dt)</td></tr>     
 </table>
-
+<p>This version of the analogy removes the explicit use of gravity, so it is usable for systems using pumps other than elevators, and capacitive storages using some elastic force instead of gravity.</p>
+</div>
 <h3>2.1.3 The hydraulic resonator</h3>
 <p>A resonator or "2nd order system" is made by the combination of two devices that exchange energy, on storing energy by integration of the flow ("static storage"), the other one by integration of the potential ("inertial storage").</p>
 <img src="reson_vessels.png" style="display: inline"><img src="reson_sch.png" style="display: inline">
 <p>A pair of communicating vessels are the hydraulic analogue of the RLC circuit, where two tanks store energy by gravity ("static storage"), while the accelerated fluid in the pipe stores kinetic energy. The friction in the pipe constitutes the dissipative element which damps the oscillation, like R</p>
 <img src="reson_waves.png">
 <p>With the valve closed, the tank are filled with h1 > h2. Then at time 0 the valve is fully opened. The fluid flows to the right, until h2 = h1. At that point the potential difference is zero, but all the energy is now stored as kinetic energy in the pipe, allowing h2 to become higher than h1, causing a deceleration of the flow, and so on.</p> 
+<p>Note: a simple U-shaped tube would also present a similar oscillation, in this case there are no separated components for gravitational energy and kinetic energy, the system is said "distributed". This happens as well in electronics, in high frequency systems (like more than 500 Mhz), resonators can have L, R and C merged in a single device.</p>
 
 <h3>2.1.4 Other basic hydraulic circuits</h3>
 <img src="hydraulic_circuits.png">
@@ -117,7 +116,7 @@ wich the help of two constant coefficients :</p>
 <p>This damping is called "viscous friction" because it involves a fluid (liquid or gas), providing a linear (proportional) action like its analogue, the resistor. (Solid friction is more difficult to model, being strongly non-linear).<br>Friction with the air contributes to the damping of every vibration.</p>
 <p>When it is not too much damped, the system has a resonating frequency<br>
 ω = sqrt(k/M) = sqrt(1/L*C) in rad/s<br>
-(multiply by 2Π for converting to Herz)</p>
+(divide by 2Π for converting to Hertz)</p>
 <p>Note: on the mechanical drawing, the damper and the spring look like they are in parallel. In fact the three elements share the same displacement x (analogue of current) while the forces (analogue of voltage) are added, so this is equivalent to electric elements in series.</p>  
 </div>
 
@@ -152,36 +151,64 @@ The two fundamental quantities V and I have symmetrical roles, like L and C do. 
 <tr><td>Mass (kg) M = F/(dv/dt) = F/γ<br>(γ is the acceleration)</td><td>Capacitance (F) C = Q/V = I/(dV/dT)</td></tr>
 <tr><td>Spring compliance (m/N) 1/k = x/F<br>(k is the stiffness)</td><td>Inductance (H) L = V/(dI/dt)</td></tr>
 </table>
+<p>Position or displacement is no longer the analogue of electric charge, but it is the analogue of the integral of voltage over time, which is the magnetic flux, so a line was added for it. (It was omitted in previous tables because it is noticeable only in the inductor.)</p>
+<p>This analogy is less intuitive than the first variant, except in the case of systems containing electric motors or other electromagnetic actuators.<br>An ideal electric motor or generator has a speed proportional to the voltage and a torque proportional to the current, which fits well with this analogy. Notably, an idling electric motor viewed from the electric domain behaves like a capacitor, storing kinetic energy in its rotor</p>
 
-    
-<h3>Document links :</h3>
-<ul>
-https://en.wikipedia.org/wiki/Voltage
-https://en.wikipedia.org/wiki/Capacitance
-https://www.nist.gov/pml/owm/metric-si/si-units
-https://en.wikipedia.org/wiki/International_System_of_Units
-https://en.wikipedia.org/wiki/Communicating_vessels
-https://pubs.aip.org/asa/jasa/article/4/3/249/717305/A-NEW-ANALOGY-BETWEEN-MECHANICAL-AND-ELECTRICAL
+<p>When this analogy was first presented in 1932, a controversy arose because <a href="https://pubs.aip.org/asa/jasa/article/4/3/249/717305/A-NEW-ANALOGY-BETWEEN-MECHANICAL-AND-ELECTRICAL">some authors</a> claimed that this new analogy was "more complete" and that the older one was "nominated for oblivion". No controversy makes sense, thanks to the duality of 2nd order systems, it is normal to have two valid analogies between electricity and any other 2nd order domain.</p> 
 
-<li><a href=""></a></li>
+<h2>2.3 Acoustic Analogy</h2>
+<div class="boite">
+<img class="rightim" src="helmholtz_resonator.png">
+<p>Using gas pressure and velocity as fundamental quantities gives another analogy which helps understanding the acoustic resonators, the model of which is the Helmholz resonator.</p>
+<p>In this resonator :</p>
+<ul><li>elastic energy is stored in the cavity, where the gas is compressed and expanded alternately</li>
+<li>kinetic energy is stored in the neck pipe, where the velocity of the gas is significant</li>
 </ul>
 
-<table class="bw">
-<tr><td></td><td><i>Electrical domain</i></td></tr>     
-<tr><td></td><td>Voltage (V) V</td></tr>     
-<tr><td></td><td>Current (A) I</td></tr>     
-<tr><td></td><td>Electric Charge (C) Q = I*t</td></tr>     
-<tr><td></td><td>Energy (J) W = V*Q = V*I*t</td></tr>     
-<tr><td></td><td>Power (W) P = V*I = W/t</td></tr>     
-<tr><td></td><td>Resistor(Ω) R = V/I</td></tr>     
-<tr><td></td><td>Capacitance (F) C = Q/V = I/(dV/dT)</td></tr>     
-<tr><td></td><td>Inductance (H) L = V/(dI/dt)</td></tr>     
-<tr><td></td><td>Energy in capacitor (J) W = ½*C*V²</td></tr>     
-<tr><td></td><td>Energy in inductor (J) W = ½*L*I²</td></tr>     
-</table>
-
-
+<p>Other acoustic resonators exist that where there are no separated components for elastis energy and kinetic energy, these systems are said "distributed". This happens as well in electronics, in high frequency systems (like more than 500 Mhz), resonators can have L, R and C merged in a single device.<br>Other analogies based on standing waves are helpful in such cases.</p> 
  
+<p>Acoustic resonators are important in nature (they are essential to our ability to speak), in arts (music) and in many industrial applications</p> 
+</div>
+
+<h2>2.4 Heat conduction analogy</h2>
+<p>This analogy is simpler, being restricted to the first degree. Nevertheless it is helpful for managing conduction of heat in solids.</p>
+<div class="boite">
+<img class="rightim" src="to220.png">
+<table class="bw">
+<tr><td>Heat flow in solid</td><td><i>Electrical domain</i></td></tr>     
+<tr><td>Temperature (°C) T</td><td>Voltage (V) V</td></tr>     
+<tr><td>Heat flow (thermal power) (W) P</td><td>Current (A) I</td></tr>     
+<tr><td>Thermal Energy (J) E = P*t</td><td>Electric Charge (C) Q = I*t</td></tr>     
+<tr><td>Thermal resistance (°C/W) R = T/R</td><td>Resistor(Ω) R = V/I</td></tr>     
+<tr><td>Thermal capacity (J/°C) C = E/T</td><td>Capacitance (F) C = Q/V = I/(dV/dT)</td></tr>     
+</table>
+<p>This analogy of a great importance for the modeling of thermal behavior of electronic components like transistors, ICs and LEDs.</p>
+<p>Behaving like RC low-pass filters, the heat dissipators can smooth peaks of thermal power if properly dimensioned.</p>
+</div>
+<p>As an example, the tables below are taken from the datasheet of the IRF530 power transistor in TO-220 package:</p>
+<img src="IRF530.png">
+<div class="boite">
+<img class="rightim" src="to220_heatsink.png">
+<p>In the maximum ratings, one can read "power dissipation at Tc = 25°C" equals 70 W. Tc is the case temperature, precisely the temperature of the bottom face of the metal tab with the mounting hole.</p>
+<p>The next line on reads "linear derating factor 0.47 W/°C". This means that the power dissipation should be reduced by 0.47 W for each degree of temperature above 25°C. It looks like the relation between the heat flow and the temperature difference between the silicon chip and the case. We observe that :</p>
+<ul><li>the power dissipation should be reduced to zero when the temperature is 25 + (70/0.47) = 173.9°C, which is consistent with the maximum junction temperature of 175°C</li>
+<li>this "linear derating factor" is in fact the thermal conductance between the silicon chip junction and the case tab, the corresponding thermal resistance is 1/0.47 = 2.13 °C/W, which is redundantly indicated as junction-to-case thermal resistance in the bottom part of the table</li>
+</ul>
+<p>This transistor is designed to be bolted on a heat sink made of a massive piece of heat conductive material like aluminium or copper. In this case the total thermal resistance will be the sum of the junction-to-case resistance Rjc, the case-to-sink resistance Rcs, and the sink-to-ambient resistance which depends on the shape and dimensions of the heat sink.</p>
+<p>The transistor may work without heat sink, in this case its total thermal resistance of 62°C/W determines a maximum continuous power dissipation of (175-25)/62 = 2.4 W only.<br>
+Shorts peaks of greater power could be accepted thanks to the thermal capacity of the transistor case.</p>
+</div>
+<h3>Document links :</h3>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Voltage">en.wikipedia.org/wiki/Voltage</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Capacitance">en.wikipedia.org/wiki/Capacitance</a></li>
+<li><a href="https://www.nist.gov/pml/owm/metric-si/si-units">www.nist.gov/pml/owm/metric-si/si-units</a></li>
+<li><a href="https://en.wikipedia.org/wiki/International_System_of_Units">en.wikipedia.org/wiki/International_System_of_Units</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Communicating_vessels">en.wikipedia.org/wiki/Communicating_vessels</a></li>
+<li><a href="https://pubs.aip.org/asa/jasa/article/4/3/249/717305/A-NEW-ANALOGY-BETWEEN-MECHANICAL-AND-ELECTRICAL">A-NEW-ANALOGY-BETWEEN-MECHANICAL-AND-ELECTRICAL</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Acoustic_resonance#Resonance_of_a_sphere_of_air_(vented)">en.wikipedia.org/wiki/Acoustic_resonance</a></li>
+</ul>
+
 </div>
 </body>
 </html>
