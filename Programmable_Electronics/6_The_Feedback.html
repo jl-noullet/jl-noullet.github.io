@@ -30,7 +30,7 @@
 <img class="rightim" src="cur_src_sch.png">
 <p>The collector current Ic of a bipolar transistor is controlled by the base-to-emitter voltage Vbe with a very high gain.<br> But this control is non-linear and the current also strongly depends on the temperature and the process variations, in such a way that controlling the collector current in open loop is not feasible.</p>
 <p>With a high gain transistor, the emitter current is nearly equal to the collector current, so the voltage across Re can be used as a feedback signal. In this circuit, Vbe is the difference between Vsv (the set value) and the voltage across Re, so Vbe is the error signal which will be amplified by the transistor.</p>
-<p>The input source Vsv is swept from 1 Volt to 3 Volts, and this is repeated for temperatures 10°C, 30°C and 50°C.</p>
+<p class="bk">The input source Vsv is swept from 1 Volt to 3 Volts, and this is repeated for temperatures 10°C, 30°C and 50°C.</p>
 </div>
 <img src="cur_src.png">
 <p>Results: the output current is controlled linearly by the set value, with a constant slope close to 10mA/V, consistent with the value of Re, the temperature variations cause a large offset of Vbe but a moderate shift of Ic.</p>
@@ -66,7 +66,7 @@ in practice the amplifying element will reach its limit, which is called saturat
 </div>
 <img src="trigger.png">
 
-<h3>6.2.2 Wien bridge Oscillator</h3>
+<h3 class="bk">6.2.2 Wien bridge Oscillator</h3>
 <img src="wien_osc_sch.png">
 <p>The Wien bandpass filter will be used in the feedback loop, with the goal of making an oscillator producing a sinewave. A preliminary AC simulation will be used to check the behaviour of the filter alone, made of 2 identical resistors R1 and R2 and 2 identical capacitors C1 and C2.</p>
 

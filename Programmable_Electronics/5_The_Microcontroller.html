@@ -42,7 +42,7 @@ so the starting point was a code known as <a href="https://en.wikipedia.org/wiki
 Several solutions were proposed to extend this code to non-latin languages, the most successful being UTF-8, which uses a variable-length code, compatible with ASCII.</p>
 <p>A piece of text is represented as a sequence of bytes, called a string. It is a common practice to use the zero byte (null character) to mark the end of the string.</p>
 
-<h3>5.1.4 Addresses</h3>
+<h3 class="bk">5.1.4 Addresses</h3>
 <p>In computer memory, data words are stored in 1D-arrays, which can be considered as tables where each line contains a binary word.<br>
 The lines are numbered in sequence, and their numbers are called the addresses, which are themselves handled in binary form<p>
 <p>Many computers can read or write words which are larger than 8 bits, but to preserve the capability or writing or reading single bytes, the adresses are always byte addresses.</p>
@@ -64,7 +64,7 @@ The lines are numbered in sequence, and their numbers are called the addresses, 
 <li>the bus lines which support the communication between these modules</li>
 </ul>
 
-The parameters that characterize a microcontroller type are:
+<p class="bk">The parameters that characterize a microcontroller type are:</p>
 <ul><li>the CPU family, which determines the instructions encoding and the performance level</li>
 <li>the word size, either 8 bits, 16 bits, 32 bits or 64 bits,<br>
 this is the typical data word that the CPU can process at once, but the definition of this parameter is not uniform, for example an 8-bit microcontrollers may use 16-bit addresses and 12-bit instructions, but performs calculations on 8-bit data only</li>
@@ -95,7 +95,7 @@ Non volatile memory can be :</p>
 </ul>
 <p>In modern microcontrollers, programs are generally stored in flash memory. The CPU can read this memory, but not write into it.<br>
 Writing requires either an external hardware or a dedicated peripheral, and takes much more time than a regular memory access.</p>
-<p>A small amount of OTP-ROM is sometimes present to store the program which is used to write programs into the flash memory under control of the development computer. Such a program is called bootloader</p> 
+<p class="bk">A small amount of OTP-ROM is sometimes present to store the program which is used to write programs into the flash memory under control of the development computer. Such a program is called bootloader</p> 
 
 <h3>5.2.4 Peripherals</h3>
 <p>There are many types of specialized peripherals, here are the most common.</p>
@@ -126,7 +126,7 @@ while UART is a point-to-point connexion needing an application defined protocol
 
 <img src="I2C_transfer_simplified.png">
 
-<p>UART transmits blocks of one byte, inserted between a "start" bit (always zero) and a "stop bit" (always 1).<br>
+<p class="bk">UART transmits blocks of one byte, inserted between a "start" bit (always zero) and a "stop bit" (always 1).<br>
 The start bit leading edge causes the synchronisation of the receiver clock, which is used to sample the data bits.<br>
 The receiver clock frequency must match the transmitter clock frequency with a sufficient accuracy (~2%).<br>
 This frequency is historically called the "Baud rate".</p>
@@ -151,7 +151,7 @@ This makes a convenient way to generate a slowly varying analog signal using a s
 <p>The RTC keeps the time and date even when the main power supply is off, having a separate power supply.<br>Like watches, the RTC has a very low power need, being able to run for years on a small battery.</p>
 <p>The RTC modules frequently contain a small amount of memory called the backup RAM, which keep application data when the microcontroller is off</p>
    
-<h3>5.2.5 Interrupts</h3>
+<h3 class="bk">5.2.5 Interrupts</h3>
 <p>The CPU may accept an interrupt signal from some peripherals. When this happens, the CPU completes the current instruction and then leaves the current instruction sequence and jumps to a specific interrupt service routine subroutine or interrupt handler, in order to perform some action required by the peripheral which emitted the interrupt request.</p>
 <p>When the end of the interrupt routine is reached, the CPU returns to the instruction sequence which was interrupted. To ensure that the interrupted task is not disturbed by this process, a context saving sequence is strictly applied before entering the interrupt routine, and a matching context restoring sequence is applied upon return, by hardware and software combined.</p>
 <h4>Interrupt vectoring</h4>
@@ -170,7 +170,7 @@ The interrupt controller may also manage the interruption of an interrupt routin
 When people talk about "The Arduino" they refer to the board, or to the microcontroller itself.</p>
 <p>While some choices made by Arduino are highly questionable, the benefit of this project is a worldwide acceleration of the DIY (Do-It-Yourself) microcontroller development activity. Notably many competing manufacturers put higher performance, lower cost boards on the market, while the open source community produced alternate software solutions.</p>
 
-<h3>5.3.1 The Arduino Uno hardware</h3>
+<h3 class="bk">5.3.1 The Arduino Uno hardware</h3>
 <p>The Uno is the first Arduino board and the most famous. While its technology was nearly outdated when it was introduced, it is still produced.</p>
 <img class="wide" src="Arduino_Uno_pinout.png" width="100%">
 <p>The board is equipped with two microcontrollers :</p>
@@ -197,7 +197,7 @@ When people talk about "The Arduino" they refer to the board, or to the microcon
 <li>One ADC, 10 bits resolution, 15 ksamp/s</li>
 </ul>
 
-<p>The Uno board exposes a proprietary connector layout for which many accessory boards, called "shields", were developed.</p>
+<p class="bk">The Uno board exposes a proprietary connector layout for which many accessory boards, called "shields", were developed.</p>
 <p>The Uno board can be powered by the USB (5 Volts nominal, 4.5 Volts min.) or by an external supply from 6 to 14 Volts, thanks to a 5 Volts voltage regulator. The board also has a 3.3 Volts regulator for the needs of shields.
 
 <p>Note: Around year 2000 the standard supply voltage for microcontrollers was shifted from 5 Volts to 3.3 Volts, this change was also applied to every digital chip communicating with SPI, I2C, UART.<br>
@@ -229,7 +229,7 @@ For this reason, the Arduino IDE expects the main program file to contain instea
 The setup() function is called once, then the loop() function call is repeated indefinitely.<br>
 (These calls are included in a main() function created automatically by the Arduino build system).</p>
 
-<p>Arduino jargon:</p>
+<p class="bk">Arduino jargon:</p>
 <table class="bw">
 <tr><td><i>Arduino term</i></td><td><i>actual meaning</i></td></tr>
 <tr><td>Arduino language</td><td>C++, with specific libraries</td></tr>
@@ -269,12 +269,10 @@ to keep it stable, plot two additional curves with constant Ymin and Ymax values
 <li><a href="https://en.wikipedia.org/wiki/Serial_Peripheral_Interface">en.wikipedia.org/wiki/Serial_Peripheral_Interface</a></li>
 <li><a href="https://en.wikipedia.org/wiki/I%C2%B2C">en.wikipedia.org/wiki/I²C</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Universal_asynchronous_receiver-transmitter">en.wikipedia.org/wiki/Universal_asynchronous_receiver-transmitter</a></li>
-<li><a href="https://en.wikipedia.org/wiki/ASCII">en.wikipedia.org/wiki/ASCII</a></li>
 <li><a href="https://en.wikipedia.org/wiki/UTF-8">en.wikipedia.org/wiki/UTF-8</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Binary_number">en.wikipedia.org/wiki/Binary_number</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Hexadecimal">en.wikipedia.org/wiki/Hexadecimal</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Two%27s_complement">en.wikipedia.org/wiki/Two%27s_complement</a></li>
-<li><a href="https://en.wikipedia.org/wiki/IEEE_754">en.wikipedia.org/wiki/IEEE_754</a></li>
 <li><a href="Arduino_UNO-TH_Rev3e_schematic.pdf">Arduino UNO schematic</a></li>
 <li><a href="https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/ATmega48A-PA-88A-PA-168A-PA-328-P-DS-DS40002061B.pdf">ATmega328</a></li>
 <li><a href="https://www.nongnu.org/avr-libc/user-manual/modules.html">www.nongnu.org/avr-libc/user-manual/modules.html</a></li>

@@ -26,7 +26,7 @@ Storage oscilloscope, with an electrostatic memory built inside the CRT, were ab
 <p>Digital storage oscilloscope (DSOs) convert, store, process and display the signal in digital form, offering a similar service at a much lower price.<br>
 However the basic concepts have not changed since the analog era, and the functional diagram reproduces the same signal paths.<p>
 
-<h2>4.1 The standard benchtop oscilloscope</h2>
+<h2 class="bk">4.1 The standard benchtop oscilloscope</h2>
 <img src="tektronix_tds220.png">
 <p>Legacy analog oscilloscope had one knob for each parameter and one push button for each option - this was very user-friendly but expensive and bulky.<br>Modern instrument have knobs for the most frequently used parameters, and buttons for selecting on-screen menus for less frequent adjustments. Pocket instruments may have as little as one single knob and four buttons.</p>
 <p>In the standard layout controls are normally distributed in 4 zones:</p>
@@ -44,7 +44,7 @@ However the basic concepts have not changed since the analog era, and the functi
 <li>X1/X10 switch : this switch allows to make the displayed value of the vertical scale consistent with the type of probe in use. It has no effect on the signal path.</li>
 <li>Low pass filter : used to remove high frequency noise</li>
 </ul>
-<h3>4.1.2 Horizontal controls</h3>
+<h3 class="bk">4.1.2 Horizontal controls</h3>
 <p>Two main knobs are always present : the horizontal scale (seconds/div) and the horizontal position.</p>
 <p>The horizontal scale controls the sampling period, which is the time interval between consecutive analog-to-digital conversions (this is derived from the number of samples per division, which is not usually accessible to the user)</p>
 <p>The horizontal position controls the position of the trigger instant on the horizontal space, this instant is made visible by an arrow normally placed on the top edge of the graphics window area, unless it is outside this window.<br>
@@ -69,7 +69,7 @@ Note: if the signal does not cross the trigger threshold, the display remains fr
 <li>Display preferences</li>
 </ul>
 
-<h2>4.2 The PC-based oscilloscope</h2>
+<h2 class="bk">4.2 The PC-based oscilloscope</h2>
 <p>Another approch permitted by the digital technology is to make a "black box" containing the specific hardware like input amplifiers with gain control, ADCs, sample memory, trigger detectors, time base, and to connect this to a standard computer where the user interface and graphics display will take place.</p>
 <h3>4.2.1 Pros and Cons</h3>
 <ul><li>Benefits :<ul><li>lower cost</li>
@@ -86,7 +86,7 @@ Note: if the signal does not cross the trigger threshold, the display remains fr
 <h3>4.2.2 An example : the Picoscope</h3>
 <p>The <a href="https://www.picotech.com">Picoscope</a> is a black box with coaxial BNC inputs for the signals, and a USB connexion to the computer. It comes with a specific application software, which presents the 4 control zones of a standard digital oscilloscope described above.</p>
 <img src="picoscope_7.png">
-<p>On the screen image above, one can see :</p>
+<p class="bk">On the screen image above, one can see :</p>
 <ul><li>Run/Stop button : the green button on the top left corner, which turns red when the acquisition is paused</li>
 <li>Vertical : along the left border, the channel buttons, labelled from A to D<br>
 pressing one of these buttons causes the corresponding channel menu to be displayed,<br>
@@ -113,7 +113,7 @@ the '-' and '+' allow a quicker change of the trigger level setting</li>
 <h2>4.3 The oscilloscope probe</h2>
 <p>A measurement instrument should have a minimal impact on the system under test, for this reason the input current of the oscilloscope probe should be minimized. A widespread solution is the "X10" probe :</p>
 <img src="oscilloscope_probe.jpg" width="50%">
-<p>The probe attenuates the signal by a factor of 10, so the signal is actually multiplied by 0.1, while the Volts/Div setting is multiplied by 10, whence the "X10" label.<br>
+<p class="bk">The probe attenuates the signal by a factor of 10, so the signal is actually multiplied by 0.1, while the Volts/Div setting is multiplied by 10, whence the "X10" label.<br>
 The attenuation being done by a voltage divider, the input resistance is multiplied by 10, resulting in an input current divided by 10.</p>
 <img src="oscilloscope_probe_sch.png">
 <p>The oscilloscope channel exposes a standard input resistance of 1 MOhm (1000000 Ohms), so putting a 9 MOhms resistor in series makes a voltage divider, dividing the signal by 10.<br>

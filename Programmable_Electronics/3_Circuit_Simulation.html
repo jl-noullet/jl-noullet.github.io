@@ -36,7 +36,7 @@ Warning: a frequent user error is to use M for mega, while the simulator underst
 <li>The user needs to be aware of stability and convergence issues</li>
 </ul>
 <img src="SPICE_modes.png">
-<h3>3.1.1 Transient analysis</h3>
+<h3 class="bk">3.1.1 Transient analysis</h3>
 <p>Before starting the transient simulation, the program automatically runs a DC analysis in order to determine the initial value of each voltage and current.<br>
 It happens sometimes that this fails, if the circuit is unstable (like an ascillator), or has too many possible steady states (like a digital sequential system).
 In these cases, the initial state determination must be helped, explicitely or by means of the signal sources.</p>
@@ -49,7 +49,7 @@ Conversely, it may happen that the automatic timestep approaches zero and the si
 <h3>3.1.2 Signal sources for transient analysis</h3>
 <p><b>IMPORTANT</b> : no instantaneous variation of signal (ideal step function) should be specified, this does not exist in the real world and would prevent the algorithm convergence.</p>
 <p>There are several ways to specify a signal source (either voltage or current) as a function of time for transient analysis, two of these deserve a special attention:
-<ul><li>The <b>pulse source</b>, which creates a periodic pulse defined by two voltages and 5 relative time values <b>td, tr, tf, pw and period</b><br>.
+<ul><li>The <b>pulse source</b>, which creates a periodic pulse defined by two voltages and 5 relative time values<br> <b>td, tr, tf, pw and period</b><br>.
 <img src="pulse.gif"><br>
 A source of frequent errors with the pulse is the fact that the pulse duration <b>pw</b> is specified after the fall time <b>tf</b>, which is counter-intuitive</li>
 <li>The <b>piecewise linear source (PWL)</b>, which is defined by an indefinite list of couples of signal value and absolute time value<br>
@@ -62,7 +62,7 @@ For this purpose, the simulator permits to sweep the value of a signal source, w
 source. This is specified in the analysis directive, overriding the source description.</p>
 <p>In addition, it is possible to request a repetition of this sweep for a limited set of values of a second source or parameter.</p>
 
-<h3>3.1.4 AC analysis</h3>
+<h3 class="bk">3.1.4 AC analysis</h3>
 <p>The main use of the AC analysis is the production of "Bode plots", which are curves with :
 <ul><li>on the horizontal axis, the frequency of the signal, with a logarithmic scale</li>
 <li>on the vertical axis, the relative magnitude of the signal expressed in dB (which is another kind of logarithmic scale),
@@ -94,7 +94,7 @@ Note that the independant voltage source (providing DC, pulse, PWM, etc...) is s
 <h4>Labels</h4>
 <p>In order to be able to find the desired nodes for plotting, it is recommended to put a label on each one (the button representing a sign).<br>
 Note that unconnected wires bearing the same label are simulated as a single net, this may be used to simplify the drawing of common signals like power supplies.</p>
-<h4>Simulation commands and other SPICE directives</h4>
+<h4 class="bk">Simulation commands and other SPICE directives</h4>
 <p>The simulation commands are stored on the schematic in text form, using the legacy SPICE syntax.<br>
 They can be generated easily using the Edit Simulation Command in the Simulate menu.</p>
 <p>Other SPICE directives, known as "dot commands" because they begin with a '.' character, can be placed using the last button ".op" of the toolbar.</p>
@@ -118,7 +118,7 @@ Likewise, the component named <b>bi</b> is a configurable current source</p>
 <p>Signals are overlayed in the same horizontal strip. To view them separately, create more strips with Add Plot Pane</p>
 <p>A cursor can be added by clicking on a signal name, then it can be dragged horizontally. A second cursor can be added by clicking again on the same name</p>
 
-<h2>3.3 Simulation examples</h2>
+<h2 class="bk">3.3 Simulation examples</h2>
 
 <h3>3.3.1 Transient simulation example</h3>
 <p>In this example, we consider the RC circuit, which is a classical illustration of a system governed by a differential equation of the first order.<br>
@@ -137,7 +137,7 @@ The <b>time constant</b> Tau is a characteristic parameter of the circuit
 <li>Tau is related to Th, the time it takes to reach half the asymptotic value :<br>
 Th = Tau * ln(2) (approx. Tau * 0.693)</li>
 </ul>
-<h4>We can also observe the current through the resistor:</h4>
+<h4 class="bk">We can also observe the current through the resistor:</h4>
 (or the voltage across the resistor which is similar)
 <img class="wide" src="RC2.png">
 
@@ -150,7 +150,7 @@ The cutoff frequency (in rad/s) is 1/Tau.<br>
 Likewise, I(R1) expose a high-pass filter function with the same cutoff frequency.<br>
 By permutation of R1 and C1, a high pass filter with a voltage output could be obtained</p>
 
-<h3>3.3.3 DC simulation example</h3>
+<h3 class="bk">3.3.3 DC simulation example</h3>
 <p>This example demonstrates a bipolar junction transistor (BJT), NPN type, used to vary the power applied to a resistive load.<br>
 The typical current gain of this transistor is 200.
 The transistor base current is driven by the simulation directive, from 0 to 0.5mA, which is expected to be sufficient to cause the load current to reach 100mA.</p>
