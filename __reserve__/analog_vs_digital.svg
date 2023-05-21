@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="1024"
+   height="768"
+   viewBox="0 0 1024 768"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   sodipodi:docname="analog_vs_digital.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     showgrid="true"
+     inkscape:zoom="0.98697917"
+     inkscape:cx="464.04222"
+     inkscape:cy="384"
+     inkscape:window-width="1920"
+     inkscape:window-height="1027"
+     inkscape:window-x="1912"
+     inkscape:window-y="127"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid132" />
+  </sodipodi:namedview>
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:none;stroke:#009846;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-dasharray:none"
+       d="M 200,150 V 450 H 650 V 350 H 800 V 250 H 950 V 150"
+       id="path247" />
+    <path
+       style="fill:none;stroke:#6c6dff;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-dasharray:none"
+       d="M 650,450 H 800 V 350"
+       id="path857" />
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-dasharray:none"
+       d="M 800,450 H 950 V 250"
+       id="path859" />
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       d="M 800,250 H 700 v -30 l -50,-70"
+       id="path861"
+       sodipodi:nodetypes="cccc" />
+    <path
+       style="fill:none;stroke:#6c6dff;stroke-width:4;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       d="M 650,350 H 450 V 220 l -50,-70"
+       id="path863"
+       sodipodi:nodetypes="cccc" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:32px;line-height:1.25;font-family:sans-serif;fill:#009846;fill-opacity:1;stroke:none;-inkscape-font-specification:'sans-serif, Normal';font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+       x="258.71094"
+       y="346.06445"
+       id="text1458"><tspan
+         sodipodi:role="line"
+         id="tspan1456"
+         x="258.71094"
+         y="346.06445">Analog</tspan><tspan
+         sodipodi:role="line"
+         x="258.71094"
+         y="396.06445"
+         id="tspan1460">Technology</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:32px;line-height:1.25;font-family:sans-serif;fill:#6c6dff;fill-opacity:1;stroke:none;-inkscape-font-specification:'sans-serif, Normal';font-stretch:normal;font-variant:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+       x="488.71094"
+       y="260.39062"
+       id="text1458-9"><tspan
+         sodipodi:role="line"
+         id="tspan1456-3"
+         x="488.71094"
+         y="260.39062">Digital</tspan><tspan
+         sodipodi:role="line"
+         x="488.71094"
+         y="310.39062"
+         id="tspan1460-9">Technology</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:32px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ff0000;fill-opacity:1;stroke:none"
+       x="739.83594"
+       y="191.63281"
+       id="text1458-4"><tspan
+         sodipodi:role="line"
+         x="739.83594"
+         y="191.63281"
+         id="tspan1460-4">Computer</tspan><tspan
+         sodipodi:role="line"
+         x="739.83594"
+         y="231.63281"
+         id="tspan1774">Science</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none"
+       x="231.92578"
+       y="138.23438"
+       id="text2143"><tspan
+         sodipodi:role="line"
+         id="tspan2141"
+         x="231.92578"
+         y="138.23438">analog objects</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none"
+       x="494.94922"
+       y="138.23438"
+       id="text2143-4"><tspan
+         sodipodi:role="line"
+         id="tspan2141-8"
+         x="494.94922"
+         y="138.23438">digital objects</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke:none"
+       x="765.64453"
+       y="137.60742"
+       id="text2143-8"><tspan
+         sodipodi:role="line"
+         id="tspan2141-3"
+         x="765.64453"
+         y="137.60742">computers</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:24px;line-height:1.25;font-family:sans-serif;fill:#6c6dff;fill-opacity:1;stroke:none"
+       x="676.00391"
+       y="391.63867"
+       id="text2205"><tspan
+         sodipodi:role="line"
+         id="tspan2203"
+         x="676.00391"
+         y="391.63867">Boolean</tspan><tspan
+         sodipodi:role="line"
+         x="676.00391"
+         y="421.63867"
+         id="tspan2207">algebra</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:24px;line-height:1.25;font-family:sans-serif;fill:#ff0000;fill-opacity:1;stroke:none"
+       x="818.2207"
+       y="338.23438"
+       id="text2205-8"><tspan
+         sodipodi:role="line"
+         id="tspan2203-7"
+         x="818.2207"
+         y="338.23438">Algorithm</tspan><tspan
+         sodipodi:role="line"
+         x="818.2207"
+         y="368.23438"
+         id="tspan2207-0">science</tspan></text>
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:1;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect2389"
+       width="750"
+       height="40"
+       x="199.5"
+       y="110" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 449.5,110 v 40"
+       id="path2963" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 699.5,110 v 40"
+       id="path2965" />
+  </g>
+</svg>

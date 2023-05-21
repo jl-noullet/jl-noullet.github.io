@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+ <link rel="stylesheet" href="polycop.css" />
+ <title>Introduction</title>
+</head>
+<body>
+<div class="large">
+<center>
+<h1>Electrical Engineering - Programmable Electronics</h1>
+<i>Jean-Louis Noullet - ENAC - 2023</i>
+<h1>1. Introduction</h1>
+</center>
+
+<h2>1.1 Purpose of this document</h2>
+<ul>
+<li>Context : This is a support document for a 30-hour practical training in electronics for beginners,
+focused on low-power, low-voltage, low-frequency experiments, involving:
+<ul><li>simulation of circuits</li>
+<li>wiring of discrete components</li>
+<li>measurement of signals with an oscilloscope</li>
+<li>development of embedded software on a microcontroller.</li>
+</ul></li> 
+<li>Audience : The reader is not a specialist of electrical engineering or electronics, but is supposed to have a basic "academic" knowledge of:
+<ul><li>the laws of physics in general, electricity in particular</li>
+<li>associated mathematics like differential equations</li>
+<li>programming, in particular the C language</li>
+</ul></li>
+<li>Contents : The document does not describe the experiments to be done (this is provided separately),
+does not repeat well known theories (which can be better found on Wikipedia), but rather gives clues on "putting things together".</li>
+</ul>
+
+<h2>1.2 Analog vs Digital</h2>
+<div class="boite">
+<img class="rightim" src="digital_vs_analog.jpg">
+<p>Consumers easily identify analog objects, digital objects and computers, without caring much about the underlying technologies</p>
+<p>A superficial vision associates analog objects with old-style, outdated technologies.</p>
+<p>The clocks example leads to the observation that analog deals with continuous variables (like the angular position of the clock hands) while digital manipulates discrete data like numbers and text. That is a deeper vision.</p>
+<p>In engineering, the analog technology deals with continuous quantities like voltages and currents and with electronic components like transistors and capacitors, understood with the help of physics theory.</p>
+
+</div>
+<div class="boite">
+<img class="leftim" src="analog_vs_digital.png">
+<p>The digital technology deals with logic gates and sequential blocks where the digital binary information is carried by voltages and currents, with the help of transistors and other analog devices.</p>
+<p>So digital technology is not built beside the analog technology but rather on top of it, with the help of additional theoretical constructs.</p>
+<p>Likewise, computer science is built on top of digital and analog technologies.</p>
+</div>
+<p>The top surface of this diagram is what people perceive. The angled lines express the fact that many "analog objects" contain digital components (the quartz clock is an example), and many "digital objects" actually contain an embedded computer (or more).</p>
+<p>What is the origin of the word "analog" in this context ?</p>
+<p>Before the advent of digital technology, people were doing electronics without naming it "analog".<br>
+In order to solve engineering problems which were too hard to solve manually, engineers invented
+<a href="https://en.wikipedia.org/wiki/Analog_computer">analog computers</a> which are based on mathematical analogies between the problem to solve and the physics of the computing device.<br>
+First analog computers were <a href="https://en.wikipedia.org/wiki/FERMIAC">mechanical</a> or electromechanical, and from 1950 electronic analog computers came in use, and were superseded by digital computers only after 1980.</p>
+<p>In analog computers, problem parameters and variables were represented by continuous physical quantities,
+not numbers, this is still understood as the formal difference between analog and digital systems.</p>
+
+</div>
+</body>
+</html>

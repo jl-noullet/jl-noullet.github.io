@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+ <link rel="stylesheet" href="polycop.css" />
+ <title>The Feedback</title>
+</head>
+<body>
+<div class="large">
+<center>
+<h1>6. The Feedback</h1>
+</center>
+<div class="boite">
+<img class="rightim" src="feedback.png">
+<p>Feedback systems are also known as closed-loop systems, where some output signal is fed back to a control input.</p>
+<p>Feedback is essential to control theory and control engineering, nevertheless it also exists in nature.</p>
+</div>
+<h2>6.1 Negative feedback</h2>
+<div class="boite">
+<img class="rightim" src="steam_engine_governor.jpg">
+<p>The goal of a negative feedback loop (also known as servo, regulator or governor) is to keep the ouput of the system in accordance with an external input signal (set value), even in the presence of random perturbations</p>
+
+<p>In a negative feedback loop, the feedback signal is subtracted from the from the set value, then the difference (error signal) is amplified to control the output</p>
+<p>A greater amplification gain will provide a better rejection of the perturbations and a better accuracy of control, but an excess of gain can make the system unstable.</p>
+</div>
+
+<h3>6.1.1 Regulated current source</h3>
+<div class="boite">
+<img class="rightim" src="cur_src_sch.png">
+<p>The collector current Ic of a bipolar transistor is controlled by the base-to-emitter voltage Vbe with a very high gain.<br> But this control is non-linear and the current also strongly depends on the temperature and the process variations, in such a way that controlling the collector current in open loop is not feasible.</p>
+<p>With a high gain transistor, the emitter current is nearly equal to the collector current, so the voltage across Re can be used as a feedback signal. In this circuit, Vbe is the difference between Vsv (the set value) and the voltage across Re, so Vbe is the error signal which will be amplified by the transistor.</p>
+<p>The input source Vsv is swept from 1 Volt to 3 Volts, and this is repeated for temperatures 10°C, 30°C and 50°C.</p>
+</div>
+<img src="cur_src.png">
+<p>Results: the output current is controlled linearly by the set value, with a constant slope close to 10mA/V, consistent with the value of Re, the temperature variations cause a large offset of Vbe but a moderate shift of Ic.</p>
+
+<h3>6.1.2 Operational amplifier example</h3>
+<p>The operational amplifier is a differential amplifier, built as an integrated circuit containing many transistors. It amplifies the potential difference between its inputs with a very high gain, in such a way that when the feedback is working, this difference is so small that it can be neglected.</p>
+<p>The name "operational" comes from the fact that this amplifier was created for making the "operator modules" in the analog calculators.</p>
+<p>The practical behaviour of the operational amplifier is entirely determined by the feedback circuit, which allow a great number of applications.</p>
+<div class="boite">
+<img class="rightim" src="weight_add_sch.png">
+<p>The proposed example is a weighted adder-inverter, it produces the sum of two signals with different negative gains (-10.0 and -3.33 in the example).</p>
+<p>To predict the output voltage, one has to consider that :</p>
+<ul><li>the input current of the opamp is negligible, so the sum of the currents in R1, R2, R3 is zero</li>
+<li>the differential input voltage is negligible, so the voltage at em is zero</li>
+</ul>
+</div>
+<img src="weight_add.png">
+
+<h2>6.2 Positive feedback</h2>
+<p>Ideally, a positive feedback creates an unbounded increase of the signal, <br>
+in practice the amplifying element will reach its limit, which is called saturation or clipping</p>
+<ul><li>if the feedback path includes the DC component, the amplifier will get saturated either at its maximum output or at its minimum output, until an exterior event causes it to flip the other way</li>
+<li>if the feedback path has a narrow bandwidth, the amplifier may  become oscillating with an increased amplitude, which will be limited by clipping</li>
+</ul>
+<h3>6.2.1 Schmitt trigger</h3>
+<div class="boite">
+<img class="rightim" src="trigger_sch.png">
+<p>A trigger is a circuit which has only 2 stable output states, it is useful for processing input signals for digital circuits.</p>
+<p>The Schmitt trigger is an amplifier with an attenuated DC feedback, in such a way that its flipping threshold changes according to its output state.</p>
+<p>Such a behaviour is called hysteresis.</p>
+<p>In the example, the thresholds are approximately -0.9 V and 0.9 V. It is observed that when the input signal does not cross these thresholds, the trigger ignores it.</p> 
+
+</div>
+<img src="trigger.png">
+
+<h3>6.2.2 Wien bridge Oscillator</h3>
+
+
+
+
+
+</div>
+https://en.wikipedia.org/wiki/Control_theory
+https://en.wikipedia.org/wiki/Operational_amplifier
+https://en.wikipedia.org/wiki/Schmitt_trigger
+
+</div>
+</body>
+</html>
