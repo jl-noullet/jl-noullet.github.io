@@ -44,13 +44,13 @@ Several solutions were proposed to extend this code to non-latin languages, the 
 
 <h3 class="bk">5.1.4 Addresses</h3>
 <p>In computer memory, data words are stored in 1D-arrays, which can be considered as tables where each line contains a binary word.<br>
-The lines are numbered in sequence, and their numbers are called the addresses, which are themselves handled in binary form<p>
+The lines are numbered in sequence, and their numbers are called the addresses, which are themselves handled in binary form.<p>
 <p>Many computers can read or write words which are larger than 8 bits, but to preserve the capability or writing or reading single bytes, the adresses are always byte addresses.</p>
 
 <h3>5.1.5 Instructions</h3>
 <p>Programs in machine code are sequences of instructions coded and stored as compact binary words. The code is architecture-specific and not readable by humans.<br>When the instruction word size is fixed, the archicture is called RISC (Reduced Instruction Set Computer), otherwise it is called CISC (Complex Instruction Set Computer).</p>
 <ul><li>Programs written in languages like assembly, C, C++, Java are translated into binary code in advance, by a program called compiler (or assembler).</li>
-<li>Programs written in scripting languages like bash, javascript, python, php are translated during execution, by a program called interpreter</li>
+<li>Programs written in scripting languages like bash, javascript, python, php are translated during execution, by a program called interpreter.</li>
 </ul>
 
 <h2>5.2 Microcontroller architecture</h2>
@@ -95,11 +95,11 @@ Non volatile memory can be :</p>
 </ul>
 <p>In modern microcontrollers, programs are generally stored in flash memory. The CPU can read this memory, but not write into it.<br>
 Writing requires either an external hardware or a dedicated peripheral, and takes much more time than a regular memory access.</p>
-<p class="bk">A small amount of OTP-ROM is sometimes present to store the program which is used to write programs into the flash memory under control of the development computer. Such a program is called bootloader</p> 
+<p class="bk">A small amount of OTP-ROM is sometimes present to store the program which is used to write programs into the flash memory under control of the development computer. Such a program is called the bootloader.</p> 
 
 <h3>5.2.4 Peripherals</h3>
-<p>There are many types of specialized peripherals, here are the most common.</p>
 <p>The CPU communicates with the peripheral by means of specialized registers which have a dedicated address space besides the main memories.</p>
+<p>There are many types of specialized peripherals, here are the most common.</p>
 
 <h4>GPIO: General Purpose Input-Output</h4>
 <p>Each pin involved in GPIO can be programmed as a logic input or a logic output, and then handles one bit at a time under program control.</p>
@@ -118,20 +118,20 @@ Writing requires either an external hardware or a dedicated peripheral, and take
 </table>
 
 <p>SPI and I2C require one master device initiating the transfers and providing the clock, and one or more slaves, <br>
-while UART is a point-to-point connexion needing an application defined protocol</p>
+while UART is a point-to-point connexion needing an application defined protocol.</p>
 
-<p>SPI uses 2 unidirectional data lines MOSI (Master Out Slave In) and MISO (Master In Slave Out), and one separate SS (Slave Select) for each slave device</p>
+<p>SPI uses 2 unidirectional data lines MOSI (Master Out Slave In) and MISO (Master In Slave Out), and one separate SS (Slave Select) for each slave device.</p>
 <img src="SPI_single_slave.png">
-<p>I2C has one bidirectional data line SDA, and uses special patterns S (Start) and P (stop) to mark the block limits</p>
+<p>I2C has one bidirectional data line SDA, and uses special patterns S (Start) and P (stop) to mark the block limits.</p>
 
 <img src="I2C_transfer_simplified.png">
 
-<p class="bk">UART transmits blocks of one byte, inserted between a "start" bit (always zero) and a "stop bit" (always 1).<br>
+<p class="bk">UART transmits blocks of one byte, framed by a "start" bit (always zero) and a "stop bit" (always 1).<br>
 The start bit leading edge causes the synchronisation of the receiver clock, which is used to sample the data bits.<br>
 The receiver clock frequency must match the transmitter clock frequency with a sufficient accuracy (~2%).<br>
 This frequency is historically called the "Baud rate".</p>
 <img src="uart_signal.png">
-<p>For building area communication, the UART signals are amplified to higher voltages (RS232) or differential signals (RS485).<br>
+<p>For increasing the range to building area, the UART signals are amplified to higher voltages (RS232) or differential signals (RS485).<br>
 RS232 is obsolete but RS485 is still used for industrial equipments</p>  
 
 <h4>TIMER: Time keeping and PWM signal generation</h4>
@@ -149,7 +149,7 @@ This makes a convenient way to generate a slowly varying analog signal using a s
 
 <h4>RTC : Real Time Clock</h4>
 <p>The RTC keeps the time and date even when the main power supply is off, having a separate power supply.<br>Like watches, the RTC has a very low power need, being able to run for years on a small battery.</p>
-<p>The RTC modules frequently contain a small amount of memory called the backup RAM, which keep application data when the microcontroller is off</p>
+<p>The RTC modules frequently contain a small amount of memory called the backup RAM, which keep application data when the microcontroller is off.</p>
    
 <h3 class="bk">5.2.5 Interrupts</h3>
 <p>The CPU may accept an interrupt signal from some peripherals. When this happens, the CPU completes the current instruction and then leaves the current instruction sequence and jumps to a specific interrupt service routine subroutine or interrupt handler, in order to perform some action required by the peripheral which emitted the interrupt request.</p>
@@ -214,7 +214,7 @@ The IDE contains the following software components :</p>
 <li>A serial monitor, which is a terminal allowing to exchange text messages with a user program running on the target microcontroller</li>
 <li>A serial plotter, which draws graphics from the data it receives from the target microcontroller</li>
 </ul>
-<p>With the intention of keeping things apparently simple, the IDE ('legacy version') comes with the following limitations :</p>
+<p>With the intention of keeping things apparently simple, the IDE ('legacy version') comes with the following limitations:</p>
 <ul><li>Splitting the source code into more than one file is not encouraged</li>
 <li>Browsing the source code over multiple files is not supported, but a context sensitive help is available for Arduino library functions</li>
 <li>Build steps are hidden, unless switched to "verbose" in the preferences</li>

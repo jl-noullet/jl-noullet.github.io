@@ -89,7 +89,7 @@ So nowadays (in 2023) LTSPICE is freely offered by <a href="https://www.analog.c
 Notice that the right mouse button allows to abort the current command and otherwise gives access to a context menu.<br>
 There is no "Edit" menu with "copy, paste, delete", instead in the toolbar there is a copy button (which, in fact, duplicates) and a delete button (scissors)</p>
 <h4>Components libraries</h4>
-<p>the toolbar has buttons for some frequently used components like ground, resistors, capacitors, etc... , then every other component can be found in the components libraries (the button representing a logic AND gate, quite misleading).<br>
+<p>The toolbar has buttons for some frequently used components like ground, resistors, capacitors, etc... , then every other component can be found in the components libraries (the button representing a logic AND gate, quite misleading).<br>
 Note that the independant voltage source (providing DC, pulse, PWM, etc...) is simply  named "voltage".</p>
 <h4>Labels</h4>
 <p>In order to be able to find the desired nodes for plotting, it is recommended to put a label on each one (the button representing a sign).<br>
@@ -110,13 +110,13 @@ Then the new symbol is available to be inserted in a higher level schematic, it 
 
 <h3>3.2.2 Behavioral modeling</h3>
 <p>The component named <b>bv</b> is a configurable voltage source, the value of which can be defined as an <a href="ltspice_b_element.pdf">arbitrary function</a> of time, node voltages, device currents, including time derivative and time integral of these voltages and currents.<br>
-Likewise, the component named <b>bi</b> is a configurable current source</p>
-<p>Note: the simulator is able to remove any discontinuity of the model by smoothing the function, but it is advisable to favor continuous functions</p>
+Likewise, the component named <b>bi</b> is a configurable current source.</p>
+<p>Note: the simulator is able to remove any discontinuity of the model by smoothing the function, but it is advisable to favor continuous functions.</p>
 
 <h3>3.2.3 Waveform viewer</h3>
 <p>When a simulation ends, the waveform viewer opens an empty black window. Then signals can be added usind Add Trace in the context menu.</p>
 <p>Signals are overlayed in the same horizontal strip. To view them separately, create more strips with Add Plot Pane</p>
-<p>A cursor can be added by clicking on a signal name, then it can be dragged horizontally. A second cursor can be added by clicking again on the same name</p>
+<p>A cursor can be added by clicking on a signal name, then it can be dragged horizontally. A second cursor can be added by clicking again on the same name.</p>
 
 <h2 class="bk">3.3 Simulation examples</h2>
 
@@ -143,12 +143,12 @@ Th = Tau * ln(2) (approx. Tau * 0.693)</li>
 
 <h3>3.3.2 AC simulation example</h3>
 <p>Based on the same example, the AC simulation produces the Bode plot of Vc and I(R1).<br>
-The simulation command .ac dec 100 1 100k specifies 100 points per decade, from 1Hz up to 100kHz</p>
+The simulation command .ac dec 100 1 100k specifies 100 points per decade, from 1Hz up to 100kHz.</p>
 <img class="wide" src="RC3.png">
-<p>Considering Vc as the output, this circuit is the simplest low-pass filter (first order)<br>
+<p>Considering Vc as the output, this circuit is the simplest low-pass filter (first order).<br>
 The cutoff frequency (in rad/s) is 1/Tau.<br>
 Likewise, I(R1) expose a high-pass filter function with the same cutoff frequency.<br>
-By permutation of R1 and C1, a high pass filter with a voltage output could be obtained</p>
+By permutation of R1 and C1, a high pass filter with a voltage output could be obtained.</p>
 
 <h3 class="bk">3.3.3 DC simulation example</h3>
 <p>This example demonstrates a bipolar junction transistor (BJT), NPN type, used to vary the power applied to a resistive load.<br>
