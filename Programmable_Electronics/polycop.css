@@ -6,6 +6,7 @@ h2 { margin-top: 40px; color: blue }
 h3 { margin-top: 30px; color: blue }
 h4 { background-color:#dfd; }
 p { margin-left: 24px; margin-right: 20px; }
+pre { margin: 6px 24px }
 ul, ol { padding-inline-start: 46px; margin-inline-end: 20px; }
 .large { margin: 0 auto; border-radius: 8px; width: 1100px;
  padding-left: 10px; padding-right: 10px; padding-bottom: 8px; background-color:#FFFFFF;

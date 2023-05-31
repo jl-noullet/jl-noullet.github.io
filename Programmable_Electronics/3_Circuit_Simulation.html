@@ -99,15 +99,26 @@ Note that unconnected wires bearing the same label are simulated as a single net
 They can be generated easily using the Edit Simulation Command in the Simulate menu.</p>
 <p>Other SPICE directives, known as "dot commands" because they begin with a '.' character, can be placed using the last button ".op" of the toolbar.</p>
 <p>A notable example is the <b>.step</b> directive which can be used to iterate a simulation (of any type) for different values of a component parameter</p>
+<h4>Parametrized design</h4>
+<p>An arbitrary parameter can be created with the .param SPICE directive, to be used in a parametric expression:</p>
+<pre>.param R1=44k
+.step param R1 1k 5k 2k</pre>
+<p>In the example above, the simulation is iterated with parameter R1 swept from 1k to 5k with step 2k, which results in simulating with 3 values, 1k, 3k, 5k.</p>
+<p>In a component instance, any numeric value can be replaced by a parametric expression involving constants and parameters.
+The expression should be enclosed in curly braces <b>{}</b> (even if it contains only a single parameter)</p>
+<pre>{R1*(k+1)}</pre>
 <h4>Hierarchical design</h4>
-<p>To create a cell or subcircuit to place into a hierarchical schematic, do the following :
+<p>To create a cell or subcircuit to place into a hierarchical schematic, do the following :</p>
 <ol><li>create the schematic of the cell as a regular schematic</li>
 <li>define each terminal of the cell by placing a label on the relevant node, with Port Type set as Input, Ouput or Bi-Direct</li>
 <li>after saving the schematic, select Open this Sheet's Symbol in the hierarchy menu, the program will propose to generate a symbol, accept</li>
 <li>if desired, modify the outline of the symbol and the placement of the pins</li>
 </ol>
-Then the new symbol is available to be inserted in a higher level schematic, it can be found in the component library, after changing the top directory to the relevant location.</p>
-
+<p>Then the new symbol is available to be inserted in a higher level schematic, it can be found in the component library, after changing the top directory to the relevant location.</p>
+<p>A subcircuit containing one parameter (or more) can receive a parameter value from the higher level schematic, by adding a parameter value or expression to the symbol instance:</p>
+<pre>W=3.33
+K={2.0*N}</pre>
+<p>In the example above, W and K are parameters belonging to the subcircuit, while N is a higher level schematic parameter</p>
 <h3>3.2.2 Behavioral modeling</h3>
 <p>The component named <b>bv</b> is a configurable voltage source, the value of which can be defined as an <a href="ltspice_b_element.pdf">arbitrary function</a> of time, node voltages, device currents, including time derivative and time integral of these voltages and currents.<br>
 Likewise, the component named <b>bi</b> is a configurable current source.</p>
