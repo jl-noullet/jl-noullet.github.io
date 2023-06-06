@@ -53,6 +53,36 @@ The lines are numbered in sequence, and their numbers are called the addresses, 
 <li>Programs written in scripting languages like bash, javascript, python, php are translated during execution, by a program called interpreter.</li>
 </ul>
 
+<h3>5.1.6 Bit Level Operations</h3>
+<p>Bit level operations are implemented on every computer, but they are of a higher importance for the microcontroller developer, since they are involved in nearly every interaction with peripherals.</p>
+<h4>Bit shift</h4>
+<img src="bit_shifts.png">
+<p>Bit shift operations shift bits to the left (which is towards higher weights) or to the right (which is towards lower weights), and there are two modes of right-shifting</p> 
+<p>When bits are shifted left by one position, the MSB (Most Significant Bit, b<sub>7</sub> in the example) is dropped, while a zero is injected in the LSB position.<br>
+If the word represents a number (not too great), it is multiplied by 2</p>
+<p>When bits are shifted right by one position in "unsigned" or "logic" mode, the LSB (Least Significant Bit, b<sub>0</sub>) is dropped, while a zero is injected in the MSB position.<br>
+If the word represents an unsigned number, it is divided by 2.</p>
+<p>When bits are shifted right by one position in "signed" or "arithmetic" mode, the MSB is duplicated, with the intention of preserving the sign of a signed number coded in two's complement.<br>
+If the word represents a signed number, it is divided by 2.</p>
+<p>In C and C++, these operations are supported by means of the "&lt;&lt;" and "&gt;&gt;" operators. The mode (unsigned or signed) is determined according to the type of the first operand.</p>
+
+<h4>Bit set and reset</h4>
+<img src="bit_force.png">
+<p>In the first example, a bit is "forced" to 1 or "set", without affecting the other bits, by means of a bitwise logic OR operation with a constant containing zeros except in one place.</p>
+<p>In the second example, a bit is "forced" to 0 or "reset", without affecting the other bits, by means of a bitwise logic AND operation with a constant containing ones except in one place. Such a constant is called a "mask".</p>
+<p>In the third example, a bit is inverted or complemented, without affecting the other bits, by means of a bitwise logic XOR (eXclusive Or) operation with a constant containing zeroes except in one place.</p>
+<p>In C and C++, these operations are supported by means of the bitwise logic operators "|", "&amp;" and "^" operators. In addition, the "~" operator performs the NOT function, complementing all the bits.<br>
+Note: these should not be confused with the boolean operators "||", "&amp;&amp;" and "!" which handle words considered each one as a single boolean value.</p>
+<p>Examples in C :</p>
+<pre>A |=  ( 1 &lt;&lt; 5 );  // bit 5 (weight 32) in A is forced to 1
+B &amp;= ~( 1 &lt;&lt; N );  // bit N (weight 2<sup>N</sup>) in B is forced to zero</pre>
+
+
+
+
+
+
+
 <h2>5.2 Microcontroller architecture</h2>
 
 <img src="microcontroller_diagram.png">
@@ -152,16 +182,21 @@ This makes a convenient way to generate a slowly varying analog signal using a s
 <p>The RTC modules frequently contain a small amount of memory called the backup RAM, which keep application data when the microcontroller is off.</p>
    
 <h3 class="bk">5.2.5 Interrupts</h3>
-<p>The CPU may accept an interrupt signal from some peripherals. When this happens, the CPU completes the current instruction and then leaves the current instruction sequence and jumps to a specific interrupt service routine subroutine or interrupt handler, in order to perform some action required by the peripheral which emitted the interrupt request.</p>
-<p>When the end of the interrupt routine is reached, the CPU returns to the instruction sequence which was interrupted. To ensure that the interrupted task is not disturbed by this process, a context saving sequence is strictly applied before entering the interrupt routine, and a matching context restoring sequence is applied upon return, by hardware and software combined.</p>
+<p>The CPU may accept a hardware interrupt signal from some peripherals. When this happens, the CPU completes the current instruction and then leaves the current instruction sequence and jumps to a specific interrupt service routine subroutine or interrupt handler, in order to perform some action required by the peripheral which emitted the interrupt request.</p>
+<p>When the end of the interrupt routine is reached, the CPU returns to the instruction sequence where it was interrupted. To ensure that the interrupted task is not disturbed by this process, a context saving sequence is strictly applied before entering the interrupt routine, and a matching context restoring sequence is applied upon return, by hardware and software combined.</p>
 <h4>Interrupt vectoring</h4>
-<p>An interrupt controller may be used to manage several sources of interrupt requests, and associate a dedicated interrupt routine and a priority level for each of these sources. This is called interrupt vectoring.<br>
+<p>An interrupt controller may be used to manage several sources of interrupt requests, and to associate a dedicated interrupt routine for each of these sources. This is called interrupt vectoring.</p>
+<h4>Interrupt priority</h4>
+<p>The interrupt controller manages simultaneous interrupt requests by following some priority rules. On the simplest microcontrollers, a fixed priority is assigned to each peripheral. On more advanced ones, the priority level of each source can be set by program.</p>
 <h4>Interrupt nesting</h4>
-The interrupt controller may also manage the interruption of an interrupt routine by another interrupt of higher priority, this is called interrupt nesting.</p>
+<p>On the simplest microcontrollers, interrupts are disabled upon entry into an interrupt routine, but the code inside this routine may re-enable interrupts to permit the interruption of itself by another source, considered as deserving a quicker handling. In any case interrupts are automatically enabled after return from the interrupt routine.</p>
+<p>On more advanced architecture, the interrupt controller may permit automatically the interruption of an interrupt routine by another interrupt of higher priority, this is called interrupt nesting.</p>
+<h4>Deadlock risk</h4>
+<p>If inside an interrupt routine, a function is called to perform some communication action which depends on a lower priority interrupt service, this action will never be completed and the system will be blocked. To avoid this, the developer should be aware of all possible sources of interrupt requests.</p>  
 <h4>Multitasking</h4>
-<p>Interrupts are essentiel to the implementation of multitasking, in computers of any size as well as in microcontrollers.</p>
+<p>Interrupts are essentiel to the implementation of multitasking, in computers of any size as well as in microcontrollers. A periodic interrupt requested by a timer is theoretically sufficient to make a multitask system, but a more efficient handling of I/O streams is permitted by specific interrupts</p>
 <ul><li>In personal computers, interrupts are managed by the operating system in a manner which is transparent for the application programs</li>
-<li>On microcontroller, managing interrupts is the developer's business</li>
+<li>On microcontrollers, managing interrupts is the developer's business</li>
 </ul>
 
 <h2>5.3 Working with the Arduino</h2>
@@ -245,7 +280,13 @@ The setup() function is called once, then the loop() function call is repeated i
  
 <h3>5.3.3 The microcontroller as a PC peripheral</h3>
 <p>The USB to UART bridge which is on the Uno board is viewed by the host computer as a CDC (Communication Device Class) USB device.<br>
-This means that any program running on the host computer may dialog with the target microcontroller, using the standard serial communication interface of the computer (the COM ports in Windows, the TTYs on Linux).</p> 
+This means that, beside the two possibilities offered by the Arduino IDE, any program running on the host computer may dialog with the target microcontroller, using the standard serial communication interface of the computer (the COM ports in Windows, the TTYs on Linux).</p> 
+
+<p>The Arduino IDE has two built-in tools for serial communication :</p>
+<ul><li>the Serial Monitor, a text-only terminal</li>
+<li>the Serial Plotter, displaying curves according to numbers received from the microcontroller</li>
+</ul>
+<p>To send a text command to the board, use the input area at the top of the serial monitor or at the bottom of the serial plotter. A single byte command may be sent, by choosing "No line ending" instead of "Newline".</p>
 
 <p>The serial plotter has some interesting undocumented properties, here are some tips:<br>
 <ul><li>to plot N curves :
@@ -253,19 +294,22 @@ This means that any program running on the host computer may dialog with the tar
 <li>then send text lines, each one containing N numbers (separated by spaces or commas),<br>
 each line will append a new segment to each of the N curves, and increments X by one unit</li>
 </ul></li>
-<li>horizontal scale : the X unit is always 1/500th of the window width, the first 500 lines fill the window, then the curves are scrolled</li>
+<li>horizontal scale : the X unit is always 1/500th of the window width, the first 500 text lines fill the window, then the curves are scrolled to the left</li>
 <li>vertical scale : is automatically adjusted,<br>
 to keep it stable, plot two additional curves with constant Ymin and Ymax values, then they will "frame" the graphics</li>
 <li>to plot variables in real time, send lines periodically with a constant period, (delay function, or better, timer interrupt)</li>
-<li>to plot calculated curves, send exactly 500 lines, then pause to freeze the graphics</li>
-<li>to send a command to the board, use the bottom area of the serial plotter. The serial monitor is not compatible with the plotter.</li>
+<li>to plot calculated curves, or previously acquired measurements, send exactly 500 text lines, then pause to freeze the graphics</li>
 </ul> 
-
-<p>Note: each time the serial monitor or the serial plotter is started, the target microcontroller is reset.</p>
+<p>Notes:</p>
+<ul><li>The serial monitor and the serial plotter cannot be active simultaeously</li>
+<li>Each time the serial monitor or the serial plotter is started, the target microcontroller is reset.</li>
+</ul>
 
 <h3>Document links :</h3>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Microcontroller">en.wikipedia.org/wiki/Microcontroller</a></li>
+<li><a href="jlcl14cwTOC.pdf">C language for beginners</a></li>
+<li><a href="jlcpp12c.pdf">C++ language for beginners</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Pulse-width_modulation">en.wikipedia.org/wiki/Pulse-width_modulation</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Serial_Peripheral_Interface">en.wikipedia.org/wiki/Serial_Peripheral_Interface</a></li>
 <li><a href="https://en.wikipedia.org/wiki/I%C2%B2C">en.wikipedia.org/wiki/I²C</a></li>
