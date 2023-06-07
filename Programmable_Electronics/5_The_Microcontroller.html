@@ -224,12 +224,12 @@ When people talk about "The Arduino" they refer to the board, or to the microcon
 <li>1 kbyte of EEPROM memory</li>
 <li>2 kbytes of RAM memory</li>
 <li>Harvard architecture : Flash and RAM accessed in parallel</li>
-<li>Vectored interrupts (26 vectors)</li>
+<li>Vectored interrupts (26 vectors) with fixed priority</li>
 <li>Three timers with 2 PWM channels each</li>
 <li>One SPI port, with an 8-bit shift register</li>
 <li>One UART</li>
 <li>One I2S "2-wire Serial Interface"</li>
-<li>One ADC, 10 bits resolution, 15 ksamp/s</li>
+<li>One ADC, 10 bits resolution, 15 ksamp/s, 6 multiplexed inputs</li>
 </ul>
 
 <p class="bk">The Uno board exposes a proprietary connector layout for which many accessory boards, called "shields", were developed.</p>
@@ -305,12 +305,49 @@ to keep it stable, plot two additional curves with constant Ymin and Ymax values
 <li>Each time the serial monitor or the serial plotter is started, the target microcontroller is reset.</li>
 </ul>
 
+<h3>5.3.4 Low level programming</h3>
+<p>"Low level" means "close to the hardware", in a layered model of application development.<br>
+The complications of this level are "abstracted" (hidden) by an intermediate layer of apparently simple functions ("drivers"), but it is sometimes necessary to be aware of the hidden details. The first step is to get familiar with the target microcontroller <a href="https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/ATmega48A-PA-88A-PA-168A-PA-328-P-DS-DS40002061B.pdf">reference manual</a></p>
+
+<h4>GPIO direct access</h4>
+<p>Pin direction may be configured using the <a href="https://www.arduino.cc/reference/en/language/functions/digital-io/pinmode/">pinMode() function</a>, writing and reading can be done one pin at a time with digitalWrite() and digitalRead()</p>
+<p>By talking directly to the GPIO peripheral, it is possible to manipulate several pins simultaneously (up to 8).</p>
+<p>For this it is worth noting that the I/O pins are grouped in GPIO ports, each one containing 8 pins.<br>In the case of the Uno board, three ports PB, PC and PD are used,
+the correspondance between the GPIO port numbering and the Arduino pin numbering is documented on the <a href="Arduino_UNO-TH_Rev3e_schematic.pdf">Arduino UNO schematic</a> and the pinout diagram above.</p>
+<p>Each port exposes three 8-bit registers, DDRx (the direction register), PORTx (the output register), PINx (the input register), x being B, C or D</p>
+<p>In order to facilitate the access to these registers from a C/C++ program, symbols for every peripheral register are defined in file iom328p.h which is included by io.h which is included by Arduino.h which is included automatically in every Arduino "sketch".</p>
+
+<h4>Timer interrupt and time measurement</h4>
+<p>Function <a href="https://www.arduino.cc/reference/en/language/functions/time/millis/">millis()</a> provides a value of the duration elapsed since the last CPU reset, in ms. (It overflows approximately every 50 days).</p>
+<p>On the Uno, Timer 0 is configured for providing this service. With a prescaled clock of 16000000/64 = 250000 Hz, its internal counter measures time with a 4 us resolution, and with its 8-bit capacity it overflows every 1.024 ms.<br>
+In order to keep time on a longer scale, an overflow interrupt is configured to count the overflow events, and compute time in milliseconds from the overflows count and the timer internal counter.</p>
+<p>Function delay() just sets an arrival date (millis() + duration) and loops waiting for reaching this date.<br>In multitasking applications, such a waiting loop is merged in the main loop in order to perform other tasks while waiting.</p>
+<p>In the other hand, function delayMicroseconds() is based on an estimate of the execution duration of a repeated instructions sequence, it is worth using only for short durations (less than 1 ms).</p>
+<p>Find file writing.c in the Arduino installation directory for all details</p>
+
+<h4>PWM outputs</h4>
+<p>The analogWrite() function starts a PWM source on one of the 6 PWM-capable pins, which is bound to one of the three timers of the Uno.<br>
+This function allows to vary the duty cycle from 0 to 100% according to an 8-bit argument (0 to 255), but does not allow any control over the frequency.
+<table class="bw">
+<tr><td></td><td>digital pin</td><td>period</td></tr>
+<tr><td>timer 0</td><td>5</td><td>1024 us</td></tr>
+<tr><td>timer 0</td><td>6</td><td>1024 us</td></tr>
+<tr><td>timer 1</td><td>9</td><td>2040 us</td></tr>
+<tr><td>timer 1</td><td>10</td><td>2040 us</td></tr>
+<tr><td>timer 2</td><td>3</td><td>2040 us</td></tr>
+<tr><td>timer 2</td><td>11</td><td>2040 us</td></tr>
+</table>
+<p>Note: timer 0 is used for two purposes, which are compatible.</p>
+<p>More details in document <a href="https://docs.arduino.cc/tutorials/generic/secrets-of-arduino-pwm">Secrets of Arduino PWM</a></p>
+
+
 <h3>Document links :</h3>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Microcontroller">en.wikipedia.org/wiki/Microcontroller</a></li>
 <li><a href="jlcl14cwTOC.pdf">C language for beginners</a></li>
 <li><a href="jlcpp12c.pdf">C++ language for beginners</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Pulse-width_modulation">en.wikipedia.org/wiki/Pulse-width_modulation</a></li>
+<li><a href="https://docs.arduino.cc/tutorials/generic/secrets-of-arduino-pwm">docs.arduino.cc/tutorials/generic/secrets-of-arduino-pwm</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Serial_Peripheral_Interface">en.wikipedia.org/wiki/Serial_Peripheral_Interface</a></li>
 <li><a href="https://en.wikipedia.org/wiki/I%C2%B2C">en.wikipedia.org/wiki/I²C</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Universal_asynchronous_receiver-transmitter">en.wikipedia.org/wiki/Universal_asynchronous_receiver-transmitter</a></li>
