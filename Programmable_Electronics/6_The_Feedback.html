@@ -15,6 +15,8 @@
 <img class="rightim" src="feedback.png">
 <p>Feedback systems are also known as closed-loop systems, where some output signal is fed back to a control input.</p>
 <p>Feedback is essential to control theory and control engineering, nevertheless it also exists in nature.</p>
+<p>This chapter presents feedback examples based on analog circuits, but mixed analog-digital feedback systems including
+control by software are current.</p>
 </div>
 <h2>6.1 Negative feedback</h2>
 <div class="boite">
@@ -34,20 +36,27 @@
 </div>
 <img src="cur_src.png">
 <p>Results: the output current is controlled linearly by the set value, with a constant slope close to 10mA/V, consistent with the value of Re, the temperature variations cause a large offset of Vbe but a moderate shift of Ic.</p>
+<a href="current_source.asc">LTSPICE source file</a>
 
-<h3>6.1.2 Operational amplifier example</h3>
+<h3>6.1.2 Operational amplifier basic circuits</h3>
 <p>The operational amplifier is a differential amplifier, built as an integrated circuit containing many transistors. It amplifies the potential difference between its inputs with a very high gain, in such a way that when the feedback is working, this difference is so small that it can be neglected.</p>
 <p>The name "operational" comes from the fact that this amplifier was created for making the "operator modules" in the analog calculators.</p>
-<p>The practical behaviour of the operational amplifier is entirely determined by the feedback circuit, which allow a great number of applications.</p>
+<p>The practical behaviour of the operational amplifier is entirely determined by the feedback circuit, which allows a great number of applications, the best known being the inverting amplifier and the non-inverting amplifier.</p>
+<div class="boite">
+<div class="leftim"><img src="inv_amp.png" style="display: inline"> <img src="non_inv_amp.png" style="display: inline"></div>
+<p>Note that if R2=0 in the non-inverting circuit, the gain G is 1 and R1 can be removed, this is the "voltage follower" circuit.</p>
+<p>(Drawings from video <a href="https://www.youtube.com/watch?v=GMBqciO8fKY">opamp analogy live demo</a>)</p>
+</div>
 <div class="boite">
 <img class="rightim" src="weight_add_sch.png">
-<p>The proposed example is a weighted adder-inverter, it produces the sum of two signals with different negative gains (-10.0 and -3.33 in the example).</p>
+<p>The next example is a weighted adding-inverting circuit, it produces the sum of two signals with different negative gains (-10.0 and -3.33 in the example).</p>
 <p>To predict the output voltage, one has to consider that :</p>
 <ul><li>the input current of the opamp is negligible, so the sum of the currents in R1, R2, R3 is zero</li>
 <li>the differential input voltage is negligible, so the voltage at em is zero</li>
 </ul>
 </div>
 <img src="weight_add.png">
+<a href="adder.asc">LTSPICE source file</a>
 
 <h2>6.2 Positive feedback</h2>
 <p>Ideally, a sufficient positive feedback creates an unbounded increase of the signal, <br>
@@ -65,10 +74,11 @@ in practice the amplifying element will reach its limit, which is called saturat
 
 </div>
 <img src="trigger.png">
+<a href="schmitt.asc">LTSPICE source file</a>
 
 <h3 class="bk">6.2.2 Wien bridge Oscillator</h3>
 <img src="wien_osc_sch.png">
-<p>The Wien bandpass filter will be used in the feedback loop, with the goal of making an oscillator producing a sinewave. A preliminary AC simulation will be used to check the behaviour of the filter alone, made of 2 identical resistors R1 and R2 and 2 identical capacitors C1 and C2.</p>
+<p>The Wien bandpass filter (left drawing) will be used in the feedback loop, with the goal of making an oscillator producing a sinewave. A preliminary AC simulation will be used to check the behaviour of the filter alone, made of 2 identical resistors R1 and R2 and 2 identical capacitors C1 and C2.</p>
 
 <img src="wien_osc_1.png">
 <p>The AC simulation shows that the filter has a maximum output of -9.54dB at 2.324 kHz, with a phase close to 0°.<br> The theoretical output is 1/3, which is -9.5424 dB in good agreement with the simulation.</p>
@@ -78,15 +88,20 @@ in practice the amplifying element will reach its limit, which is called saturat
 <p>An oscillation is observed at the predicted frequency, with an amplitude increasing until saturation.<br>
 The saturation causes a distortion of the signal, which could be reduced by means of a amplitude regulation
 loop.</p> 
-
+<a href="wien.asc">LTSPICE source file</a>
 
 <h3>Theory links :</h3>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Control_theory">en.wikipedia.org/wiki/Control_theory</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Operational_amplifier">en.wikipedia.org/wiki/Operational_amplifier</a></li>
+<li><a href="https://www.youtube.com/watch?v=GMBqciO8fKY">https://youtu.be/GMBqciO8fKY opamp analogy live demo</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Schmitt_trigger">en.wikipedia.org/wiki/Schmitt_trigger</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Wien_bridge_oscillator">en.wikipedia.org/wiki/Wien_bridge_oscillator</a></li>
+<li><a href="https://www.youtube.com/watch?v=-LlhZCc0B6U">https://youtu.be/-LlhZCc0B6U an example of analog+software loop</a>
+ + <a href="optoloop.ino">arduino code</a></li>
+<li><a href="TLC2201.pdf">TLC2201 operational amplifier datasheet</a></li>
 </ul>
+
 </div>
 </body>
 </html>
