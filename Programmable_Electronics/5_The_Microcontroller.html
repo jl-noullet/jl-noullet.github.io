@@ -174,8 +174,10 @@ This makes a convenient way to generate a slowly varying analog signal using a s
 
 <h4>ADC and DAC</h4>
 <p>The ADC (Analog to Digital Converter) produces a binary number proportional to the voltage received on a pin.</p>
-<p>The conversion is not continuous and must be started periodically by software, or directly by a timer.</p>
-<p>The DAC (Digital to Analog Converter) produces the inverse service. Notice that a timer in PWM mode also makes a digital to analog conversion, but a dedicated DAC is preferred when a wide bandwidth is needed.</p>
+<p>The conversion is not continuous and must be triggered periodically by software, or directly by a timer.</p>
+<p>This periodic conversion has the same limitations as any sampled signal processing, notably the input signal frequency should no exceed half the sampling frequency, otherwise the acquired signal is corrupted by aliasing (See chapter 4.4 The aliasing issue)</p>
+
+<p>The DAC (Digital to Analog Converter) produces the inverse service. Notice that a timer in PWM mode also makes an economical DAC solution, but its output should be filtered to obtain a clean analog signal.</p>
 
 <h4>RTC : Real Time Clock</h4>
 <p>The RTC keeps the time and date even when the main power supply is off, having a separate power supply.<br>Like watches, the RTC has a very low power need, being able to run for years on a small battery.</p>

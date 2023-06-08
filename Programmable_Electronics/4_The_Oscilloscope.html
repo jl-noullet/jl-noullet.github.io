@@ -123,8 +123,14 @@ C_adj is an adjustable capacitor allowing to precisely match the capacitive atte
 
 <h2>4.4 The aliasing issue</h2>
 <p>Digital instruments periodically sample the signal. The sampling theory (Nyquist–Shannon theorem) states that the sampling frequency should be greater than twice the signal frequency.</p>
-<p>If the original signal frequency exceeds half the sampling frequency, an alteration known as "aliasing" causes the sampled signal to expose a wrong frequency. This is also known as "stroboscopic effect" or "wagon-whell effect"</p>
-<p>If a periodic signal is observed with a seconds/div setting which is thousands times greater than the signal period, the digital oscilloscope may display the signal with an totally wrong apparent frequency, with no kind of warning</p>
+<p>If the original signal frequency exceeds half the sampling frequency, an alteration known as "aliasing" causes the sampled signal to expose a wrong frequency. This is also known as "stroboscopic effect" or "wagon-whell effect".</p>
+<img src="sampler.png">
+<p>In the example above, an input signal is sampled by means of a MOS transistor and a capacitor. The MOS transistor works like a switch, which is driven by a periodic signal composed of short pulses at 10 KHz. Each sampler keeps the sampled value constant for an entire sampling period to permit the ADC operation. This creates the typical staircase aspect.</p>
+<p>Two samplers are simulated simultaneously for comparison purpose.</p>
+<ul><li>The top sampler receives a 400 Hz signal at its input, its output presents an acceptable sampled representation of the input signal.</li>
+<li>The bottom sampler receives a 9500 Hz signal, but its output presents a wrong frequency of 500 Hz only, which is called an "alias" of the original signal. This happens because the input frequency is greater than half the sampling frequency.</li>
+</ul>
+<p>If a periodic signal is observed with a seconds/div setting which is thousands times greater than the signal period, the digital oscilloscope may display the signal with an totally wrong apparent frequency, with no kind of warning.</p>
 <p>If the signal frequency is totally unknown, it is advisable to start observing it with the smallest seconds/div setting and then increasing it until obtaining a convenient display.</p> 
 
 
