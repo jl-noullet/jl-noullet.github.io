@@ -139,7 +139,7 @@ The circuit is made of R1 and C1, it is operated with a voltage step of 1 Volt g
 <a href="RC.asc">LTSPICE source file</a>
 <h4>Plot of the voltage Vc across C1 :</h3>
 <img class="wide" src="RC1.png">
-We observe a function Vc(t) = Vstep * ( 1 - exp(t/Tau) ).
+We observe a function Vc(t) = Vstep * ( 1 - exp(-t/Tau) ).
 The <b>time constant</b> Tau is a characteristic parameter of the circuit
 <ul>
 <li>Tau = R * C (R being the effective resistance viewed from C)</li>

@@ -136,33 +136,48 @@ Writing requires either an external hardware or a dedicated peripheral, and take
 <p>Logic 1 or "true" is represented by a high voltage, close to the power supply voltage (most often 3.3 Volts), while logic 0 or "false" is represented by a voltage close to zero (ground).</p>
 <p>GPIO pins can source or sink a limited current, 4 mA to 20 mA depending on the model</p>
 
-<h4>Serial communication interfaces : SPI, I2C, UART</h4>
-<p>Serial communication involves the transmission of all the bits of each word in sequence, one after the other, in order to minimize the cost of wiring.</p>
-<p>SPI, I2C and UART are used for board area communication and differ by the number of wires used and the attainable speed, while USB is suitable for room area communication and Ethernet for building area communication</p>
+<h4>Serial communication principle</h4>
+<p>Serial communication involves the transmission of all the bits of each word in sequence, one after the other. The speed is reduced compared with parallel busses, but the cost of wiring is lower.</p>
+<p>Some serial communication schemes transmit the MSB (most significant bit) first, some others transmit the LSB first.</p>
 
 <table class="bw">
-<tr><td></td><td></td><td>data<br>wires</td><td>clock<br>wires</td><td>select<br>wires</td><td>total wires<br>incl. gnd</td><td>typ. speed</td></tr>
-<tr><td>SPI</td><td>Serial Peripheral Interface</td><td>2</td><td>1</td><td>1+</td><td>6</td><td>25 Mbits/s</td></tr>
-<tr><td>I2C<br>TWI</td><td>Inter-Integrated Circuit<br>Two Wire Interface</td><td>1</td><td>1</td><td>0</td><td>3</td><td>400 kbits/s</td></tr>
-<tr><td>UART</td><td>Universal Asynchronous Receiver-Transmitter</td><td>2</td><td>0</td><td>0</td><td>3</td><td>115200 Bauds</td></tr>
+<tr><td></td><td></td><td>data<br>wires</td><td>clock<br>wires</td><td>select<br>wires</td><td>total wires<br>incl. gnd</td><td>typ. speed</td><td>protocol</td><td>range</td></tr>
+<tr><td>UART</td><td>Universal Asynchronous<br> Receiver-Transmitter</td><td>2</td><td>0</td><td>0</td><td>3</td><td>115200 Bauds</td><td>peer-to-peer</td><td>PCBs</td></tr>
+<tr><td>I2C<br>TWI</td><td>Inter-Integrated Circuit<br>Two Wire Interface</td><td>1</td><td>1</td><td>0</td><td>3</td><td>400 kbits/s</td><td>master-slave</td><td>PCBs</td></tr>
+<tr><td>SPI</td><td>Serial Peripheral Interface</td><td>2</td><td>1</td><td>1+</td><td>5</td><td>25 Mbits/s</td><td>master-slave</td><td>PCBs</td></tr>
+<tr><td>USB</td><td>Universal Serial Bus</td><td>2</td><td>0</td><td>0</td><td>4</td><td>480 Mbits/s</td><td>master-slave</td><td>Desk</td></tr>
+<tr><td>Ethernet</td><td>LAN (Local Area Network)</td><td>4</td><td>0</td><td>0</td><td>4</td><td>100 Mbits/s</td><td>peer-to-peer</td><td>Building</td></tr>
 </table>
 
-<p>SPI and I2C require one master device initiating the transfers and providing the clock, and one or more slaves, <br>
-while UART is a point-to-point connexion needing an application defined protocol.</p>
-
-<p>SPI uses 2 unidirectional data lines MOSI (Master Out Slave In) and MISO (Master In Slave Out), and one separate SS (Slave Select) for each slave device.</p>
-<img src="SPI_single_slave.png">
-<p>I2C has one bidirectional data line SDA, and uses special patterns S (Start) and P (stop) to mark the block limits.</p>
-
-<img src="I2C_transfer_simplified.png">
-
-<p class="bk">UART transmits blocks of one byte, framed by a "start" bit (always zero) and a "stop bit" (always 1).<br>
-The start bit leading edge causes the synchronisation of the receiver clock, which is used to sample the data bits.<br>
-The receiver clock frequency must match the transmitter clock frequency with a sufficient accuracy (~2%).<br>
-This frequency is historically called the "Baud rate".</p>
+<h4>Serial asynchronous communication : UART</h4> 
+<p class="bk">UART transmits blocks of one byte, framed by a "start" bit (always zero) and a "stop bit" (always 1).</p>
 <img src="uart_signal.png">
-<p>For increasing the range to building area, the UART signals are amplified to higher voltages (RS232) or differential signals (RS485).<br>
+<p>The start bit leading edge causes the synchronisation of the receiver clock, which is used to sample the data bits. The synchronization is reset at the start of each byte</p>
+<p>The receiver clock frequency must be configured to match the transmitter clock frequency with a sufficient accuracy (~2%).<br>
+This frequency is historically called the "Baud rate". The usual Baud rates values are such as 300 * 2<sup>N</sup>.</p>
+<p>No master is defined at the hardware level, this is left to the application software.</p>
+<p>For increasing the range to building area, the UART signals are amplified to higher voltages (RS232) or differential signals (RS485).
 RS232 is obsolete but RS485 is still used for industrial equipments</p>  
+
+<h4>Serial synchronous communication : I2C</h4>
+<p>I2C is sometimes named TWI for historical copyright reasons.</p>
+<img src="I2C_transfer_simplified.png">
+<p>The master provides the clock signal on SCL, and the data line SDA is bidirectional.<br>The master creates special patterns S (Start) and P (stop) to mark the block limits.</p>
+<p>The direction of transfer on the data line may be changed during a transaction, which involves a complex protocol.</p>
+<p>The bus supports several slaves, thanks to an address field inserted by the master at the beginning of a transaction.</p>
+
+
+<h4>Serial synchronous communication : SPI</h4>
+<p>SPI is a very simple but loosely defined serial communication scheme</p>
+<img src="SPI_single_slave.png">
+<p>It uses 2 unidirectional data lines MOSI (Master Out Slave In) and MISO (Master In Slave Out).<br>
+There is one active-low SS (Slave Select) signal for each slave, which the master uses to select a slave before driving the clock line SCLK.</p>
+<div class="boite">
+<img src="SPI_modes.png" class="rightim">
+<p>There are 4 modes described in the initial specification, but what really matters is the direction of the clock edge which is used to sample data at the receiving end of each data line.</p>
+<ul><li>Modes 0 and 3: data sampled at the rising clock edge</li>
+<li>Modes 1 and 2: data sampled at the falling clock edge</li></div>
+
 
 <h4>TIMER: Time keeping and PWM signal generation</h4>
 <p>A timer is a digital binary counter driven by a periodic signal (the CPU clock or a signal derived from it by frequency division).<br>
@@ -292,7 +307,7 @@ This means that, beside the two possibilities offered by the Arduino IDE, any pr
 
 <p>The serial plotter has some interesting undocumented properties, here are some tips:<br>
 <ul><li>to plot N curves :
-<ul><li>send an initial text line with N words, to be displayed as labels for the curves</li>
+<ul><li>send an initial text line with N words (each one beginning with a letter, not a digit), to be displayed as labels for the curves</li>
 <li>then send text lines, each one containing N numbers (separated by spaces or commas),<br>
 each line will append a new segment to each of the N curves, and increments X by one unit</li>
 </ul></li>
