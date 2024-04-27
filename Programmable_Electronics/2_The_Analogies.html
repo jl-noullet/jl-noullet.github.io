@@ -11,13 +11,10 @@
 <center>
 <h1>2. The Analogies</h1>
 </center>
-<p>The most complete analogies between electricity and other domains of physics are those which extend to systems represented by <b>differential equations of the second degree</b>. But some which are limited to the first degree are useful too.</p>
-<p>To establish an analogy, one has to select <b>two fundamental quantities similar to voltage and current</b>. It his helpful but not mandatory to select one which represent a potential (something rather static, which has the power of action but may remain idle), and the other which represents a flow, something in motion</p>
-<p>In electricity, the quantity which is commonly named voltage is more precisely the "electric potential difference" and in some cases "electromotive force".<br>It is worth remarking that the french word for voltage is "tension", which means "static traction", while the chinese word for voltage is 电压 which means "electric pressure".</p>
+<p>The most complete analogies between electricity and other domains of physics are those which extend to systems represented by <b>differential equations of the second degree</b>. But some equations limited to the first degree are useful too.</p>
+<p>To establish an analogy, one has to select <b>two fundamental quantities similar to voltage and current</b>. It his helpful but not mandatory to select one which represent a potential (some capability of action depending on the position in space, which exists event while the system is idle), and the other which represents a flow, something in motion</p>
+<p>In electricity, the quantity which is commonly named voltage is more precisely the "electric potential difference" and in some cases "electromotive force".<br>It is worth remarking that the french word for voltage is "tension", which means "pull" or "traction", while the chinese word for voltage is 电压 which means "electric pressure".</p>
 <p>The scientists who created this vocabulary for electricity were surely inspired by the hydraulic analogy, this is the one to begin with.</p>
-
-<h2></h2>
-<h3></h3>
 
 <h2>2.1 The Hydraulic Analogy</h2>
 <p>When a mass is lifted to a higher altitude, its gravitational potential is increased, at the cost of some energy.</p>
@@ -26,6 +23,7 @@
 <p>To make the analogy work, we need first to state that the fluid density and the gravitational acceleration are fixed.<br>
 Then we may represent the potential as a pressure or as a height, and the flow as a volume flow or a mass flow, these choices are arbitrary.<br>
 
+<div class="nob">
 <h3>2.1.1 Legacy analogy</h3>
 <div class="boite">
 <img class="rightim" src="hydraulic_analogy_1.png">
@@ -43,7 +41,8 @@ with kgf as force unit (apologies to Mr Newton) in order to keep the equations s
 <tr><td>Tank "area" (kgf/m) A = M/h</td><td>Capacitance (F) C = Q/V = I/(dV/dT)</td></tr>     
 <tr><td>Inertial pipe j = h/(df/dt)</td><td>Inductance (H) L = V/(dI/dt)</td></tr>     
 </table>
-<p class="bk">The bucket elevator was chosen in the example picture because it demonstrates clearly the transformation of the mecanical energy applied to the lower pulley into potential energy recived by the water.</p>
+</div>
+<p>The bucket elevator was chosen in the example picture because it demonstrates clearly the transformation of the mecanical energy applied to the lower pulley into potential energy recived by the water.</p>
 <p>When the valve R is closed, the relative pressure that it blocks is proportional to the height h, regardless of its own altitude.</p>
 
 <p>If the valve is slightly open, it creates a restriction which acts like a resistor, determining the h/f ratio and converting the h*f power into heat.<br>
@@ -68,7 +67,7 @@ This is a little harder to figure out, since the heat is immediateley carried aw
 </table>
 <p>This version of the analogy removes the explicit use of gravity, so it is usable for systems using pumps other than elevators, and capacitive storages using some elastic force instead of gravity.</p>
 </div>
-<h3 class="bk">2.1.3 The hydraulic resonator</h3>
+<h3>2.1.3 The hydraulic resonator</h3>
 <p>A resonator or "2nd order system" is made by the combination of two devices that exchange energy, one storing energy by integration of the flow ("static storage"), the other one by integration of the potential ("inertial storage").</p>
 <img src="reson_vessels.png" style="display: inline"><img src="reson_sch.png" style="display: inline">
 <p>A pair of communicating vessels are the hydraulic analogue of the RLC circuit, where two tanks store energy by gravity ("static storage"), while the accelerated fluid in the pipe stores kinetic energy. The friction in the pipe constitutes the dissipative element which damps the oscillation, like R</p>
@@ -76,7 +75,8 @@ This is a little harder to figure out, since the heat is immediateley carried aw
 <p>With the valve closed, the tank are filled with h1 > h2. Then at time 0 the valve is fully opened. The fluid flows to the right, until h2 = h1. At that point the potential difference is zero, but all the energy is now stored as kinetic energy in the pipe, allowing h2 to become higher than h1, causing a deceleration of the flow, and so on.</p> 
 <p>Note: a simple U-shaped tube would also present a similar oscillation, in this case there are no separated components for gravitational energy and kinetic energy, the system is said "distributed". This happens as well in electronics, in high frequency systems (like more than 500 Mhz), resonators can have L, R and C merged in a single device.</p>
 
-<h3 class="bk">2.1.4 Other basic hydraulic circuits</h3>
+<div class="nob">
+<h3>2.1.4 Other basic hydraulic circuits</h3>
 <img src="hydraulic_circuits.png">
 <p>From the left to the right:</p>
 <ul><li>a closed circuit: the generator-motor combination :
@@ -86,8 +86,10 @@ This is a little harder to figure out, since the heat is immediateley carried aw
 <li>the series combination: the height (or pressure) add, while the flow is common, like in series electric circuits where the voltages add while the current is common</li>
 <li>the parallel combination: the flows add, while the height is common, like in parallel electric circuits where the currents add while the voltage is common</li>
 </ul>
+</div>
 
-<h2 class="bk">2.2 The Mechanical Analogies</h2>
+<div class="nob">
+<h2>2.2 The Mechanical Analogies</h2>
 
 <h3>2.2.1 The Mechanical analogy of the first kind</h3>
 <p>This analogy is close to the hydraulic analogy previously presented, with force replacing pressure and velocity replacing fluid flow.<br>It is well known from the analogy between the spring-mass resonator and the RLC circuit.</p> 
@@ -104,6 +106,8 @@ This is a little harder to figure out, since the heat is immediateley carried aw
 <tr><td>Elastic energy (J) W = ½*(1/k)*F² = ½*k*x²</td><td>Energy in capacitor (J) W = ½*C*V²</td></tr>     
 <tr><td>Kinetic energy (J) W = ½*M*v²</td><td>Energy in inductor (J) W = ½*L*I²</td></tr>     
 </table>
+</div>
+
 <h3>2.2.2 The mass-spring resonator</h3>
 <div class="boite">
 <div class="rightim">
@@ -120,7 +124,8 @@ This is a little harder to figure out, since the heat is immediateley carried aw
 <p>Note: on the mechanical drawing, the damper and the spring look like they are in parallel. In fact the three elements share the same displacement x (analogue of current) while the forces (analogue of voltage) are added, so this is equivalent to electric elements in series.</p>  
 </div>
 
-<h3 class="bk">2.2.3 The rotational variant</h3>
+<div class="nob">
+<h3>2.2.3 The rotational variant</h3>
 <div class="boite">
 <img class="rightim" src="balance_wheel.jpg">
 <p>A similar mechanical analogy can be defined for rotating mechanisms : </p>
@@ -132,6 +137,7 @@ This is a little harder to figure out, since the heat is immediateley carried aw
 <p>A familiar example of a rotational resonator is the balance wheel used in mechanical watches and clocks.<br>
 With minimal damping, the frequency of its oscillation is precise enough to be the reference for time measurement. The mechanism called escapement provides just enough energy to compensate the damping caused by friction.<br>
 Similarly, LC oscillators are composed of a RLC resonator associated with a feedback circuitry which provides energy to compensate the losses.</p>
+</div>
 </div>
 
 <h3>2.2.4 The Mechanical analogy of the second kind</h3>
@@ -154,7 +160,7 @@ The two fundamental quantities V and I have symmetrical roles, like L and C do. 
 <p>Position or displacement is no longer the analogue of electric charge, but it is the analogue of the integral of voltage over time, which is the magnetic flux, so a line was added for it. (It was omitted in previous tables because it is noticeable only in the inductor.)</p>
 <p>This analogy is less intuitive than the first variant, except in the case of systems containing electric motors or other electromagnetic actuators.<br>An ideal electric motor or generator has a speed proportional to the voltage and a torque proportional to the current, which fits well with this analogy. Notably, an idling electric motor viewed from the electric domain behaves like a capacitor, storing kinetic energy in its rotor</p>
 
-<p class="bk">When this analogy was first presented in 1932, a controversy arose because <a href="https://pubs.aip.org/asa/jasa/article/4/3/249/717305/A-NEW-ANALOGY-BETWEEN-MECHANICAL-AND-ELECTRICAL">some authors</a> claimed that this new analogy was "more complete" and that the older one was "nominated for oblivion". No controversy makes sense, thanks to the duality of 2nd order systems, it is normal to have two valid analogies between electricity and any other 2nd order domain.</p> 
+<p>When this analogy was first presented in 1932, a controversy arose because <a href="https://pubs.aip.org/asa/jasa/article/4/3/249/717305/A-NEW-ANALOGY-BETWEEN-MECHANICAL-AND-ELECTRICAL">some authors</a> claimed that this new analogy was "more complete" and that the older one was "nominated for oblivion". No controversy makes sense, thanks to the duality of 2nd order systems, it is normal to have two valid analogies between electricity and any other 2nd order domain.</p> 
 
 <h2>2.3 Acoustic Analogy</h2>
 <div class="boite">
@@ -185,8 +191,11 @@ The two fundamental quantities V and I have symmetrical roles, like L and C do. 
 <p>This analogy of a great importance for the modeling of thermal behavior of electronic components like transistors, ICs and LEDs.</p>
 <p>Behaving like RC low-pass filters, the heat dissipators can smooth peaks of thermal power if properly dimensioned.</p>
 </div>
-<p class="bk">As an example, the tables below are taken from the datasheet of the IRF530 power transistor in TO-220 package:</p>
+
+<div class="nob">
+<p>As an example, the tables below are taken from the datasheet of the IRF530 power transistor in TO-220 package:</p>
 <img src="IRF530.png">
+</div>
 <div class="boite">
 <img class="rightim" src="to220_heatsink.png">
 <p>In the maximum ratings, one can read "power dissipation at Tc = 25°C" equals 70 W. Tc is the case temperature, precisely the temperature of the bottom face of the metal tab with the mounting hole.</p>
@@ -196,8 +205,10 @@ The two fundamental quantities V and I have symmetrical roles, like L and C do. 
 </ul>
 <p>This transistor is designed to be bolted on a heat sink made of a massive piece of heat conductive material like aluminium or copper. In this case the total thermal resistance will be the sum of the junction-to-case resistance Rjc, the case-to-sink resistance Rcs, and the sink-to-ambient resistance which depends on the shape and dimensions of the heat sink.</p>
 <p>The transistor may work without heat sink, in this case its total thermal resistance of 62°C/W determines a maximum continuous power dissipation of (175-25)/62 = 2.4 W only.<br>
-Shorts peaks of greater power could be accepted thanks to the thermal capacity of the transistor case.</p>
+Shorts peaks of greater power could be accepted thanks to the thermal capacity of the transistor case (see "pulsed drain current").</p>
 </div>
+
+<div class="nob">
 <h3>Document links :</h3>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Voltage">en.wikipedia.org/wiki/Voltage</a></li>
@@ -208,6 +219,7 @@ Shorts peaks of greater power could be accepted thanks to the thermal capacity o
 <li><a href="https://pubs.aip.org/asa/jasa/article/4/3/249/717305/A-NEW-ANALOGY-BETWEEN-MECHANICAL-AND-ELECTRICAL">A-NEW-ANALOGY-BETWEEN-MECHANICAL-AND-ELECTRICAL</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Acoustic_resonance#Resonance_of_a_sphere_of_air_(vented)">en.wikipedia.org/wiki/Acoustic_resonance</a></li>
 </ul>
+</div>
 
 </div>
 </body>

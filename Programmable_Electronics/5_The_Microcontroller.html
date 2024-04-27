@@ -42,10 +42,12 @@ so the starting point was a code known as <a href="https://en.wikipedia.org/wiki
 Several solutions were proposed to extend this code to non-latin languages, the most successful being UTF-8, which uses a variable-length code, compatible with ASCII.</p>
 <p>A piece of text is represented as a sequence of bytes, called a string. It is a common practice to use the zero byte (null character) to mark the end of the string.</p>
 
-<h3 class="bk">5.1.4 Addresses</h3>
+<div class="nob">
+<h3>5.1.4 Addresses</h3>
 <p>In computer memory, data words are stored in 1D-arrays, which can be considered as tables where each line contains a binary word.<br>
 The lines are numbered in sequence, and their numbers are called the addresses, which are themselves handled in binary form.<p>
 <p>Many computers can read or write words which are larger than 8 bits, but to preserve the capability or writing or reading single bytes, the adresses are always byte addresses.</p>
+</div>
 
 <h3>5.1.5 Instructions</h3>
 <p>Programs in machine code are sequences of instructions coded and stored as compact binary words. The code is architecture-specific and not readable by humans.<br>When the instruction word size is fixed, the archicture is called RISC (Reduced Instruction Set Computer), otherwise it is called CISC (Complex Instruction Set Computer).</p>
@@ -64,7 +66,10 @@ If the word represents a number (not too great), it is multiplied by 2</p>
 If the word represents an unsigned number, it is divided by 2.</p>
 <p>When bits are shifted right by one position in "signed" or "arithmetic" mode, the MSB is duplicated, with the intention of preserving the sign of a signed number coded in two's complement.<br>
 If the word represents a signed number, it is divided by 2.</p>
+
+<div class="nob">
 <p>In C and C++, these operations are supported by means of the "&lt;&lt;" and "&gt;&gt;" operators. The mode (unsigned or signed) is determined according to the type of the first operand.</p>
+</div>
 
 <h4>Bit set and reset</h4>
 <img src="bit_force.png">
@@ -78,14 +83,11 @@ Note: these should not be confused with the boolean operators "||", "&amp;&amp;"
 B &amp;= ~( 1 &lt;&lt; N );  // bit N (weight 2<sup>N</sup>) in B is forced to zero</pre>
 
 
-
-
-
-
-
 <h2>5.2 Microcontroller architecture</h2>
 
 <img src="microcontroller_diagram.png">
+
+<div class="nob">
 <p>The main modules inside a microcontroller are :</p>
 <ul><li>the CPU (Central Processing Unit),<br>which processes binary words that it reads and writes from memory and peripheral through the bus</li>
 <li>the non-volatile memory, sometimes called ROM or flash memory or program memory,<br>which contains programs and constant data</li>
@@ -93,8 +95,9 @@ B &amp;= ~( 1 &lt;&lt; N );  // bit N (weight 2<sup>N</sup>) in B is forced to z
 <li>the peripherals, which permit communication with the outer world in various forms</li>
 <li>the bus lines which support the communication between these modules</li>
 </ul>
+</div>
 
-<p class="bk">The parameters that characterize a microcontroller type are:</p>
+<p>The parameters that characterize a microcontroller type are:</p>
 <ul><li>the CPU family, which determines the instructions encoding and the performance level</li>
 <li>the word size, either 8 bits, 16 bits, 32 bits or 64 bits,<br>
 this is the typical data word that the CPU can process at once, but the definition of this parameter is not uniform, for example an 8-bit microcontrollers may use 16-bit addresses and 12-bit instructions, but performs calculations on 8-bit data only</li>
@@ -115,7 +118,8 @@ More advanced CPUs can perform multiplication and division in a single instructi
 <p>RAM is volatile, which means that the data it contains are lost each time the power is switched off.</p>
 <p>The fact of being volatile is a disvantage, but this memory is much faster than non-volatile memories in particular when writing.</p> 
 <p>In architectures where the data memory and the program memory are entirely separated ("Harward architectures"), the RAM is simply called "data memory".</p>
- 
+
+<div class="nob">
 <h3>5.2.3 FLASH memory</h3>
 <p>Microcontrollers need some non-volatile memory to have some program ready to execute immediately after power-up.<br>
 Non volatile memory can be :</p>
@@ -125,7 +129,8 @@ Non volatile memory can be :</p>
 </ul>
 <p>In modern microcontrollers, programs are generally stored in flash memory. The CPU can read this memory, but not write into it.<br>
 Writing requires either an external hardware or a dedicated peripheral, and takes much more time than a regular memory access.</p>
-<p class="bk">A small amount of OTP-ROM is sometimes present to store the program which is used to write programs into the flash memory under control of the development computer. Such a program is called the bootloader.</p> 
+<p>A small amount of OTP-ROM is sometimes present to store the program which is used to write programs into the flash memory under control of the development computer. Such a program is called the bootloader.</p> 
+</div>
 
 <h3>5.2.4 Peripherals</h3>
 <p>The CPU communicates with the peripheral by means of specialized registers which have a dedicated address space besides the main memories.</p>
@@ -149,8 +154,9 @@ Writing requires either an external hardware or a dedicated peripheral, and take
 <tr><td>Ethernet</td><td>LAN (Local Area Network)</td><td>4</td><td>0</td><td>0</td><td>4</td><td>100 Mbits/s</td><td>peer-to-peer</td><td>Building</td></tr>
 </table>
 
+<div class="nob">
 <h4>Serial asynchronous communication : UART</h4> 
-<p class="bk">UART transmits blocks of one byte, framed by a "start" bit (always zero) and a "stop bit" (always 1).</p>
+<p>UART transmits blocks of one byte, framed by a "start" bit (always zero) and a "stop bit" (always 1).</p>
 <img src="uart_signal.png">
 <p>The start bit leading edge causes the synchronisation of the receiver clock, which is used to sample the data bits. The synchronization is reset at the start of each byte</p>
 <p>The receiver clock frequency must be configured to match the transmitter clock frequency with a sufficient accuracy (~2%).<br>
@@ -158,6 +164,7 @@ This frequency is historically called the "Baud rate". The usual Baud rates valu
 <p>No master is defined at the hardware level, this is left to the application software.</p>
 <p>For increasing the range to building area, the UART signals are amplified to higher voltages (RS232) or differential signals (RS485).
 RS232 is obsolete but RS485 is still used for industrial equipments</p>  
+</div>
 
 <h4>Serial synchronous communication : I2C</h4>
 <p>I2C is sometimes named TWI for historical copyright reasons.</p>
@@ -187,18 +194,22 @@ It provides a high resolution time measurement (microseconds) and can generate p
 The average value of the PWM signal is proportional to the function used to modulate the pulse width.<br>
 This makes a convenient way to generate a slowly varying analog signal using a single digital pin, and to control a power device with reduced losses compared to a continous control.</p>
 
+<div class="nob">
 <h4>ADC and DAC</h4>
 <p>The ADC (Analog to Digital Converter) produces a binary number proportional to the voltage received on a pin.</p>
 <p>The conversion is not continuous and must be triggered periodically by software, or directly by a timer.</p>
 <p>This periodic conversion has the same limitations as any sampled signal processing, notably the input signal frequency should no exceed half the sampling frequency, otherwise the acquired signal is corrupted by aliasing (See chapter 4.4 The aliasing issue)</p>
 
 <p>The DAC (Digital to Analog Converter) produces the inverse service. Notice that a timer in PWM mode also makes an economical DAC solution, but its output should be filtered to obtain a clean analog signal.</p>
+</div>
 
+<div class="nob">
 <h4>RTC : Real Time Clock</h4>
 <p>The RTC keeps the time and date even when the main power supply is off, having a separate power supply.<br>Like watches, the RTC has a very low power need, being able to run for years on a small battery.</p>
 <p>The RTC modules frequently contain a small amount of memory called the backup RAM, which keep application data when the microcontroller is off.</p>
+</div>
    
-<h3 class="bk">5.2.5 Interrupts</h3>
+<h3>5.2.5 Interrupts</h3>
 <p>The CPU may accept a hardware interrupt signal from some peripherals. When this happens, the CPU completes the current instruction and then leaves the current instruction sequence and jumps to a specific interrupt service routine subroutine or interrupt handler, in order to perform some action required by the peripheral which emitted the interrupt request.</p>
 <p>When the end of the interrupt routine is reached, the CPU returns to the instruction sequence where it was interrupted. To ensure that the interrupted task is not disturbed by this process, a context saving sequence is strictly applied before entering the interrupt routine, and a matching context restoring sequence is applied upon return, by hardware and software combined.</p>
 <h4>Interrupt vectoring</h4>
@@ -209,12 +220,15 @@ This makes a convenient way to generate a slowly varying analog signal using a s
 <p>On the simplest microcontrollers, interrupts are disabled upon entry into an interrupt routine, but the code inside this routine may re-enable interrupts to permit the interruption of itself by another source, considered as deserving a quicker handling. In any case interrupts are automatically enabled after return from the interrupt routine.</p>
 <p>On more advanced architecture, the interrupt controller may permit automatically the interruption of an interrupt routine by another interrupt of higher priority, this is called interrupt nesting.</p>
 <h4>Deadlock risk</h4>
-<p>If inside an interrupt routine, a function is called to perform some communication action which depends on a lower priority interrupt service, this action will never be completed and the system will be blocked. To avoid this, the developer should be aware of all possible sources of interrupt requests.</p>  
+<p>If inside an interrupt routine, a function is called to perform some communication action which depends on a lower priority interrupt service, this action will never be completed and the system will be blocked. To avoid this, the developer should be aware of all possible sources of interrupt requests.</p>
+
+<div class="nob">
 <h4>Multitasking</h4>
 <p>Interrupts are essentiel to the implementation of multitasking, in computers of any size as well as in microcontrollers. A periodic interrupt requested by a timer is theoretically sufficient to make a multitask system, but a more efficient handling of I/O streams is permitted by specific interrupts</p>
 <ul><li>In personal computers, interrupts are managed by the operating system in a manner which is transparent for the application programs</li>
 <li>On microcontrollers, managing interrupts is the developer's business</li>
 </ul>
+</div>
 
 <h2>5.3 Working with the Arduino</h2>
 <p><a href="https://www.arduino.cc/">Arduino</a> is the name of an Italian private company which made a successful attempt to enable non-professionals to learn electronics through embedded computing, and produce some home-made microcontroller based applications.</p>
@@ -222,9 +236,11 @@ This makes a convenient way to generate a slowly varying analog signal using a s
 When people talk about "The Arduino" they refer to the board, or to the microcontroller itself.</p>
 <p>While some choices made by Arduino are highly questionable, the benefit of this project is a worldwide acceleration of the DIY (Do-It-Yourself) microcontroller development activity. Notably many competing manufacturers put higher performance, lower cost boards on the market, while the open source community produced alternate software solutions.</p>
 
-<h3 class="bk">5.3.1 The Arduino Uno hardware</h3>
+<h3>5.3.1 The Arduino Uno hardware</h3>
 <p>The Uno is the first Arduino board and the most famous. While its technology was nearly outdated when it was introduced, it is still produced.</p>
 <img class="wide" src="Arduino_Uno_pinout.png" width="100%">
+
+<div class="nob">
 <p>The board is equipped with two microcontrollers :</p>
 <ul><li>the target microcontroller, which executes the user's programs and exposes 22 I/O pins for external wiring</li>
 <li>the USB gateway microcontroller, which acts like a bridge between the target microcontroller's UART and the host computer's USB port</li>
@@ -232,6 +248,7 @@ When people talk about "The Arduino" they refer to the board, or to the microcon
 <p>On delivery, the target microcontroller flash memory contains already a small bootloader program, which is ready to receive program data via the UART and write them into the remaining space in the flash memory. The gateway microcontroller contains the USB-UART bridge software.</p>
 
 <p>Why 2 microcontrollers? The USB communication protocol is extremely complex and having the USB port on the target microcontroller would not have left sufficient resources for the user programs. In the other hand, the UART-based bootloader is lightweight.</p>
+</div>
 
 <p>The target microcontroller is an ATmega328P made by ATMEL (now belonging to Microchip), with the following characteristics:</p>
 <ul><li>8-bit AVR RISC CPU</li>
@@ -249,12 +266,13 @@ When people talk about "The Arduino" they refer to the board, or to the microcon
 <li>One ADC, 10 bits resolution, 15 ksamp/s, 6 multiplexed inputs</li>
 </ul>
 
-<p class="bk">The Uno board exposes a proprietary connector layout for which many accessory boards, called "shields", were developed.</p>
+<p>The Uno board exposes a proprietary connector layout for which many accessory boards, called "shields", were developed.</p>
 <p>The Uno board can be powered by the USB (5 Volts nominal, 4.5 Volts min.) or by an external supply from 6 to 14 Volts, thanks to a 5 Volts voltage regulator. The board also has a 3.3 Volts regulator for the needs of shields.
 
 <p>Note: Around year 2000 the standard supply voltage for microcontrollers was shifted from 5 Volts to 3.3 Volts, this change was also applied to every digital chip communicating with SPI, I2C, UART.<br>
 The ATmega328P could run from 3.3 Volts at a reduced clock frequency, but Arduino chose to stick to 5 Volts. For this reason, the accessory boards or "shields" frequently include voltage translator ICs to ensure compatibility with 3.3V chips.</p>
- 
+
+<div class="nob">
 <h3>5.3.2 The Arduino software</h3>
 
 <p>Arduino proposes an IDE (Integrated Development Environment) running on a host computer (Windows, Mac OS, Linux).<br>
@@ -266,6 +284,9 @@ The IDE contains the following software components :</p>
 <li>A serial monitor, which is a terminal allowing to exchange text messages with a user program running on the target microcontroller</li>
 <li>A serial plotter, which draws graphics from the data it receives from the target microcontroller</li>
 </ul>
+</div>
+
+<div class="nob">
 <p>With the intention of keeping things apparently simple, the IDE ('legacy version') comes with the following limitations:</p>
 <ul><li>Splitting the source code into more than one file is not encouraged</li>
 <li>Browsing the source code over multiple files is not supported, but a context sensitive help is available for Arduino library functions</li>
@@ -273,6 +294,8 @@ The IDE contains the following software components :</p>
 <li>No incremental build</li>
 <li>No debugger</li>
 </ul>
+</div>
+
 <p>However, the system is more open that it seems at first sight. With some efforts it is possible to split the source code, use legacy C text formatting (snprintf), perform direct access to the peripheral registers, and use interrupts (all this thanks to the <a href="https://www.nongnu.org/avr-libc/user-manual/modules.html">avr-libc</a> library)</p>
 
 <p>The C/C++ standards require a main() function with 2 optional arguments, returning an int.<br>
@@ -281,7 +304,7 @@ For this reason, the Arduino IDE expects the main program file to contain instea
 The setup() function is called once, then the loop() function call is repeated indefinitely.<br>
 (These calls are included in a main() function created automatically by the Arduino build system).</p>
 
-<p class="bk">Arduino jargon:</p>
+<p>Arduino jargon:</p>
 <table class="bw">
 <tr><td><i>Arduino term</i></td><td><i>actual meaning</i></td></tr>
 <tr><td>Arduino language</td><td>C++, with specific libraries</td></tr>
@@ -326,6 +349,7 @@ to keep it stable, plot two additional curves with constant Ymin and Ymax values
 <p>"Low level" means "close to the hardware", in a layered model of application development.<br>
 The complications of this level are "abstracted" (hidden) by an intermediate layer of apparently simple functions ("drivers"), but it is sometimes necessary to be aware of the hidden details. The first step is to get familiar with the target microcontroller <a href="https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/ATmega48A-PA-88A-PA-168A-PA-328-P-DS-DS40002061B.pdf">reference manual</a></p>
 
+<div class="nob">
 <h4>GPIO direct access</h4>
 <p>Pin direction may be configured using the <a href="https://www.arduino.cc/reference/en/language/functions/digital-io/pinmode/">pinMode() function</a>, writing and reading can be done one pin at a time with digitalWrite() and digitalRead()</p>
 <p>By talking directly to the GPIO peripheral, it is possible to manipulate several pins simultaneously (up to 8).</p>
@@ -333,6 +357,7 @@ The complications of this level are "abstracted" (hidden) by an intermediate lay
 the correspondance between the GPIO port numbering and the Arduino pin numbering is documented on the <a href="Arduino_UNO-TH_Rev3e_schematic.pdf">Arduino UNO schematic</a> and the pinout diagram above.</p>
 <p>Each port exposes three 8-bit registers, DDRx (the direction register), PORTx (the output register), PINx (the input register), x being B, C or D</p>
 <p>In order to facilitate the access to these registers from a C/C++ program, symbols for every peripheral register are defined in file iom328p.h which is included by io.h which is included by Arduino.h which is included automatically in every Arduino "sketch".</p>
+</div>
 
 <h4>Timer interrupt and time measurement</h4>
 <p>Function <a href="https://www.arduino.cc/reference/en/language/functions/time/millis/">millis()</a> provides a value of the duration elapsed since the last CPU reset, in ms. (It overflows approximately every 50 days).</p>
@@ -342,6 +367,7 @@ In order to keep time on a longer scale, an overflow interrupt is configured to 
 <p>In the other hand, function delayMicroseconds() is based on an estimate of the execution duration of a repeated instructions sequence, it is worth using only for short durations (less than 1 ms).</p>
 <p>Find file writing.c in the Arduino installation directory for all details</p>
 
+<div class="nob">
 <h4>PWM outputs</h4>
 <p>The analogWrite() function starts a PWM source on one of the 6 PWM-capable pins, which is bound to one of the three timers of the Uno.<br>
 This function allows to vary the duty cycle from 0 to 100% according to an 8-bit argument (0 to 255), but does not allow any control over the frequency.
@@ -356,8 +382,9 @@ This function allows to vary the duty cycle from 0 to 100% according to an 8-bit
 </table>
 <p>Note: timer 0 is used for two purposes, which are compatible.</p>
 <p>More details in document <a href="https://docs.arduino.cc/tutorials/generic/secrets-of-arduino-pwm">Secrets of Arduino PWM</a></p>
+</div>
 
-
+<div class="nob">
 <h3>Document links :</h3>
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Microcontroller">en.wikipedia.org/wiki/Microcontroller</a></li>
@@ -376,7 +403,7 @@ This function allows to vary the duty cycle from 0 to 100% according to an 8-bit
 <li><a href="https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/ATmega48A-PA-88A-PA-168A-PA-328-P-DS-DS40002061B.pdf">ATmega328</a></li>
 <li><a href="https://www.nongnu.org/avr-libc/user-manual/modules.html">www.nongnu.org/avr-libc/user-manual/modules.html</a></li>
 </ul>
-
+</div>
 
  
 </div>
