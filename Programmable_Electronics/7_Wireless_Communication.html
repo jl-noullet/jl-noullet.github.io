@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+ <link rel="stylesheet" href="polycop.css" />
+ <title>Wireless Communication</title>
+</head>
+<body>
+<div class="large">
+<center>
+<h1>7. Wireless Communication</h1>
+</center>
+
+<p>Wireless communication, also called radio communication, is the art of transmitting information by means of electromagnetic waves.</p>
+<p>Radio engineering was the first application of electron tubes (also named vacuum tubes or valves), and the strong demand for radio communication stimulated the development of electronic devices, initially based on vacuum and later on semi-conductor materials in solid state.</p>
+<p>This also stimulated the development of signal processing methods based on the spectral representation of signals, the theory of which was already ready (complex numbers, Fourier transform) but had served few applications.</p>
+
+<h2>7.1 Waves</h2>
+<div class="boite">
+<img class="rightim" src="water_wave.jpg">
+<p>A <a href="https://en.wikipedia.org/wiki/Wave">wave</a> is the propagation in space of some disturbance of a physical quantity.</p>
+<p>Waves have two essential properties:
+<ul><li>they involve some <a href="https://en.wikipedia.org/wiki/Action_at_a_distance">"action at a distance"</a></li>
+<li>they propagate at a finite speed</li>
+</ul></p>
+<p>These properties are necessary and sufficient. Well known examples illustrating these properties are water surface waves, mechanical waves along strings and elastic materials, and acoustic waves or sound</p>
+</div><div class="boite">
+<img class="rightim" src="doorbell.png">
+<p>It is important to understand the difference between an instantaneous action and a wave. The door bell is an example of instantaneous action, and in this case when you pull the chain, you have to deal with the inertia of the lever holding the bell and the bell itself.
+The radio equivalent of this is called "near field communication" (NFC)</p>
+<p>But if you replace the chain by a long horizontal rope, the pulse your hand applies generates a wave pulse which takes an observable time to travel, and in this case you have to deal with the inertia of the rope, not the bell.</p>
+<img src="traveling_pulse3.png">
+</div>
+<p>This is an illustration of two fundamental consequences of the definition of a wave:
+<ul><li>the emitter of the waves interacts with the "propagation medium" only, not with any object receiving the wave</li>
+<li>some energy is stored in the "propagation medium"</li>
+</ul></p>
+<p>One may object that in modern physics, no instantaneous action may even exist. But we are permitted to consider an action as instantaneous if the propagation delay is negligible in the timescale of the observed events, or in radio vocabulary, if the distance is negligible compared with the wavelength.</p>  
+<p>Notably when we analyze electrical circuits represented as interconnected components like resistors, capacitors,etc.. (said "lumped elements"), we consider that the interaction between them is propagated instantaneously by the wiring. But when working with high frequency signal (familiarly called RF signals for Radio Frequency signals), more sophisticated models become necessary, like transmission lines and "distributed elements")</p>
+
+<h2>7.2 Electromagnetic Waves</h2>
+
+<h3>7.2.1 Electric and magnetic fields</h3>
+<p>A spectacular example of "action at a distance" is the influence of a magnet on ferrous objects or other magnets. During centuries, physicists considered this action as instantaneous and then not implying waves.<br>The same remark applies to the electrostatic forces</p> 
+<p>At the same time, the study of static magnetic and electrostatic fields found no interaction between them.</p>
+<div class="boite">
+<img class="rightim" src="biot_savart.png">
+<p>But on the dynamic side, several laws of electromagnetism exist which connect magnetics and electrostatics:
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Biot%E2%80%93Savart_law">Biot-Savart law</a> : an electric current creates a magnetic field, the lines of force of which are circles lying in planes perpendicular to the current. More generally, any motion of an electric charge creates such a magnetic field.<br>A practical application is the coil or electromagnet, where the magnetic fields produced by <a href="loop_field.png">current loops</a> add together (see <a href="https://en.wikipedia.org/wiki/Amp%C3%A8re%27s_circuital_law">Ampere's law</a>).</li>
+</ul></p>
+</div>
+<div class="boite">
+<img class="rightim" src="induction_law.png">
+<ul><li><a href="https://en.wikipedia.org/wiki/Faraday%27s_law_of_induction">Faraday's law of induction</a> : between the terminals of a conductor moving in such a manner that its motion cuts a magnetic field, a voltage appears, called "electromotive force". More generally, if the magnetic flux traversing a circuit loop varies in time, an electromotive force appears. This is the operating principle of generators (dynamos, alternators) and transformers</li>
+</ul></div>
+
+<h3>7.2.2 Maxwell's equations</h3>
+<p>Amazingly soon after Ampere's and Faraday's works, Maxwell formulated an unified generalization of all the laws of electricity and magnetism, known as <a href="https://en.wikipedia.org/wiki/Maxwell%27s_equations">Maxwell's equations</a>. These equations have two remarkable consequences :
+<ul><li>If an electric field varies in time, this creates a varying magnetic field, and conversely</li>
+<li>The fluctuations of electric and magnetic fields propagate through space at a finite speed, the value of which can be derived from the electrostatic constant (permittivity) and the magnetic constant (permeability)</li>
+</ul>
+<p>This implies the existence of waves, and also that these waves are electric and magnetic at the same time, hence <a href="https://en.wikipedia.org/wiki/Electromagnetic_radiation">electromagnetic</a>.</p>
+<p>The electric field and the magnetic field are perpendicular to the propagation direction (transversal wave), and perpendicular to each other.<br>By definition, the polarization is the direction of the electric field (vertical on the figure below).<br>Special antenna designs create a <a href="circular_polarization.gif">circular polarization</a> where the E and B vectors rotate in time</p>
+<img src="vertical_polarization.png">
+<p>The existence of waves requires that energy is stored in the transmission medium. But electromagnetic waves may travel in vacuum, so during some time, physicists assumed the existence of an undetectable medium called "aether" to hold this energy. With the special relativity, Einstein convinced everyone that electromagnetic energy is simply stored in vacuum.<p>
+
+<h3>7.2.3 Hertzian waves</h3>
+<p>Scientific experiments led by Herz confirmed the predicted properties of electromagnetic waves, including optical-like properties (reflexion, refraction, polarization).<p>
+<p>Herz produced waves using resonant circuits excited by pulses obtained by means of sparks (brief electric arcs)</p> 
+<p>As soon as he knew about this, Marconi started to develop commercial wireless communication solutions based on these "hertzian waves" also named "radio waves".</p>
+
+<h3>7.2.4 The light</h3>
+<p>Young's experiments with <a href="https://en.wikipedia.org/wiki/Young%27s_interference_experiment">optical interferences</a> proved that light is a wave, permitted measurement of its wavelength, and matched colors with wavelengths</p>
+<p>Measuring light's speed appeared very difficult, but at the time of Maxwell's works, some results were available. Observing that the speed of light was very close to the speed of electromagnetic waves which he had predicted independantly, Maxwell concluded that light is an electromagnetic wave, together with <a href="https://en.wikipedia.org/wiki/Infrared">infrared</a> and <a href="https://en.wikipedia.org/wiki/Ultraviolet">ultraviolet</a>.</p>
+
+<h3>7.2.5 The scaling principle</h3>
+<p>At that point, it is necessary to recall that similar results are obtained if the linear dimensions of electric devices (inductors, capacitors, antennas) are scaled proportionnaly to the wavelength.</p>
+<img src="LC_scaling.png">
+<p>This helps understanding the practical difference between radio waves and light:
+<ul><li>Radio wavelengths (from 1mm to 10km) are compatible with man-made electric circuits</li>
+<li>Light (from 0.1µm to 10µm) is generated and sensed by microscopic events, governed by quantum physics</li>
+</ul></p>  
+
+<h3>7.2.6 The electromagnetic spectrum</h3>
+<p>In optics, the spectrum is a representation of light intensity as a function of wavelength.<br>
+In signal processing, the spectrum is a representation of a signal as a function of frequency. Now we know that the visible light spectrum is a small portion of the <a href="Electromagnetic_spectrum_NASA_illustration.jpg">electromagnetic spectrum</a>.</p>
+<img src="electromagnetic_spectrum.png">
+<p>It should be noted that the transitions between different zones of the spectrum are not sharp, some are rather a matter of convention.</p>
+  
+<h2>7.3 Carrier and Modulation</h2>
+
+<h3>7.3.1 Bandwidths</h3>
+
+<p>A bandwidth is the range of frequencies which are required to carry a desired information flow.
+<ul><li>the source bandwidth or user bandwidth or baseband is the bandwidth of the client infomation flow or "payload"</li>
+<li>the radio bandwidth or channel bandwidth is the range occupied by the transmission in the electromagnetic spectrum</li> 
+</ul>
+Examples of well known source bandwidths:
+<ul><li>analog audio (telephone quality) : 3 kHz</li>
+<li>analog audio (high fidelity) : 20 kHz</li>
+<li>analog television (SD-TV) : 7 MHz</li>
+<li>digital information : proportional to the bit rate, ratio depending on the analog encoding</li>
+</ul>
+Considering a given modulation technology, the channel bandwidth is proportional to the source bandwidth. The ratio depends on the modulation scheme.</p>
+
+<h3>7.3.2 Carrier</h3>
+
+<p>To establish a radio link, a carrier frequency is chosen in the spectrum, according to:
+<ul><li>fair compatibility with other users of the radio spectrum</li>
+<li>propagation conditions</li>
+<li>desired bandwidth</li>
+<li>operational constraints vs available technology</li>
+</ul>
+The lower bound of the usable radio spectrum is determined by:
+<ul><li>The requirement that the carrier frequency be great compared with the channel bandwidth, in order to leave space for several channels</li>
+<li>the huge size of equipments dealing with large bandwidths (like kilometers long antennas)</li>
+</ul>
+In practice, frequencies lower than 30 kHz are used only for very special needs (communication with submarines).</p>
+<p>The higher bound of the usable radio spectrum is where optical (infrared) methods become more usable, and depends on technology evolutions,
+a limit of 300 GHz is admitted in 2025.</p>
+<p>Fair use of the radio spectrum relies on rules enforced by governemental authorities. These rules cut the spectrum into bands, each one strictly reserved to a determined application and subject to transmitted power limitations, geographical limits and time constraints</p>
+<p>A small fraction of the spectrum is occupied by the ISM bands (Industrial, Scientific and Medical), which are available for general use for any purpose, without any license, but with low transmitted power limit allowing only a short range. Home appliances like remote controls, Bluetooth and Wifi work in ISM bands.</p>
+
+<h3>7.3.3 Modulation</h3>
+
+<p>In the transceiver, the carrier is modulated by the source signal in order to carry the information.</p>
+<p>The simplest form of modulation is the On-Off keying, which was historically used to transmit messages with the Morse code. Nowadays, On-Off keying is used for transmitting binary data between digital devices. It is an extreme case of amplitude modulation.</p>
+<p>Modulation techniques fall into 3 categories:
+<ul><li>Amplitude Modulation AM</li>
+<li>Frequency Modulation FM</li>
+<li>Phase Modulation</li>
+</ul>
+In theory, frequency modulation and phase modulation are similar, frequency being the derivative of phase. In practice modulation and demodulation processes for frequency and phase are different</p>
+<p>Demodulation of AM may be the simplest, using a diode to extract the envelope of the received RF signal. The first generation audio receivers were called "crystal radio" because a natural galena crystal (PbS, lead sulfide) was used as semiconductor diode.</p>
+<p>The theoretical channel bandwidth for AM is twice the source bandwidth (6 kHz for 3 kHz audio).</p>
+<p>FM was introduced in order to improve the quality of audio broadcasting, up to High Fidelity, as soon as progresses in technology opened new, higher frequency bands, in the VHF band (around 100 MHz), where wider channel widths (such as 250 kHz) were allowed.</p>
+<p>Demodulation of FM is more complex, involving clipping to remove any unwanted amplitude fluctuation, filtering through a linear slope filter, followed par amplitude demodulation.</p> 
+<p>The channel <a href="https://en.wikipedia.org/wiki/Frequency_modulation">bandwidth for FM</a> is theoretically infinite and complicated to calculate (based on Bessel's functions). A simplified approximation is Carson's rule, giving the channel bandwidth as twice the frequency deviation added to the source bandwidth.</p>
+<p>AM and FM are also used for individual voice communication for aviation (AM), marine (FM), walkie-talkie (AM and FM).</p>
+<p>Comparison between AM and FM for audio:
+<ul><li>AM : 
+<ul><li>sensitivity to amplitude fluctuations</li>
+<li>minimum channel bandwidth (with possible further reduction with <a href="https://en.wikipedia.org/wiki/Single-sideband_modulation">SSB</a></li>
+<li>progressive degradation of signal at extreme distance or in presence of interfering transmission</li>
+</ul></li>
+<li>FM :
+<ul><li>immunity against amplitude fluctuations</li>
+<li>increasing the frequency deviation gives control on signal quality at the expense of greater channel bandwidth</li>
+<li>signal quality maintained up to complete loss, in case of interferring transmission the strongest masks the other</li>
+</ul></li></ul>
+</p>
+<p>Phase modulation is used mainly for digital transmission (as well as AM and FM), with the help of IQ modulation and demodulation made affordable in digital form</p> 
+
+
+
+
+
+<h2>7.  The Super-Heterodyne receiver</h2>
+	<h3>7. The filtering requirement</h3>
+	<h3>7. The mixer as a frequency translator</h3>
+	<h3>7. The super-heterodyne receiver</h3>
+	<h3>7. The digital configurable transceiver</h3>
+<h2>7.  The antenna and the impedance matching</h2>
+<h2>7.  The challenges and tradeoffs of wireless transmission</h2>
+
+https://en.wikipedia.org/wiki/Horizon
+
+
+
+
+
+
+
+
+
+
+
+</div>
+</body>
+</html>
