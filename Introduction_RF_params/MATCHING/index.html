@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf8">
+   <meta http-equiv="content-type" content="text/html; charset=utf8">
+   <title>Antenna matching circuits</title>
+</head>
+<body text="#000000" bgcolor="#DDDDDD" link="#000099" vlink="#990099" alink="#000099">
+
+<style type="text/css">
+table.bw { border: 2px solid black; border-collapse:collapse; }
+table.bw td { border: 1px solid green; background-color:white;
+		padding: 1px 5px 1px 10px; }
+.bk { page-break-before: always; }
+h2 { margin-top: 50px; color: blue }
+h3 { margin-top: 40px; color: blue }
+h4 { background-color:#dfd; }
+.toc { list-style-type: none; }
+.toc ul{ list-style-type: none; }
+.toc li { margin: 0; font-size: 125% }
+.toc ul li { margin: 0px; font-size: 80% }
+li { margin-top: 10px; }
+ul ul li { margin-top: 3px; }
+.lilli li { margin-top: 3px; }
+img { margin-top: 4px; margin-bottom: 4px }
+.large { margin: 0 auto; -webkit-border-radius: 8px; -moz-border-radius: 8px; border-radius: 8px;
+width: 880px; padding-left: 10px; padding-right: 8px; background-color:white; }
+.boite { overflow: auto }
+.leftim { float: left; margin-right: 50px }
+.rightim { float: right; margin-left: 20px; margin-right: 20px}
+</style>
+<!-- marges pour chrome A4 portrait : TRBL 20 10 10 10 mm -->
+
+<div class="large">
+<center>
+<h1>Antenna matching circuits</h1>
+<small>&copy; Jean-Louis Noullet 2017</small></center>
+<br>
+By inserting lossless components (capacitors, inductors, short transmission lines), it is possible to
+improve the impedance matching between two devices, increasing the signal transmission efficiency.<br>
+An example of such an adjustment is matching an antenna, which has a complicated complex impedance, to a transceiver
+which has a standard real impedance.<br>
+<img src="pcb-antenna1.jpg"><br>
+The process involves usually three steps :
+<ol><li>do the matching at the nominal (center) frequency</li>
+<li>check its behaviour across the required bandwidth</li>
+<li>check its sensitivity to parameter drift (temperature, manufacturing tolerance)</li>
+</ol>
+<h3>LC circuits</h3>
+With the aid of the Smith chart, it is easy to demonstrate that any matching problem can be solved by means of a simple <b>&#x0393;</b>
+circuit made out of one capacitor and one inductor, at the expense of a reduced bandwidth. 
+<div class="boite">
+<img src="Smith_Chart_Tuning_Paths.png" class="rightim">
+<br><ul>
+<li>The effect of capacitors and inductors placed in series can be described as motion on some
+<b>constant real impedance part circle</b> of the Z-Smith chart.</li>
+<li>The effect of capacitors and inductors placed in parallel can be described as motion on some
+<b>constant real admittance part circle</b> of the Y-Smith chart.</li>
+</ul>
+The most usual problem is to match an arbitrary impedance Z<sub>x</sub> to the reference impedance Z<sub>0</sub>,
+which is represented by the origin (center) of the Smith Chart.<br>
+A practical method consists in finding two segments of circle (one from the Z-chart, one from the Y-chart),
+<a href="smith_path.png">building a path</a> from Z<sub>x</sub> to the origin.<br>
+A combined <a href="YZ_smith_chart.png" target="_blank">Y-Z-Smith chart</a> is helpful in this context.<br>
+The method is suitable for <a href="spectre_sim.html" target="_blank">simulations</a> as well as for
+<a href="Atmel-42732-Antenna-Tune-Up_ApplicationNote_AT16802.pdf" target="_blank">
+laboratory circuit adjustements</a>.
+</div>
+<h3>Transmission line</h3>
+A <b>quarter-wave</b> transmission line segment can match <b>Z<sub>x</sub></b> to <b>Z<sub>0</sub></b>,
+provided that Z<sub>x</sub> is <b>real</b> (resistive).<br>
+(see <a href="../standing_waves.html" target="_blank">Standing Waves</a>)<br>
+Such a segment can be cascaded with a LC circuit which in this case does not need to reach Z<sub>0</sub> but simply the real axis.<br>
+The quarter-wave segment characteristic impedance Z<sub>s</sub></b> should be such as <b>(Z<sub>s</sub>)<sup>2</sup> = Z<sub>0</sub>.Z<sub>x</sub></b>
+<h3>Non-synchronous Transformer</h3>
+In order to perform an adaptation between two real (resistive) impedances <b>Z<sub>1</sub></b> and <b>Z<sub>2</sub></b>,
+solutions using cascaded line segments of impedances <b>Z<sub>1</sub></b> and <b>Z<sub>2</sub></b> only are proposed
+as <a href="nonsynchronous_transformer.pdf" target="_blank">non-synchronous transformers</a>. These solutions occupy less space than the quarter wave line.<br>
+The simplest one uses two cascaded line segments with equal length. 
+<img src="non_sync_transfo.png">
+
+</div></body></html>

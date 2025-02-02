@@ -1,0 +1,147 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+   <title>Transmission Lines Secrets</title>
+</head>
+<body text="#000000" bgcolor="#DDDDDD" link="#000099" vlink="#990099" alink="#000099" style="font-size: 110%">
+
+<style type="text/css">
+table.bw { border: 2px solid black; border-collapse:collapse; }
+table.bw td { border: 1px solid green; background-color:white;
+		padding: 1px 5px 1px 10px; }
+.bk { page-break-before: always; }
+h2 { margin-top: 50px; color: blue }
+h3 { margin-top: 40px; color: blue }
+h4 { background-color:#dfd; }
+.toc { list-style-type: none; }
+.toc ul{ list-style-type: none; }
+.toc li { margin: 0; font-size: 125% }
+.toc ul li { margin: 0px; font-size: 80% }
+li { margin-top: 10px; }
+ul ul li { margin-top: 3px; }
+.lilli li { margin-top: 3px; }
+img { margin-top: 10px; margin-bottom: 10px }
+.large { margin: 0 auto; -webkit-border-radius: 8px; -moz-border-radius: 8px; border-radius: 8px;
+width: 880px; padding-left: 10px; padding-right: 8px; background-color:white; }
+.boite { overflow: auto }
+.leftim { float: left; margin-right: 50px }
+.rightim { float: right; margin-left: 20px; margin-right: 20px}
+</style>
+<!-- marges pour chrome A4 portrait : TRBL 20 10 10 10 mm -->
+
+<div class="large">
+<center>
+<h1>Transmission Lines Secrets</h1>
+<small>&copy; Jean-Louis Noullet 2017</small></center>
+
+<h1>The Two Questions</h1>
+<b>L'</b> and <b>C'</b> being the values of inductance per unit length and capacitance per unit length,
+the <a href="https://en.wikipedia.org/wiki/Telegrapher%27s_equations">Telegrapher's Equations</a> applied to the <a href="../lossless_line_model.html">model of lossless transmission lines</a>
+yield the following expressions :<br />
+<ul><li>Characteristic impedance : <img src="../form_0.png" style="vertical-align: middle"></li>
+<li>Propagation velocity : <img src="../form_0b.png" style="vertical-align: middle"></li>  
+</ul>
+It looks like one can have full control over the characteristic impedance and the propagation velocity.<br />
+But commercially available cable have <b>Z<sub>0</sub></b> impedances in the range of 40 to 75 Ohms for coaxial cables, and 100 to 300 Ohms for
+balanced pairs and twisted pairs.<br /> 
+Hence the <b>questions</b> :
+<ol><li>Is it possible to make cables of any arbitrary impedance, or are there physical bounds to <b>Z<sub>0</sub></b> ?</li>
+<li>Is it possible to achieve any arbitrary propagation speed ? greater than the speed of light ?</li>
+</ol>
+<i>Answers at the end of the document...</i>
+<h1>1. General expressions for L' and C'</h1>
+<img src="form_10.png"><br />
+where <b>K<sub>C</sub></b> and <b>K<sub>C</sub></b> are dimensionless functions of the geometry of the line cross-section.<br />
+These factors may depend on frequency because the distribution of current inside conductors varies according to
+the "skin effect", but they are always strongly connected together, as a consequence of Maxwell's equations.<br />
+When the frequency dependance is neglected, this connection is expressed by :<br />
+<img src="form_11.png"><br />
+The relative magnetic permeability is 1.0 for every non-ferromagnetic material.<br />
+The relative permittivity belongs to the insulating material surrounding or separating the conductors, so
+these formulas apply only where a single insulating material is used.
+
+<h1>2. Characteristic Impedance</h1>
+<img src="form_15.png"><br />
+This expression may be simplified, taking into account the definition of the impedance of free space, which is a derived physical constant<br />
+<img src="form_12.png"><br />
+and the connection between <b>K<sub>L</sub></b> and <b>K<sub>C</sub></b> :<br />
+<table class="bw"><tr><td><img src="form_16.png"></td></tr></table>
+
+<h1>3. Propagation Velocity</h1>
+<img src="form_17.png"><br />
+This expression may be simplified, taking into account the connection between vacuum constants and the speed of light <b>c</b><br />
+<img src="form_13.png"><br />
+as well as the connection between <b>K<sub>L</sub></b> and <b>K<sub>C</sub></b> :<br />
+<table class="bw"><tr><td><img src="form_18.png"></td></tr></table>
+<br />This is just the same as the speed of light (or any TEM electromagnetic wave) in the insulating material.<br />
+Figures for typical plastic-insulated cables :<br />
+<table class="bw">
+<tr><td></td><td>dense plastic E<sub>r</sub>=2.3</td><td>plastic foam E<sub>r</sub>=1.5</td><td>Light</td></tr>
+<tr><td>speed</td><td>0.20 m/ns</td><td>0.24 m/ns</td><td>0.30 m/ns</td></tr>
+<tr><td>delay</td><td>5 ns/m</td><td>4 ns/m</td><td>3.3 ns/m</td></tr>
+</table>
+
+<h1>4. Typical Examples</h1>
+<h2>Coaxial Cable</h2>
+<div class="boite"><img class="leftim" src="coaxial.png">
+<img src="form_20.png">
+<table class="bw">
+<tr><td>R2/R1</td><td>Z<sub>0</sub> with E<sub>r</sub>=2.3</td><td>Z<sub>0</sub> with E<sub>r</sub>=1.5</td></tr>
+<tr><td>3</td><td>43.4</td><td>53.8</td></tr>
+<tr><td>6</td><td>70.8</td><td>87.7</td></tr>
+<tr><td>10</td><td>91</td><td>113</td></tr>
+<tr><td>20</td><td>118</td><td>147</td></tr>
+<tr><td>100</td><td>182</td><td>225</td></tr>
+</table>
+</div>
+<h2>Parallel Wires (Balanced Pair)</h2>
+<img src="form_21.png">
+<div class="boite"><img class="leftim" src="parallel_pair.png"><br />
+<table class="bw">
+<tr><td>D/r</td><td>Z<sub>0</sub> with E<sub>r</sub>=2.3</td><td>Z<sub>0</sub> with E<sub>r</sub>=1.5</td></tr>
+<tr><td>3</td><td>76</td><td>94</td></tr>
+<tr><td>6</td><td>139</td><td>172</td></tr>
+<tr><td>10</td><td>181</td><td>224</td></tr>
+<tr><td>20</td><td>237</td><td>293</td></tr>
+<tr><td>100</td><td>364</td><td>451</td></tr>
+</table>
+<br />
+When <b>D/r >> 1</b>, the following approximation may be used:<br /><img src="form_22.png">
+</div>
+
+<h1>5. The Answers</h1>
+<ol><li>Yes, it is theoretically possible to make coaxial cables and pair cables of any impedance, but extreme values
+would require extremely thick or extremely thin conductors which are impractical</li>
+<li>No, it is not possible to achieve any speed, as well as it is not possible to create a material of an arbitrary
+relative permittivity.
+The relative permittivity being always greater than one, the propagation speed is always lower than the speed of light in vacuum.</li>
+</ol>
+<h2>Notes</h2>
+Low impedances are preferred for coaxial cables for efficiency reasons (minimal loss), not for ease of manufacturing.
+Low impedance coaxial cables (R2/R1 &lt;= 3) may be made with a hollow central conductor to save material :
+<img src="hollow_coax.jpg"><i>source <a href="https://en.wikipedia.org/wiki/File:CDMA_Cell_antenna.jpg">Wikipedia</a></i><br />
+For special applications (delay lines), the propagation speed may be greatly reduced by including ferromagnetics materials or
+creating an additional inductive coupling between neighboring LC sections.
+<p id="pipo"></p>
+
+<script type="text/javascript">
+/*
+function coax ( $epsilon, $x ) {
+return( (376.73/(2*Math.PI*Math.sqrt($epsilon))) * Math.log($x) );
+}
+function paral ( $epsilon, $x ) {
+return( (376.73/(Math.PI*Math.sqrt($epsilon))) * Math.log(($x/2)+Math.sqrt((($x*$x)/4)-1)) );
+}
+var $t = "Z = "; $e = 2.3;
+$t += paral( $e, 3 ) + "<br>";
+$t += paral( $e, 6 ) + "<br>";
+$t += paral( $e, 10 ) + "<br>";
+$t += paral( $e, 20 ) + "<br>";
+$t += paral( $e, 100 ) + "<br>";
+document.getElementById("pipo").innerHTML = $t;
+*/
+</script>
+</div>
+</body></html>

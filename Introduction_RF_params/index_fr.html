@@ -1,0 +1,67 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+   <title>Intro RF</title>
+</head>
+<body text="#000000" bgcolor="#DDDDDD" link="#000099" vlink="#990099" alink="#000099">
+
+<style type="text/css">
+table.bw { border: 2px solid black; border-collapse:collapse; }
+table.bw td { border: 1px solid green; background-color:white;
+		padding: 1px 5px 1px 10px; }
+.bk { page-break-before: always; }
+h2 { margin-top: 50px; color: blue }
+h3 { margin-top: 40px; color: blue }
+h4 { background-color:#dfd; }
+.toc { list-style-type: none; }
+.toc ul{ list-style-type: none; }
+.toc li { margin: 0; font-size: 125% }
+.toc ul li { margin: 0px; font-size: 80% }
+li { margin-top: 10px; }
+ul ul li { margin-top: 3px; }
+.lilli li { margin-top: 3px; }
+img { margin-top: 10px; }
+.large { margin: 0 auto; -webkit-border-radius: 8px; -moz-border-radius: 8px; border-radius: 8px;
+width: 880px; padding-left: 10px; padding-right: 8px; background-color:white; }
+.boite { overflow: auto }
+.leftim { float: left; margin-right: 50px }
+.rightim { float: right; margin-left: 20px; margin-right: 20px}
+</style>
+<!-- marges pour chrome A4 portrait : TRBL 20 10 10 10 mm -->
+
+<div class="large">
+<center>
+<h1>Introduction aux paramètres RF</h1>
+<small>&copy; J.L. Noullet 2013-2016</small></center>
+<h2>Objet</h2>
+L'objectif de ce document est de donner une introduction concrète aux paramètres spécifiques qui ont été inventés
+pour satisfaire les besoins de l'électronique <b>RF</b> (<b>R</b>adio-<b>F</b>réquences) :
+<ul class="lilli"><li>ligne de transmission</li>
+<li>adaptation d'impédance</li>
+<li>coefficients de réflexion</li>
+<li>abaque de Smith</li>
+<li>ondes stationnaires</li>
+<li>paramètres <b>S</b> (Scattering Parameters)</li></ul>
+Ces concepts doivent être en oeuvre chaque fois que des éléments de circuits sont interconnectés par des liaisons dans
+lesquelles le temps de propagation n'est pas négligeable par rapport à l'échelle de temps des signaux.<br />
+Ou encore chaque fois que les dimensions du système ne sont pas négligeables par rapport aux longueurs d'ondes des signaux.<br />
+Cela peut éventuellement concerner des projets qui ne sont pas des systèmes de radio communication.<br /><br />
+<div class="boite">
+<img class="rightim" src="line_with_birds.jpg">
+Quelques exemples :
+<table class="bw"><tr><td>câble USB</td><td>1.5 m</td><td>horloge 480 MHz</td></tr>
+<tr><td>liaison CPU-RAM dans un PC</td><td>10 cm</td><td>horloge 1.2 GHz</td></tr>
+<tr><td>ligne téléphonique analogique</td><td>100 km</td><td>audio max 3 kHz</td></tr>
+<tr><td>sonde instrument labo RF</td><td>5 cm</td><td>30 GHz</td></tr>
+</table>
+<h2>Chapitres</h2>
+<ul class="toc">
+<li><a href="lignes_et_reflexions.html">1. Lignes et Réflexions</a></li>
+<li><a href="parametres_S.html">2. Paramètres S</a></li>
+</ul>
+</div>
+<p>&nbsp;</p>
+</div>
+</body></html>

@@ -1,0 +1,57 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+   <title>Lossless Line Model</title>
+</head>
+<body text="#000000" bgcolor="#DDDDDD" link="#000099" vlink="#990099" alink="#000099">
+
+<style type="text/css">
+table.bw { border: 2px solid black; border-collapse:collapse; }
+table.bw td { border: 1px solid green; background-color:white;
+		padding: 1px 5px 1px 10px; }
+.bk { page-break-before: always; }
+h2 { margin-top: 50px; color: blue }
+h3 { margin-top: 40px; color: blue }
+h4 { background-color:#dfd; }
+.toc { list-style-type: none; }
+.toc ul{ list-style-type: none; }
+.toc li { margin: 0; font-size: 125% }
+.toc ul li { margin: 0px; font-size: 80% }
+li { margin-top: 10px; }
+ul ul li { margin-top: 3px; }
+.lilli li { margin-top: 3px; }
+img { margin-top: 10px; margin-bottom: 10px }
+.large { margin: 0 auto; -webkit-border-radius: 8px; -moz-border-radius: 8px; border-radius: 8px;
+width: 880px; padding-left: 10px; padding-right: 8px; background-color:white; }
+.boite { overflow: auto }
+.leftim { float: left; margin-right: 50px }
+.rightim { float: right; margin-left: 20px; margin-right: 20px}
+</style>
+<!-- marges pour chrome A4 portrait : TRBL 20 10 10 10 mm -->
+
+<div class="large">
+<center>
+<h1>Lossless Line Model</h1></center>
+<img src="lclclc.png" title="LC cascade"><br />
+The limit of the series of identical cascaded LC cells when the cell length approaches zero gives the following results,
+with <b>L'</b> being the inductance per unit length and <b>C'</b> the capacitance per unit length :
+<ul><li>Characteristic impedance : <img src="form_0.png" style="vertical-align: middle"></li>
+<li>Propagation velocity : <img src="form_0b.png" style="vertical-align: middle"></li>  
+</ul>
+Dimensional checks :
+<ul>
+<li>[Inductance] = [ R T ] then [ L' ] = [ R T L<sup>-1</sup> ]</li>
+<li>[Capacitance] = [ R<sup>-1</sup> T ] then [ C' ] = [ R<sup>-1</sup> T L<sup>-1</sup> ]</li>
+<li>then [ Z<sub>0</sub> ] = [ (R T L<sup>-1</sup>/ R<sup>-1</sup> T L<sup>-1</sup>)<sup>1/2</sup> ] = [ R ] Ok</li>
+<li>and [ v ] = [ (R T L<sup>-1</sup> R<sup>-1</sup> T L<sup>-1</sup>)<sup>-1/2</sup> ] = [ L T<sup>-1</sup> ] Ok</li>
+</ul>
+The figure below represents a model similar to the one which is built in SPICE-type simulators, representing each end
+of the line as a Norton generator, using "voltage controlled current sources".<br />
+<img src="Transmission_Line_Model.png"><br />
+The figure shows more general parameter expressions, where the losses R and G are included and R,L,G,C are considered as
+functions of frequency, while s is the Laplace operator (jw in AC)<br />
+(source <a href="https://en.wikipedia.org/wiki/File:Transmission_Line,_Balanced,_Equiv_Crt.png">Wikipedia</a>)
+</div>
+</body></html>

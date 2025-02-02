@@ -1,0 +1,88 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+   <title>2-port S Parameters</title>
+</head>
+<body text="#000000" bgcolor="#DDDDDD" link="#000099" vlink="#990099" alink="#000099">
+
+<style type="text/css">
+table.bw { border: 2px solid black; border-collapse:collapse; }
+table.bw td { border: 1px solid green; background-color:white;
+		padding: 1px 5px 1px 10px; }
+.bk { page-break-before: always; }
+h2 { margin-top: 50px; color: blue }
+h3 { margin-top: 40px; color: blue }
+h4 { background-color:#dfd; }
+.toc { list-style-type: none; }
+.toc ul{ list-style-type: none; }
+.toc li { margin: 0; font-size: 125% }
+.toc ul li { margin: 0px; font-size: 80% }
+li { margin-top: 10px; }
+ul ul li { margin-top: 3px; }
+.lilli li { margin-top: 3px; }
+img { margin-top: 10px; margin-bottom: 10px }
+.large { margin: 0 auto; -webkit-border-radius: 8px; -moz-border-radius: 8px; border-radius: 8px;
+width: 880px; padding-left: 10px; padding-right: 8px; background-color:white; }
+.boite { overflow: auto }
+.leftim { float: left; margin-right: 50px }
+.rightim { float: right; margin-left: 20px; margin-right: 20px}
+</style>
+<!-- marges pour chrome A4 portrait : TRBL 20 10 10 10 mm -->
+
+<div class="large">
+<a style="float: left" href="./index.html">&lt;index&lt;</a>
+<center>
+<h1>3. 2-port S Parameters</h1>
+<small>&copy; Jean-Louis Noullet 2013-2017</small></center>
+
+<h2>3.1 Matrix representation of 2-ports</h2>
+A <b>two-port</b> is a circuit block with two pairs of terminals, described as a linear system (at least for small signals).<br />
+Each of these pairs of terminals or <b>ports</b> may work as input or output.<br /> 
+The ports may have a terminal in common.<br />
+<img title="" src="2_port_VI.png"><br />
+<img title="" src="matrix_HYZ.png"><br />
+Each matrix describes entirely the two-port and thus may be expressed in terms of any other one.
+
+<h2>3.2 Incident and Reflected Waves</h2> 
+As seen in §1.4, after having chosen a value for the <b>reference impedance Z<sub>0</sub></b>, the voltage visible at one port may be considered as the algebraic sum of :
+<ul class="lilli"><li>an incident voltage E<sub>i</sub> which is the value associated with the maximal power transfer condition</li>
+<li>a reflected voltage E<sub>r</sub> which is the possible consequence of an impedance mismatch</li>
+</ul>
+By definition, <b>waves</b> are these voltages divided by the square root of the reference impedance. This is a kind of normalization, for handling the case where the reference impedance would be different for each port.
+<ul class="lilli"><li><b>a</b> = incident wave</li>
+<li><b>b</b> = reflected wave</li>
+</ul>  
+<img title="" src="2_port_ab.png"><br />
+<img title="" src="definitions_ab.png"><br />
+
+<h2>3.3 S parameters</h2>
+The relations between the waves involved in a 2-port may be expressed by a matrix containing 4 dimensionless coefficients, the <b>S parameters</b> :<br />
+<img title="" src="S_matrix.png"><br />
+<img title="" src="S_equations.png"><br />
+
+The <b>S</b> letter refers to <b>Scattering Parameters</b>, a name which comes from optics, where the crossing of a material boundary causes partial reflexion and light scattering.<br />
+Provided that the reference impedance is known, the S matrix describes the system entirely and may be expressed in terms of any one of matrixes H, Y, Z and conversely.<br />
+This may be considered as a generalization of the reflexion coefficient, with benefits similar to those explained in §1.4.<br />
+<ul><li><b>S<sub>11</sub></b> = reflexion coefficient at port 1</li>
+<li><b>S<sub>12</sub></b> = transmission coefficient from port 2 to port 1</li>
+<li><b>S<sub>21</sub></b> = transmission coefficient from port 1 to port 2</li>
+<li><b>S<sub>22</sub></b> = reflexion coefficient at port 2</li></ul>
+If the reference impedance is the same for both ports, S<sub>12</sub> and S<sub>21</sub> are similar to voltage gains.
+Otherwise, S<sub>12</sub> and S<sub>21</sub> are normalized voltage gains, i.e. a value of 1 describes a power gain of 1.
+<h2>3.4 Conversion formulas</h2>
+The following tables give the equivalence between the S parameters and normalized Y, Z, H parameters, which are computed with a reference impedance of 1.
+When Z<sub>0</sub> is different from 1 :
+<ul class="lilli"><li>multiply the Z's by Z<sub>0</sub></li>
+<li>divide the Y's by Z<sub>0</sub></li>
+<li>multiply H11 by Z<sub>0</sub></li>
+<li>divide H22 by Z<sub>0</sub></li>
+<img src="SvsYe.png"><br />
+<img src="SvsZe.png"><br />
+<img src="SvsHe.png"><br />
+Source: Richard Anderson's reference document, published by Hewlett-Packard
+<a href="http://cp.literature.agilent.com/litweb/pdf/5952-1130.pdf">AN-95</a>
+
+</div>
+</body></html>

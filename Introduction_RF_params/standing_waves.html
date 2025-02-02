@@ -1,0 +1,98 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+   <title>Standing Waves</title>
+</head>
+<body text="#000000" bgcolor="#DDDDDD" link="#000099" vlink="#990099" alink="#000099">
+
+<style type="text/css">
+table.bw { border: 2px solid black; border-collapse:collapse; }
+table.bw td { border: 1px solid green; background-color:white;
+		padding: 1px 5px 1px 10px; }
+.bk { page-break-before: always; }
+h2 { margin-top: 50px; color: blue }
+h3 { margin-top: 40px; color: blue }
+h4 { background-color:#dfd; }
+.toc { list-style-type: none; }
+.toc ul{ list-style-type: none; }
+.toc li { margin: 0; font-size: 125% }
+.toc ul li { margin: 0px; font-size: 80% }
+li { margin-top: 10px; }
+ul ul li { margin-top: 3px; }
+.lilli li { margin-top: 3px; }
+img { margin-top: 10px; margin-bottom: 10px }
+.large { margin: 0 auto; -webkit-border-radius: 8px; -moz-border-radius: 8px; border-radius: 8px;
+width: 880px; padding-left: 10px; padding-right: 8px; background-color:white; }
+.boite { overflow: auto }
+.leftim { float: left; margin-right: 50px }
+.rightim { float: right; margin-left: 20px; margin-right: 20px}
+</style>
+<!-- marges pour chrome A4 portrait : TRBL 20 10 10 10 mm -->
+
+<div class="large">
+<a style="float: left" href="./index.html">&lt;index&lt;</a>
+<center>
+<h1>2. Standing Waves</h1>
+<small>&copy; Jean-Louis Noullet 2013-2017</small></center>
+
+<h2>2.1 Signal Decomposition</h2>
+<div class="boite"><a href="swr_anime.html"><img class="rightim" src="SWR_fixe.png"></a>
+In presence of reflexions, in sinewave steady state mode (AC), there may be some locations along the line where the incident signal and the reflected signal are in phase, which causes their amplitudes to add up.<br />
+Similarly, there may be some locations where they are in opposition (180° phase difference) and their amplitudes subtract one from the other.
+<ul class="lilli"><li>The locations where the resulting amplitude is minimal are said <b>nodes</b></li>
+<li>The locations where the resulting amplitude is maximal are said <b>antinodes</b></li>
+</ul>
+In the case of total reflexion (<b>S = 1</b> or <b>S = -1</b>),  the amplitude is zero at the nodes, like in this picture.
+</div>
+<br />
+In the general case, the total signal may be decomposed into :
+<ul><li>a <b>standing wave</b> or <b>stationary wave</b>, the amplitude of which depends on the distance from the reflexion point</li>
+<li>a <b>traveling wave</b> or <b>progressive wave</b>, the amplitude of which is independent of the location</li>
+</ul>
+Visual representation : see the <a href="swr_anime.html">interactive simulation</a><br />
+
+<div class="boite"><img class="rightim" src="form_6a.png"><br />
+This phenomenon may be described by means of the <b>Standing Wave Ratio</b> (<b>SWR</b>), which is the ratio of the maximum amplitude to the minimum amplitude of the total signal, observed along the line.<br />
+</div>
+The <b>SWR</b> can easily be expressed as a function of the reflexion coefficient <b>S</b>, provided that there is a reflexion at only one end of the line.
+<center><img src="form_6b.png"></center>
+As well as <b>S</b>, this ratio is used to describe the quality of an impedance matching.
+
+<h2>2.1 The line as a Resonator</h2>
+If a one-dimension propagation medium exhibits reflexion at both ends, the amplitude of the standing waves may exceed the value of the incident signal for some frequencies, which may be considered as a <b>resonance</b>.<br />
+This phenomenon has been used for centuries in musical instruments. A more recent application of this is the LASER.<br />
+This is also observed on 2-dimension media (vibrating membrane, liquid surface) and 3-dimension media (resonating cavity).<br />
+<h4>Example N°8</h4>
+<img src="sch_1T1ac.png"><br />
+We still consider a line of a total delay 100ns, with a voltage measurement <b>v1</b> at 1/3 the length, and another <b>v2</b> at half the length.
+Both ends are loaded with 1 Ohm, which causes a reflexion coefficient of -0.96 at each end.
+<img src="wav_1T1acN.png"><br />
+<ul class="lilli"><li>At 5 MHz, we observe a maximum (antinode) at the middle of the line, with an overvoltage factor of 25. There is a node at each end.</li>
+<li>At 10 MHz, we observe a node at each end and one in the middle, while antinodes should be at 1/4 and 3/4 of the total length.</li>
+<li>At 15 MHz, we see an antinode at the middle and a node at 1/3 the length.</li>
+</ul>
+<img src="wav_1T1acZN.png"><br />
+By zooming over v0 and v3, we observe that at multiples of 5 MHz, the line impedance is exactly 1 Ohm at each end, which corresponds to 1 or more complete turns on the Smith Chart.<br /><br />
+A transmission line with reflexion coefficients of the same sign at both ends is said a <b>half-wave line</b>, because its fundamental resonance frequency is the one for which its length is half the wavelength.<br />
+A <a href="Harmonic_partials_on_strings.svg.png" target="_blank">vibrating string</a> is the classical example of a half-wave line (source <a href="http://commons.wikimedia.org/wiki/File:Harmonic_partials_on_strings.svg" target="_blank">Wikipedia</a>)
+
+<h4>Example N°9</h4>
+<img src="sch_1T2500ac.png"><br />
+We still use a line of a total delay 100ns, with a voltage measurement at 1/3 the length, and another at half the length.</br>
+The left end is driven with a 1-ohm source (S=-0.96), while the other end is loaded with 2500 Ohms (S=0.96).
+<img src="wav_1T2500acN.png"><br />
+<ul class="lilli"><li>At 2.5 MHz, we see a node at the left end, an antinode at the right end</li>
+<li>At 7.5 MHz too, with an additional antinode at 1/3</li>
+<li>At 12.5 MHz: same as at 2.5 MHz</li>
+</ul>
+At the right end, an overvoltage factor of 25 is seen for frequencies which are <b>odd multiples</b> of 2.5 MHz.<br />
+At these specific frequencies, the line input impedance is 1 Ohm, which is the transform of R<sub>L</sub>=2500 Ohms by a half-turn (or N+1/2 turns) on the Smith chart.<br />
+Then its output impedance is 2500 Ohms, so it appears that at these specific frequencies, this line performs an <b>impedance matching</b> between a 1-Ohm source and a 2500-Ohm load.<br /><br />
+A transmission line with reflexion coefficients of opposite signs at the ends is said a <b>quarter-wave line</b>, because its fundamental resonance frequency is the one for which its length is 1/4 of the wavelength.<br />
+Such a line may be used for impedance matching between two ports of impedances Z<sub>1</sub> and Z<sub>2</sub>, provided that 
+(Z<sub>0</sub>)<sup>2</sup> =  Z<sub>1</sub>.Z<sub>2</sub><br /><br />
+
+</div>
+</body></html>

@@ -1,0 +1,104 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+   <title>2. Paramètres S</title>
+</head>
+<body text="#000000" bgcolor="#DDDDDD" link="#000099" vlink="#990099" alink="#000099">
+
+<style type="text/css">
+table.bw { border: 2px solid black; border-collapse:collapse; }
+table.bw td { border: 1px solid green; background-color:white;
+		padding: 1px 5px 1px 10px; }
+.bk { page-break-before: always; }
+h2 { margin-top: 50px; color: blue }
+h3 { margin-top: 40px; color: blue }
+h4 { background-color:#dfd; }
+.toc { list-style-type: none; }
+.toc ul{ list-style-type: none; }
+.toc li { margin: 0; font-size: 125% }
+.toc ul li { margin: 0px; font-size: 80% }
+li { margin-top: 10px; }
+ul ul li { margin-top: 3px; }
+.lilli li { margin-top: 3px; }
+img { margin-top: 10px; }
+.large { margin: 0 auto; -webkit-border-radius: 8px; -moz-border-radius: 8px; border-radius: 8px;
+width: 880px; padding-left: 10px; padding-right: 8px; background-color:white; }
+.boite { overflow: auto }
+.leftim { float: left; margin-right: 50px }
+.rightim { float: right; margin-left: 20px; margin-right: 20px}
+</style>
+<!-- marges pour chrome A4 portrait : TRBL 20 10 10 10 mm -->
+
+<div class="large">
+<a style="float: left" href="./index.html">&lt;index&lt;</a>
+<center>
+<h1>2. Paramètres S</h1>
+<small>&copy; J.L. Noullet 2013</small>
+</center>
+
+<h2>2.1 Représentation matricielle des quadripôles</h2>
+Un <b>quadripôle</b> (en anglais <b>"Two port"</b>) est un circuit
+comportant deux paires de terminaux.<br />
+Chaque paire de terminaux ou <b>port</b> peut être utilisé comme entrée ou sortie pour le signal.<br />
+Les deux ports peuvent éventuellement avoir un terminal commun.<br />
+<img title="" src="2_port_VI.png"><br />
+<img title="" src="matrix_HYZ.png"><br />
+Chaque matrice décrit entièrement le quadripôle et peut donc être exprimée en fonction d'une des autres.
+<h2>2.2 Ondes incidentes et réfléchies</h2>
+Comme on l'a vu au 1.4, après qu'on ait convenu d'une <b>impédance de référence Z<sub>0</sub></b>,
+le voltage observable à un port peut être considéré comme la somme algébrique de :
+<ul class="lilli"><li>un voltage incident E<sub>i</sub> qui est la valeur correpondant au transfert de puissance maxi</li>
+<li>un voltage réfléchi E<sub>r</sub> qui traduit éventuellement une non-adaptation d'impédance</li>
+</ul>
+On définit les <b>ondes</b> ou <b>"waves"</b> en divisant ces voltages par la racine carrée de
+l'impédance de référence,
+dans un but de normalisation, pour le cas ou l'impédance de référence ne serait pas la même pour
+tous les ports :
+<ul class="lilli"><li><b>a</b> = onde incidente</li>
+<li><b>b</b> = onde réfléchie</li>
+</ul>  
+<img title="" src="2_port_ab.png"><br />
+<img title="" src="definitions_ab.png"><br />
+<h2>2.3 Paramètres S</h2>
+Les relations entre les ondes peuvent être exprimées sous forme d'une matrice de
+4 coefficients sans dimension, les <b>paramètres S</b> :<br />
+<img title="" src="S_matrix.png"><br />
+<img title="" src="S_equations.png"><br />
+L'appellation "paramères S" vient de <b>"Scattering Parameters"</b>, littéralement "paramètres de dispersion",
+une expression qui vient de l'optique, où la transition entre deux milieux différents donne lieu
+à réflexions et dispersion de la lumière.<br />
+A condition d'être accompagnée de la valeur de l'impédance de référence, la matrice S décrit entièrement
+le quadripôle et peut donc être exprimée en fonction de chacune des matrices H, Y, Z et réciproquement.<br />
+L'intérêt de la méthode est le même que pour le coefficient de réflexion appliqué à caractérisation d'un
+dipôle (1.4)<br />
+<ul><li><b>S<sub>11</sub></b> = coefficient de réflexion au port 1</li>
+<li><b>S<sub>12</sub></b> = coefficient de transmission du port 2 vers le port 1</li>
+<li><b>S<sub>21</sub></b> = coefficient de transmission du port 1 vers le port 2</li>
+<li><b>S<sub>22</sub></b> = coefficient de réflexion au port 2</li></ul>
+Si l'impédance de référence est la même pour les deux ports, S<sub>12</sub> et S<sub>21</sub>
+sont similaires à des gains en tension.<br />
+Sinon, S<sub>12</sub> et S<sub>21</sub> sont des gains en tension normalisés en puissance, c'est à dire qu'une
+valeur de 1 correspond à un gain en puissance de 1.
+<h2>2.4 Formules de conversion</h2>
+Les tables suivantes donnent l'équivalence entre les paramètres S et les paramètres Y, Z, H normalisés,
+c'est à dire calculés pour Z<sub>0</sub> = 1.<br />
+Lorsque Z<sub>0</sub> est différent de 1 :
+<ul class="lilli"><li>multiplier les Z par Z<sub>0</sub></li>
+<li>diviser les Y par Z<sub>0</sub></li>
+<li>multiplier H<sub>11</sub> par Z<sub>0</sub>,
+diviser H<sub>22</sub> par Z<sub>0</sub></li>
+</ul>
+<img src="SvsY.png"><br />
+<img src="SvsZ.png"><br />
+<img src="SvsH.png"><br />
+D'aprés l'article de référence de Richard Anderson,
+publié par Hewlett-Packard sous le titre
+<a href="http://cp.literature.agilent.com/litweb/pdf/5952-1130.pdf">AN-95</a>
+
+
+
+ 
+</div>
+</body></html>

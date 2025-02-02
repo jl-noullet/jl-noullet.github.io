@@ -1,0 +1,288 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+   <title>Lines and Reflexions</title>
+</head>
+<body text="#000000" bgcolor="#DDDDDD" link="#000099" vlink="#990099" alink="#000099">
+
+<style type="text/css">
+table.bw { border: 2px solid black; border-collapse:collapse; }
+table.bw td { border: 1px solid green; background-color:white;
+		padding: 1px 5px 1px 10px; }
+.bk { page-break-before: always; }
+h2 { margin-top: 50px; color: blue }
+h3 { margin-top: 40px; color: blue }
+h4 { background-color:#dfd; }
+.toc { list-style-type: none; }
+.toc ul{ list-style-type: none; }
+.toc li { margin: 0; font-size: 125% }
+.toc ul li { margin: 0px; font-size: 80% }
+li { margin-top: 10px; }
+ul ul li { margin-top: 3px; }
+.lilli li { margin-top: 3px; }
+img { margin-top: 10px; margin-bottom: 10px }
+.large { margin: 0 auto; -webkit-border-radius: 8px; -moz-border-radius: 8px; border-radius: 8px;
+width: 880px; padding-left: 10px; padding-right: 8px; background-color:white; }
+.boite { overflow: auto }
+.leftim { float: left; margin-right: 50px }
+.rightim { float: right; margin-left: 20px; margin-right: 20px}
+</style>
+<!-- marges pour chrome A4 portrait : TRBL 20 10 10 10 mm -->
+
+<div class="large">
+<a style="float: left" href="./index.html">&lt;index&lt;</a>
+<center>
+<h1>1. Lines and Reflexions</h1>
+<small>&copy; Jean-Louis Noullet 2017</small></center>
+<div class="boite">
+<a href="3_line_types_color.png" target="_blank" class="rightim"><img title="clic to zoom" src="3_line_types_thumb.png"></a>
+<h2>1.1 Lossless Line Model</h2>
+The goal is the study of the transmission of a signal by means of a homogeneous line made out of 2 conductors,
+the basic arrangement of which may be :
+<ul class="lilli"><li>two parallel, symmetrical wires, possibly <a href="twisted_pair_cable.png" target="_blank">twisted</a></li>
+<li>a coaxial cable</li>
+<li>a flat ribbon parallel to a ground plane
+ (<a href="microstrip07.jpg" target="_blank">microstrip</a>,
+ <a href="microstrip07.jpg" target="_blank">PCB RF</a>,
+ <a href="pcb_ddr3.png" target="_blank">PCB digital</a>)</li>
+</ul>
+</div>
+Let us assume that a small conductor segment exhibits an inductance proportional to its length and,
+together with the other conductor, a capacitance also proportional to its length.<br />
+Then we can model the line as a set of cascaded identical LC cells, seeking the limit of the model
+when the number of cells is increased towards infinity while their individual length approaches zero.<br />
+<img src="lclclc.png" title="LC cascade"><br />
+(It is also possible to include a representation of the ohmic losses by a resistor in series with each L, and the dielectric losses
+by means of a resistor in parallel with C, but for the moment we limit our study to lossless lines.)<br />
+The mathematical theory behind this is known as "Telegrapher's Equations" and can be found in fundamental courses on electricity.
+Summary of the essential features of the <a href="lossless_line_model.html" target="_blank">lossless line model</a>, which can be derived from
+thought experiments (with the help of the theory of special relativity) :
+<ul class="lilli"><li>unlike discrete LC circuits, the line does not behave like a low-pass filter
+(the cutoff frequency of infinitesimal LC cells tends to infinity)</li>
+<li>The short-term transient impedance of each end of the line, said <b>characteristic impedance Z<sub>0</sub></b>, is resistive,
+and depends on <a href="LINE_SECRETS/" target="_blank">physical properties of the line</a> but :
+<ul><li><b>NOT</b> on its length</li>
+<li><b>NOT</b> on the load conditions at the other end of the line</li>
+</ul></li>
+<li>The long-term impedance of one end of the line depends on the load condition at the other end (this is obvious in the case of DC steady-state),
+so some information has to flow back from the other end, this is called <b>signal reflexion</b></li>
+<li>The signal is propagated with a uniform velocity below the speed of light, this velocity depends mainly on physical constants
+of the material surrounding the conductors (permittivity and permeability).</li>
+</ul>
+Note : "short-term" is when the experiment duration is small with regards to the propagation time in the transmission line, "long-term" is when
+the experiment duration is great enough like in the well known "steady state mode", either DC (all signals constant) or AC (all signals periodic
+with a constant amplitude). 
+<h2>1.2 Impedance Matching</h2>
+Thought experiment : if we cut the line at some place and then connect the two halves again, we can say that the left half is loaded by the
+characteristic impedance of the other one, but since the cut is imaginary, this causes no discontinuity of the propagation of the signal,
+hence no signal reflexion.<br />  
+Each time the end of a line is connected to a resistor, the resistance of which is equal to the line's characteristic impedance,
+a similar situation is created, so in this case, no signal reflexion occurs, this condition is called <b>impedance matching</b>.<br />
+This situation is also similar to the "maximal transmitted power" condition well known in the theory of Thévenin and Norton models.<br /><br />
+Circuit simulation programs like SPICE offer a built-in model for lossless lines, with 2 parameters : characteristic impedance
+and propagation time, which is the electric translation of the line length.<br />
+We are going to use the LTSPICE simulator from <a href="http://www.linear.com/designtools/software/" target="_blank">
+Linear Technology</a> to exemplify these concepts.
+<div class="boite"><img class="leftim" src="sch_50T50.png">
+<h4>Experiment N°1</h4>
+<ul class="lilli"><li>the source produces a 2-Volt pulse with a 5 ns duration</li>
+<li>the impedance is matched at both line ends (50 Ohms)</li></ul>
+</div>
+The transient-mode simulation confirms that a 1 Volt pulse is transmitted through the line :
+<ul class="lilli"><li>the left end of the line behaves like a 50 Ohm load viewed from the source</li>
+<li>the right end of the line behaves like a 50 Ohm source, with a 2 Volt e.m.f.</li>
+<li>at any point along the line, one could measure a 1 Volt pulse, according to the split line thought experiment described above</li>
+<li>the energy absorbed by the line between t=10 ns and t=16ns was stored, then given back at the other end between t=110 ns et t=116ns.</li>
+</ul>
+<img src="wav_50T50.png">
+
+<h2>1.3 Simple pulse reflexion</h2>
+<div class="boite"><img class="leftim" src="sch_50T25.png">
+<h4>Experiment N°2</h4>
+<ul class="lilli"><li>the source produces a 2 Volt pulse with a 5 ns duration</li>
+<li>the right end of the line is loaded by a 25 Ohm unmatched impedance</li></ul>
+</div>
+Let us try to predict what is going to happen :
+<ul class="lilli"><li>the left end of the line still behaves like a 50 Ohm load viewed from the source,
+then it should absorb the same energy as in experiment 1 (principle of causality, special relativity)</li>
+<li>at some point along the line, one could measure a 1 Volt pulse as previously, let's call it the <b>incident pulse</b></li>
+<li>the right end behaves like a 2 Volt, 50 Ohm source loaded with 25 Ohms, the pulse amplitude should be 2.0*(25/(50+25)) = 0.667 Volts,
+carrying less energy than stored at the left end</li>
+<li>to keep the energy balance, let us assume that a <b>reflected</b> pulse goes back to the left, carrying the remaining energy</li>
+<li>the amplitude of the reflected pulse should be -0.333 Volts so that the superposition of the 1 Volt incident pulse and the reflected
+pulse matches the amplitude of the outgoing pulse reaching the 25 Ohm load resistor</li> 
+<li>energy balance is verified : (1)<sup>2</sup>/50 = (0.667)<sup>2</sup>/25 + (0.333)<sup>2</sup>/50</li>
+</ul>
+<img src="wav_50T25.png"><br />
+The experiment confirms the predictions, and one can see the arrival of the reflected pulse after a 200 ns round-trip.<br />
+By definition, the <b>Reflexion coefficient</b>, noted <i>Lambda</i> ou <b>S</b> is the ratio <b>reflected amplitude / incident amplitude</b>.<br />
+In the example above we have S = -0.333, then by generalization the following expression is derived :<br />
+<center><img title="coeff reflexion" src="form_2b.png"></center>
+<div class="boite"><img class="leftim" src="Partial_transmittance.gif"><br />
+This animated picture shows the arrival of a pulse at the boundary between two different transmission media with a reflexion coefficient
+of -0.333 (same as the simulation above).<br />
+(source : <a href="http://en.wikipedia.org/wiki/File:Partial_transmittance.gif" target="_blank">Wikipedia</a>)<br />
+This partial reflexion phenomenon is also well known in all areas of vibration physics (acoustics, mechanics, hydrology, seismology) and in optics.<br />
+Partial reflexion is also called <b>scattering</b>, hence the <b>S</b> symbol.
+</div>
+
+One more exemple :
+<div class="boite"><img class="leftim" src="sch_50T150.png">
+<h4>Experiment N°3</h4>
+<ul class="lilli"><li>left side : nothing changed</li>
+<li>the right end of the line is loaded by an 150 Ohm unmatched impedance</li></ul>
+</div>
+Let us try to predict what is going to happen :
+<ul class="lilli"><li>same incident pulse as in experiments 1 and 2</li>
+<li>the right end still behaves like a 2 Volt, 50 Ohm source loaded with 150 Ohms, the pulse amplitude should be 2.0*(150/(50+150))
+= 1.5 Volts, carrying less energy than stored at the left end in spite of a greater amplitude !
+<li>the amplitude of the reflected pulse should be 0.5 Volts so that the superposition of the 1 Volt incident pulse and the reflected
+pulse matches the amplitude of the outgoing 1.5 Volt pulse</li>
+<li>energy balance is verified : (1)<sup>2</sup>/50 = (1.5)<sup>2</sup>/150 + (0.5)<sup>2</sup>/50</li>
+</ul>
+<img src="wav_50T150.png"><br />
+We note that the reflexion coefficient may be positive or negative. According to the <b>S</b> formula above, S varies from -1 to +1 when
+Z<sub>L</sub> takes real values ranging from zero to open-circuit.
+
+<h2>1.4 Generalizing the reflexion coefficient</h2>
+<h4>Experiment N°4</h4>
+With the same schematic as experiment N°1 (25 Ohms on the right), the line length is reduced from 100ns down to 1ns.<br />
+The superposition of the incident pulse and the reflected pulse, that we were observing previously at the right end, now extends to the left end.
+Then one can observe a 0.667 Volt plateau, during the time interval when both pulses are superimposed.<br /> 
+<img src="wav_50T25_1ns.png">
+
+<h4>Experiment N°5</h4>
+<div class="boite"><img class="leftim" src="sch_50N25.png">
+<ul class="lilli"><li>let's keep reducing the line length</li>
+<li>approaching zero, there isn't any line left, only a <b>voltage divider</b></li>
+<li>the outcome is obviously a 0.666 Volt pulse</li></ul>
+</div>
+However the reflexion coefficient keeps its meaning, even while we cannot observe distinct incident and reflected signals :
+<ul class="lilli"><li>by definition, the <b>incident signal</b> is what would appear in <b>maximal power</b> condition</li>
+<li>by definition, the <b>reflected signal</b> is the difference between the observed signal and the incident signal</li>
+<li>the reflexion coefficient is still defined as <b>reflected amplitude / incident amplitude</b></li>
+</ul>
+In the example above,
+<ul class="lilli"><li>incident pulse = +1.0 V,</li>
+<li>reflexion coefficient S = (25-50)/(25+50) = -1/3</li>
+<li>reflected pulse -0.333 V</li>
+<li>resulting "actual" outgoing pulse 1 - 0.333 = 0.667 V</li></ul>
+<div class="boite"><img class="leftim" src="form_2.png">
+This may look like an overkill for addressing the simple "voltage divider" problem, however the use of the same <b>S</b> parameter
+for describing the matching relation between a source with impedance Z<sub>0</sub> and a load with impedance Z<sub>L</sub>,
+with or without an interposed transmission line, is a fundamental tool for the design of RF systems.
+</div>
+<h2>1.5 Reflexion in AC mode</h2>
+We now address the same problem in steady sinewave mode.<br />
+Since the source is permanent, the incident signal and the reflected signal are superimposed at any place along the line
+and the only their algebraic sum may be observed, the amplitude of which depends on their relative phases.
+<div class="boite"><img class="leftim" src="sch_50T25ac.png">
+<h4>Experiment N°6</h4>
+Same schematic as experiment N°1 (25 Ohms on the right, 100 ns propagation time), AC analysis from 0 Hz to 2.5 MHz<br />
+</div>
+Let us try to predict what is going to happen :
+<ul class="lilli">
+<li>incident signal 1V, reflected signal -0.333V</li>
+<li>at the right end, the sum of the incident and reflected signals with no phase shift yields a constant amplitude 1 V - 0.333V = 0.667 V</li>
+<li>at the right end, the incident phase shift with respect to the source is proportional to the frequency (pure delay property),
+and reaches 90° at 2.5 MHz (100 ns delay = T/4)</li>
+<li>at the left end, the superposition of the incident and reflected signals with a variable phase shift yields a variable amplitude,
+lets us consider 3 particular cases :
+<ul><li>at 0 Hz, phase shift zero, amplitude 0.666V, the lossless transmission line is like transparent to DC, as expected</li>
+<li>at 2.5 MHz, round-trip phase shift 180° (2*100 ns delay = T/2), amplitude 1 V - (-0.333 V) = 1.333 V, phase zéro</li>
+<li>à 1.25 MHz, phase shift 90°, amplitude ((1)<sup>2</sup> + (0.333)<sup>2</sup>)<sup>1/2</sup> = 1.054 V,
+phase atan(0.333) = 18.4°</li>
+</ul></li> 
+</ul>
+The simulation confirms that the signal at the left end may be predicted by assuming a round-trip delay for the reflected signal,
+the delay associated with 2 x the line length.<br />
+<img src="wav_50T25ac.png"><br />
+(dashed curves represent phases)<br /><br />
+In the AC domain, the <b>S</b> formula is also valid for complex Z<sub>L</sub> values, yielding complex reflexion coefficients.
+So it is now possible to give an expression of the reflexion coefficient <b>S'</b> at the left end of the line
+as a function of the right end coefficient <b>S</b> and the frequency <b>w</b> :<br />
+<img src="form_3.png"><br />
+where the complex exponential function represents a delay of 2 times the line's propagation delay <b>d</b>.<br /><br />
+If we note <b>Z'<sub>L</sub></b> the left end impedance of the line, we can express <b>S'</b> and the derive <b>Z'<sub>L</sub></b> :<br />
+<img src="form_4.png" style="vertical-align: middle">&nbsp;&nbsp;then&nbsp;&nbsp;<img src="form_5.png" style="vertical-align: middle"><br />
+<b>Note 1 :</b> for <b>S'</b> and <b>Z'<sub>L</sub></b>, we got complex, frequency-dependent expressions.
+These expressions are still valid for any complex value of the right side load impedance <b>Z<sub>L</sub></b>, like any combination
+of R, L and C elements, or any arbitrary complex function of frequency.<br />
+<b>Note 2 :</b> each the reflexion coefficient describes the coupling between two devices at a <b>port</b> (a pair of nodes). This is why we have
+two coefficients in these examples, one at each end of the transmission line.<br />
+
+<h2>1.6 The Smith Chart</h2>
+Let us consider now the problem of laboratory measurements on RF devices (passive ou semi-conductor).
+<ul class="lilli">
+<li>Direct measurement of impedances requires an ideal current source (infinite impedance) with a voltage measurement</li>
+<li>Direct measurement of admittances requires an ideal voltage source (negligible impédance) with a current measurement</li>
+</ul>
+These conditions may be met in low frequencies, but are impractical in RF.<br />
+Even worse, the usual active RF devices (semi-conductor) use to be unstable in extreme conditions like open-circuit or short-circuit.
+In the other hand, what is feasible is :
+<ul class="lilli">
+<li>test the device with a <b>Z<sub>0</sub></b> impedance source, through a line of the same impedance</li>
+<li>measure the reflexion coefficient <b>S'</b> at the instrument end of the line, as a complex function of frequency</li>
+<li>perform calculations for deriving the device's impedance as a complex function of frequency</li>
+</ul>
+The direct measurement of a reflexion coefficient if made possible by a passive device named <b>directional coupler</b>.
+The laboratory instrument performing this measurement is called <b>VNA</b> (Vector Network Analyzer).<br /><br />
+Simulation software tools used in RF engineering offer analysis modes similar to this measurement technique,
+then we will make the next experiments using the <i>Spectre</i> simulator from <a href="cadence.com" target="_blank">Cadence</a>
+which offers an "S parameters" analysis, similar to the AC analysis but translating the results into reflexion coefficients.
+<div class="boite"><img class="leftim" src="sch_P50Tx.png">
+<h4>Experiment N°7</h4><br />
+Same schematic as in experiments 2 and 3, but the signal source is replaced by a special symbol called "port" where the source
+impedance is built-in, with the purpose of indicating to the simulator :
+<ul><li>the value of the reference impedance for the calculations</li>
+<li>the pair of nodes where the reflexion coefficient is to be measured</li>
+</ul>  
+</div>
+<div class="boite"><img class="leftim" src="plan_S.png">
+Results : the representation of <b>S'</b> (at the left end of the line) in the complex plane, with a frequency sweeping from
+0 HZ to 2.5 MHz, for two values of the resistive load impedance <b>Z<sub>L</sub></b> which we used in experiments 2 and 3
+(25 Ohms et 150 Ohms).
+<ul><li>the reflexion coefficient magnitude (modulus) is always below 1, so the curves remain inside the unit circle</li>
+<li>the complex exponential function representing the delay is translated into a rotation around the origin, in the negative direction,
+as the frequency increases.</li>
+<li>the right side coefficient <b>S</b> being real and constant, the left side coefficient <b>S'</b> stands on a circle</li>
+<li><b>S'</b> is real for 0 Hz and 2.5 MHz, as seen in experiment 6, and would become real again for every multiple of 2.5 MHz
+if the frequency were further increased</li>
+</ul> 
+</div><br />
+<div class="boite"><img class="rightim" src="form_5a.png">
+Mr Phillip Hagar Smith's invention consists of adding on the complex plane a collection of scalings allowing direct reading of
+the complex value of <b>Z<sub>L</sub></b>.<br />
+The initial goal was to avoid tedious complex numbers calculations.<br />
+Even with modern computers performing all these calculations, the <b>Smith Chart</b> is still appreciated as a visual aid,
+just like the Bode plot.
+</div>
+<div class="boite"><img class="leftim" src="Smith_Z_25_150.png">
+On this chart built for a 50 Ohm reference impedance :
+<ul><li>the origin (center of the chart) represents the reference impedance <b>Z<sub>0</sub></b></li>
+<li>each circle centered on the horizontal axis represents impedances having the same real part :
+<ul><li>the circle passing on points (0,0) and (1.0) represents all the impedances the real part of which is 50 Ohm</li>
+<li>the unit circle represents purely reactive impedances (null real part)</li></ul>
+<li>each circle orthogonal to the previous ones represents impedances having the same imaginary part, inductive in the upper half,
+capacitive in the lower half</li>
+<li>real impedances are on the horizontal axis</li>
+</ul>
+For example, we can check that our line loaded with 25 Ohms exhibits a 100 Ohm resistive impedance at its left end at 2.5 MHz,
+which is consistent with the voltage observed in experiment 6 : 1.333V = 2*(100)/(50+100).
+</div>
+Another option is the admittance scalings :
+<div class="boite"><img class="leftim" src="Smith_Y.png">
+Then we can read that our line loaded with 25 Ohms exhibits :
+<ul><li>a 0.04 Siemens admittance at 0 Hz</li>
+<li>a 0.01 Siemens admittance at 2.5 MHz</li>
+</ul>
+</div>
+Modern vector analyzers are able to display measurements directly over Smith charts, and as well calculate and display the parameters at the far end
+of the transmission line, provided that the line is calibrated (<b>De-Embedding</b>):<br />
+<img title="Agilent_N5245" src="Agilent_N5245A.jpg">
+
+</div>
+</body></html>
+

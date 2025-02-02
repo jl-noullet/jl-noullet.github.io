@@ -1,0 +1,68 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+   <title>RF parameters</title>
+</head>
+<body text="#000000" bgcolor="#DDDDDD" link="#000099" vlink="#990099" alink="#000099">
+
+<style type="text/css">
+table.bw { border: 2px solid black; border-collapse:collapse; }
+table.bw td { border: 1px solid green; background-color:white;
+		padding: 1px 5px 1px 10px; }
+.bk { page-break-before: always; }
+h2 { margin-top: 50px; color: blue }
+h3 { margin-top: 40px; color: blue }
+h4 { background-color:#dfd; }
+.toc { list-style-type: none; }
+.toc ul{ list-style-type: none; }
+.toc li { margin: 0; font-size: 125% }
+.toc ul li { margin: 0px; font-size: 80% }
+li { margin-top: 10px; }
+ul ul li { margin-top: 3px; }
+.lilli li { margin-top: 3px; }
+img { margin-top: 10px; margin-bottom: 10px }
+.large { margin: 0 auto; -webkit-border-radius: 8px; -moz-border-radius: 8px; border-radius: 8px;
+width: 880px; padding-left: 10px; padding-right: 8px; background-color:white; }
+.boite { overflow: auto }
+.leftim { float: left; margin-right: 50px }
+.rightim { float: right; margin-left: 20px; margin-right: 20px}
+</style>
+<!-- marges pour chrome A4 portrait : TRBL 20 10 10 10 mm -->
+
+<div class="large">
+<center>
+<h1>Introduction to RF parameters</h1>
+<small>&copy; Jean-Louis Noullet 2013-2017</small></center>
+<h2>Object</h2>
+The goal of this document is to give a practical introduction to those specific parameters which have been devised
+to address the needs of RF engineering (<b>R</b>adio-<b>F</b>requency) :
+<ul class="lilli"><li>Transmission Line</li>
+<li>Impedance Matching</li>
+<li>Reflexion Coefficient</li>
+<li>Smith Chart</li>
+<li>Standing Waves</li>
+<li><b>S</b> Parameters (Scattering Parameters)</li></ul>
+These constructs are useful each time circuits elements are interconnected by links the propagation time of which is not
+negligible compared to the timescale of the application signals.<br />
+We could say as well each time the system physical dimensions are not negligible compared to the typical wavelength of signals.<br />
+This extends widely beyond the field of wireless communication for which it was invented.<br /><br />
+<div class="boite">
+<img class="rightim" src="line_with_birds.jpg">
+A few examples :
+<table class="bw"><tr><td>USB cable</td><td>1.5 m</td><td>480 MHz clock</td></tr>
+<tr><td>CPU-RAM bus in a PC</td><td>10 cm</td><td>1.2 GHz clock</td></tr>
+<tr><td>analog telephone line</td><td>100 km</td><td>audio bandwidth 3 kHz</td></tr>
+<tr><td>RF laboratory instrument probe</td><td>15 cm</td><td>30 GHz</td></tr>
+</table>
+<h2>Chapters</h2>
+<ul class="toc">
+<li><a href="lines_and_reflexions.html">1. Lines and Reflexions</a></li>
+<li><a href="standing_waves.html">2. Standing Waves</a></li>
+<li><a href="2port_S_parameters.html">3. 2-port S Parameters</a></li>
+</ul>
+</div>
+<p>&nbsp;</p>
+</div>
+</body></html>

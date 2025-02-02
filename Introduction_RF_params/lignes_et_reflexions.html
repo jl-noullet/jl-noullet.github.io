@@ -1,0 +1,368 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+   <title>1. Lignes et Réflexions</title>
+</head>
+<body text="#000000" bgcolor="#DDDDDD" link="#000099" vlink="#990099" alink="#000099">
+
+<style type="text/css">
+table.bw { border: 2px solid black; border-collapse:collapse; }
+table.bw td { border: 1px solid green; background-color:white;
+		padding: 1px 5px 1px 10px; }
+.bk { page-break-before: always; }
+h2 { margin-top: 50px; color: blue }
+h3 { margin-top: 40px; color: blue }
+h4 { background-color:#dfd; }
+.toc { list-style-type: none; }
+.toc ul{ list-style-type: none; }
+.toc li { margin: 0; font-size: 125% }
+.toc ul li { margin: 0px; font-size: 80% }
+li { margin-top: 10px; }
+ul ul li { margin-top: 3px; }
+.lilli li { margin-top: 3px; }
+img { margin-top: 10px; }
+.large { margin: 0 auto; -webkit-border-radius: 8px; -moz-border-radius: 8px; border-radius: 8px;
+width: 880px; padding-left: 10px; padding-right: 8px; background-color:white; }
+.boite { overflow: auto }
+.leftim { float: left; margin-right: 50px }
+.rightim { float: right; margin-left: 20px; margin-right: 20px}
+</style>
+<!-- marges pour chrome A4 portrait : TRBL 20 10 10 10 mm -->
+
+<div class="large">
+<a style="float: left" href="./index.html">&lt;index&lt;</a>
+<center>
+<h1>1. Lignes et Réflexions</h1>
+<small>&copy; J.L. Noullet 2013</small></center>
+<div class="boite">
+<a href="3_line_types_color.png" target="_blank" class="rightim"><img title="clic to zoom" src="3_line_types_thumb.png"></a>
+<h2>1.1 Modèle de la ligne sans pertes</h2>
+On s'intéresse à la transmission du signal par une ligne homogène composée de 2 conducteurs,
+qui peuvent être par exemple :
+<ul class="lilli"><li>parallèles, symétriques</li>
+<li>coaxiaux</li>
+<li>un conducteur plat parallèle à un plan de masse
+ (<a href="microstrip07.jpg" target="_blank">microstrip</a>,
+ <a href="microstrip07.jpg" target="_blank">PCB RF</a>,
+ <a href="pcb_ddr3.png" target="_blank">PCB digital</a>)</li>
+</ul>
+</div>
+On peut considérer qu'un petit segment de conducteur possède une inductance proportionnelle à sa longueur
+et constitue avec l'autre conducteur une capacité également proportionnelle à sa longueur.<br />
+Alors on peut modéliser la ligne comme une cascade de cellules LC, dont on fait tendre la longueur
+individuelle vers zéro pour rendre compte de la continuité du dispositif.<br />
+<img src="lclclc.png" title="LC cascade"><br />
+(On peut en plus représenter les pertes ohmiques par une résistance série et les pertes diélectriques
+par une conductance en parallèle, chacune proportionnelle à la longueur du segment, mais
+dans cette étude nous nous limitons aux lignes sans pertes.)<br />
+Cette méthode dite "équation du télégraphiste" aboutit à un ensemble de résultats dont la démonstration
+se trouve dans les cours fondamentaux d'électronique.
+On retiendra l'essentiel, pour une ligne sans pertes :
+<ul class="lilli"><li>contrairement au circuit LC discret, la ligne ne se comporte pas comme un filtre passe-bas
+(la fréquence de résonance des cellules LC est rejetée à l'infini)</li>
+<li>l'impédance en régime impulsionnel de chaque extrémité de la ligne, dite <b>impédance caractéristique</b>, est résistive,
+et dépend de la géométrie de la ligne mais pas de sa longueur :<br /><img src="form_1.png"></li>
+<li>le signal se propage à une vitesse uniforme inférieure à la vitesse de la lumière et dépendant essentiellement
+des constantes diélectrique (permittivité) et magnétique (perméabilité) du milieu entourant les conducteurs.</li>
+</ul>
+N.B. l'impédance d'une extrémité de la ligne en régime continu (DC) et en régime sinusoïdal permanent (AC)
+dépend de la situation à l'autre extrémité, et n'est pas égale à son impédance caractéristique, sauf cas particulier.
+
+<h2>1.2 Adaptation d'impédance</h2>
+Lorsqu'une extrémité de la ligne est connectée à un dipôle dont l'impédance est égale à l'impédance caractéristique
+de la ligne, il n'y a pas de discontinuité de la propagation, tout comme entre deux segments adjacents de la ligne.<br />
+On dit qu'il y a <b>adaptation d'impédance</b> (<i>impedance matching</i>).<br />
+Cette situation concorde avec la condition "puissance maximale transmise" bien connue comme conséquence des
+modèles de générateur de Thévenin et de Norton.
+Les simulateurs de circuit du type SPICE supportent un modèle de ligne sans perte avec 2 paramètres : l'impédance caractéristique
+et le temps de propagation, qui est la conséquence électrique de la longueur.<br />
+Nous allons utiliser d'abord le simulateur LTSPICE de <a href="http://www.linear.com/designtools/software/" target="_blank">
+Linear Technology</a> pour illustrer ce document.
+<div class="boite"><img class="leftim" src="sch_50T50.png">
+<h4>Exemple N°1</h4>
+<ul class="lilli"><li>la source produit une impulsion de 2 Volts avec une durée de 5 ns</li>
+<li>l'impédance est adaptée aux deux extrémités de la ligne</li></ul>
+</div>
+La simulation en mode transitoire ("tran") confirme qu'une impulsion de 1V s'est bien transmise d'un bout à l'autre de la ligne :
+<ul class="lilli"><li>l'entrée de la ligne se comporte comme une charge de 50 Ohms pour la source</li>
+<li>la sortie de la ligne se comporte comme une source d'impédance de 50 Ohms</li>
+<li>l'énergie absorbée par la ligne entre t=10 ns et t=16ns a été stockée puis restituée à l'autre extrémité
+entre t=110 ns et t=116ns.</li>
+<li>l'extrémité droite de la ligne se comporte comme une source de f.e.m. 2 Volts par application du principe de conservation d'énergie</li>
+</ul>
+<img src="wav_50T50.png">
+
+<h2>1.3 Simple réflexion d'une impulsion</h2>
+<div class="boite"><img class="leftim" src="sch_50T25.png">
+<h4>Exemple N°2</h4>
+<ul class="lilli"><li>la source produit une impulsion de 2 Volts avec une durée de 5 ns</li>
+<li>l'extrémité droite de la ligne est chargée par une impédance non adaptée de 25 Ohms</li></ul>
+</div>
+Essayons de prédire ce qui va se passer :
+<ul class="lilli"><li>l'entrée de la ligne se comporte toujours comme une charge de 50 Ohms pour la source,
+et elle absorbe la même énergie que dans l'exemple 1 (loi de causalité, relativité restreinte)</li>
+<li>la sortie présentant une impédance de 50 Ohms chargée par 25 Ohms, l'amplitude de l'impulsion
+sera 2.0*(25/(50+25)) soit 0.666 Volts, avec une énergie inférieure</li>
+<li>pour équilibrer le déficit énergétique, on suppose qu'une impulsion réfléchie part en sens inverse,
+dont on estime l'amplitude à -0.333 Volts (th. de superposition au voisinage de l'extrémité droite de la ligne)</li>
+<li>on vérifie le bilan énergétique : (1)<sup>2</sup>/50 = (0.666)<sup>2</sup>/25 + (0.333)<sup>2</sup>/50</li>
+</ul>
+<img src="wav_50T25.png"><br />
+L'expérience confirme nos hypothèses, et on observe l'arrivée à gauche de l'impulsion réfléchie
+après un aller-retour de 200 ns.<br />
+On appellera <b>Coefficient de réflexion</b> en mode impulsionnel, noté <i>Lambda</i> ou <b>S</b> le rapport
+<b>amplitude réfléchie (retour) / amplitude incidente (aller)</b>, en généralisant le calcul qu'on a fait
+ci-dessus, on trouve l'expression suivante :<br />
+<center><img title="coeff reflexion" src="form_2b.png"></center>
+(Pour le moment nous ne considérons que des impédances purement résistives.)<br />
+<div class="boite"><img class="leftim" src="Partial_transmittance.gif"><br />
+Cette animation montre l'arrivée d'une impulsion à la frontière de deux milieux de propagation différents
+avec un coefficient de réflexion de -0.333.<br />
+(source : <a href="http://en.wikipedia.org/wiki/File:Partial_transmittance.gif" target="_blank">Wikipedia</a>)<br />
+Ce type de phénomène a été étudié en physique des vibrations (acoustique, mécanique, hydrologie, sismologie) et en optique.<br />
+La réflexion partielle est aussi appelée <b>dispersion</b> ou <b>scattering</b>.
+</div>
+
+Un autre exemple :
+<div class="boite"><img class="leftim" src="sch_50T150.png">
+<h4>Exemple N°3</h4>
+<ul class="lilli"><li>coté gauche, rien n'a changé</li>
+<li>l'extrémité droite de la ligne est chargée par une impédance non adaptée de 150 Ohms</li></ul>
+</div>
+Essayons de prédire ce qui va se passer :
+<ul class="lilli"><li>à l'entrée de la ligne il se passe la même chose que dans l'exemple 2</li>
+<li>la sortie présentant une impédance de 50 Ohms chargée par 150 Ohms, l'amplitude de l'impulsion
+sera 2.0*(150/(50+150)) soit 1.5 Volts, soit plus qu'à l'entrée, cependant l'énergie est inférieure</li>
+<li>pour équilibrer le déficit énergétique, on suppose encore qu'une impulsion réfléchie part en sens inverse,
+cette fois positive, avec une amplitude de 0.5 Volts</li>
+<li>on vérifie le bilan énergétique : (1)<sup>2</sup>/50 = (1.5)<sup>2</sup>/150 + (0.5)<sup>2</sup>/50</li>
+</ul>
+<img src="wav_50T150.png"><br />
+On observe que le coefficient de réflexion peut être positif ou négatif,
+conformément à la l'expression obtenue à l'étape précedente.
+
+<h2>1.4 Généralisation du coefficient de réflexion</h2>
+<h4>Exemple N°4</h4>
+On reprend le schéma de l'exemple N°1 (25 Ohms à droite), et on réduit la longueur de la ligne à 1 ns au lieu de 100 ns.<br />
+La sommation de l'impulsion incidente et de l'impulsion réfléchie qu'on avait décrite au voisinage de l'extrémité
+droite de la ligne s'étend à présent jusqu'à l'extrémité gauche, et on observe un palier à 0.666V, pendant l'intervalle
+de temps où les deux impulsions (incidente et réfléchie) se recouvrent.<br /> 
+<img src="wav_50T25_1ns.png">
+
+<h4>Exemple N°5</h4>
+<div class="boite"><img class="leftim" src="sch_50N25.png">
+<ul class="lilli"><li>on continue à réduite la longueur de la ligne</li>
+<li>on arrive à zéro, il n'y a plus de ligne, seulement un "pont résistif"</li>
+<li>l'obtention d'un impulsion de 0.666 Volts ne fait aucun doute</li></ul>
+</div>
+Cependant, le coefficient de réflexion peut conserver son sens, bien qu'on ne puisse plus distinguer
+physiquement un signa incident et un signal réflechi :
+<ul class="lilli"><li>on définit le <b>signal incident</b> comme celui qu'on aurait dans les conditions de <b>puissance maximale</b>
+<li>on définit le <b>signal réfléchi</b> comme différence entre le signal observé et le signal incident</li>
+<li>le coefficient de réflexion est toujours le rapport <b>signal réfléchi / signal incident</b></li>
+</ul>
+Dans l'exemple ci dessus,
+<ul class="lilli"><li>l'impulsion incidente fait +1.0 V,</li>
+<li>le coefficient de réflexion S = (25-50)/(25+50) = -1/3</li>
+<li>l'impulsion réflechie -0.333 V</li>
+<li>l'impulsion résultante 1 - 0.333 = 0.666 V</li></ul>
+<div class="boite"><img class="leftim" src="form_2.png">
+Cela peut paraître bien compliqué pour résoudre le simple problème du "pont résistif", cependant
+l'utilisation du coefficient de réflexion comme moyen de décrire la relation d'adaptation entre une source
+d'impédance Z<sub>0</sub> et une charge d'impédance Z<sub>L</sub>, qu'il y ait ou non interposition d'une ligne
+de transmission, est un outil fondamental pour la conception des circuits RF.
+</div>
+<h2>1.5 Réflexion en mode AC</h2>
+On va à présent considérer le même problème en régime sinusoïdal permanent.<br />
+Puisque l'excitation du circuit est permanente, le signal incident et le signal réfléchi sont
+superposés en tous points de la ligne, et on ne peut observer que leur somme algébrique,
+qui dépend de leurs déphasages respectifs.
+<div class="boite"><img class="leftim" src="sch_50T25ac.png">
+<h4>Exemple N°6</h4>
+On reprend le schéma de l'exemple N°1 (25 Ohms à droite), avec une analyse AC de 0 Hz à 2.5 MHz (période 400 ns)<br />
+</div>
+Essayons de prédire ce qui va se passer :
+<ul class="lilli">
+<li>signal incident 1V, signal réflechi -0.333V</li>
+<li>à l'extrémité droite, les signaux incident et réflechi ont un déphasage nul,
+donc l'amplitude du signal sera constante soit 1 V - 0.333V = 0.666 V</li>
+<li>toujours à l'extrémité droite, la phase du signal (par rapport à la source) est proportionnelle
+à la fréquence (propriété du "retard pur"),
+et atteint 90° à 2.5 MHz (retard de 100 ns soit 1/4 période)</li>
+<li>à l'extrémité gauche la sommation du signal incident et du signal réfléchi avec un déphasage variable donne
+un résultat variable, on considérera 2 cas particuliers :
+<ul><li>à 0 Hz, déphasage nul, amplitude 0.666V, phase zéro (on s'attend bien à ce que la ligne sans perte
+soit "transparente" en DC)</li>
+<li>à 2.5 MHz, déphasage 180° (retard de 2*100 ns soit 1/2 période), amplitude 1 V + 0.333 V = 1.333 V,
+phase zéro</li>
+<li>à 1.25 MHz, déphasage 90°, amplitude ((1)<sup>2</sup> + (0.333)<sup>2</sup>)<sup>1/2</sup> = 1.054 V,
+phase atan(0.333) = 18.4°</li>
+</ul></li> 
+</ul>
+La simulation confirme que le signal à l'extrémité gauche de la ligne peut être prédit en appliquant au signal
+réflechi à droite un retard correspondant à 2 fois la longueur de la ligne (aller-retour).<br />
+<img src="wav_50T25ac.png"><br />
+(les courbes en pointillé sont les phases)<br /><br />
+On peut alors donner une expression du coefficient de réflexion à l'extrémité gauche S' en fonction
+du coefficient de l'extrémité droite S et de la fréquence w :<br />
+<img src="form_3.png"><br />
+où l'exponentielle complexe représente un retard de 2 fois le délai de propagation d de la ligne.<br /><br />
+Si on note Z'<sub>L</sub> l'impédance de l'entrée de la ligne, on peut exprimer S' et Z'<sub>L</sub> :<br />
+<img src="form_4.png">&nbsp;&nbsp;&nbsp;<img src="form_5.png"><br />
+N.B. On a obtenu pour S' et Z'<sub>L</sub> des expressions complexes dépendant de la fréquence.<br />
+Ces expressions resteraient valables si l'impédance de charge à droite Z<sub>L</sub> n'était pas purement résistive
+(par exemple une combinaison d'éléments R, L et C, ou même une fonction complexe arbitraire de la fréquence).
+
+<h2>1.6 Abaque de Smith</h2>
+Considérons le problème pratique de la caractérisation en laboratoire de dipôles utilisés en RF
+(passifs ou semi-conducteurs).
+<ul class="lilli">
+<li>La mesure directe d'impédance nécessite une source de courant idéale (impédance infinie) avec mesure
+de tension</li>
+<li>La mesure directe d'admittance nécessite une source de tension idéale (impédance négligeable) avec mesure
+de courant</li>
+</ul>
+Ces conditions peuvent être satisfaites en basse fréquence, mais sont pratiquement irréalisables en RF.<br />
+De plus les circuits RF actifs (semi-conducteurs) sont rarement stables dans les conditions extrèmes telles
+que circuit ouvert ou court-circuit.
+Ce qui est par contre réalisable, c'est :
+<ul class="lilli">
+<li>tester le dipôle avec une source d'impédance Z<sub>0</sub> au travers d'une ligne de même impédance</li>
+<li>mesurer le coefficient de réflexion (complexe) en fonction de la fréquence</li>
+</ul>
+La mesure du coefficient de réflexion est facilitée par un dispositif dit <b>coupleur directionnel</b>,
+l'instrument qui l'utilise est appelé <b>analyseur vectoriel</b> ou <b>VNA</b> (Vector Network Analyzer).<br /><br />
+Les logiciels de simulation utilisés en RF offrent des analyses similaires à ces mesures,
+pour illustrer la suite nous allons utiliser le simulateur <i>Spectre</i> de <a href="cadence.com" target="_blank">Cadence</a> qui
+offre une analyse dite "S parameters" similaire à l'analyse AC de SPICE, mais avec des résultats traduits
+sous forme de coefficients de réflexion.
+<div class="boite"><img class="leftim" src="sch_P50Tx.png">
+<h4>Exemple N°7</h4><br />
+On reprend le schéma des exemples 2 et 3, mais la source est remplacée par un composant "port" dans lequel
+l'impédance de source est incluse, qui sert à préciser au simulateur :
+<ul><li>la valeur de l'impédance de référence pour les calculs</li>
+<li>la paire de noeuds constituant le "port" du circuit sous test</li>.
+</ul>  
+</div>
+<div class="boite"><img class="leftim" src="plan_S.png">
+Résultat : la représentation du coefficient de réflexion <b>S'</b> (à l'entrée de la ligne) dans le plan complexe,
+avec un balayage de fréquence de 0 HZ à 2.5 MHz, pour les deux valeurs d'impédance
+de charge Z<sub>L</sub> résistive qui ont servi pour les exemples 2 et 3, soit 25 Ohms et 150 Ohms.
+<ul><li>le module du coefficient de réflexion est toujours inférieur à 1, le graphe est donc contenu
+dans le cercle unité,</li>
+<li>la fonction exponentielle qui représente le délai de la ligne se traduit par une
+rotation autour de l'origine (dans le sens négatif)</li>
+<li>le coeff de réflexion <b>S</b> du coté droit étant réel constant, le coeff du coté gauche
+<b>S'</b> se représente par un arc de cercle</li>
+<li><b>S'</b> est réel pour 0 Hz et 2.5 MHz, comme on l'a vu avec l'exemple 6, et il repasserait par des valeurs
+réelles pour tous les multiples de 2.5 MHz si on continuait à augmenter la fréquence</li>
+</ul> 
+</div><br />
+<div class="boite"><img class="rightim" src="form_5a.png">
+L'invention de Mr Phillip Hagar Smith a consisté a ajouter sur le plan complexe des graduations
+permettant la lecture directe de la valeur complexe de Z<sub>L</sub>.<br />
+Le but initial était d'éviter de pénibles calculs manuels sur les valeurs complexes.<br />
+Même avec les moyens de calcul modernes, l'<b>abaque de Smith</b> reste apprécié pour représenter
+le comportement des circuits, tout comme le diagramme de Bode.
+</div>
+<div class="boite"><img class="leftim" src="Smith_Z_25_150.png">
+Sur cet abaque établi pour une impédance de référence de 50 Ohms :
+<ul><li>l'origine (centre du diagramme) représente l'impédance de référence</li>
+<li>chaque cercle centré sur l'axe horizontal représente les impédances ayant une même partie réelle, en particulier :
+<ul><li>le cercle passant par l'origine et le point (1,0) représente toutes les impédances dont la partie réelle vaut 50</li>
+<li>sur le cercle unité sont les impédances purement réactives (partie réelle nulle)</li></ul>
+<li>chaque arc orthogonal aux précédents représente les impédances ayant une même partie imaginaire, inductive en haut,
+capacitive en bas</li>
+<li>sur l'axe horizontal sont les impédances réelles</li>
+</ul>
+On peut vérifier par exemple que la ligne chargée à 25 Ohm présente une impédance d'entrée réelle de 100 Ohms à 2.5 MHz,
+ce qui est cohérent avec le voltage de 1.333V = 2*(100)/(50+100) mentionné dans l'exemple N°6.
+</div>
+On peut ausi utiliser une variante où les graduations permettent de lire les admittances :
+<div class="boite"><img class="leftim" src="Smith_Y.png">
+Ici on peut lire que la ligne chargée à 25 Ohms présente :
+<ul><li>une admittance réelle de 0.04 Siemens à 0 Hz</li>
+<li>une admittance réelle de 0.01 Siemens à 2.5 MHz</li>
+</ul>
+</div>
+Les analyseurs vectoriels affichent éventuellement les résultats sous forme d'abaque de Smith :<br />
+<img title="Agilent_N5245" src="Agilent_N5245A.jpg">
+
+<h2>1.7 Ondes stationnaires</h2>
+<div class="boite"><a href="swr_anim.html"><img class="rightim" src="SWR_fix.png"></a>
+Lorsqu'il y a réflexion, en régime sinusoïdal permanent, en certains lieux fixes de la ligne l'onde réfléchie et l'onde incidente sont en phase
+et leurs amplitudes s'additionnent, en d'autres points elles sont en opposition et leurs amplitudes
+se soustraient. 
+<ul class="lilli"><li>Les lieux d'amplitude minimale sont dits <b>noeuds</b> (<i>nodes</i>)</li>
+<li>Les lieux d'amplitude maximale sont dits <b>ventres</b> (<i>antinodes</i>)</li></ul>
+En cas de réflexion totale (S=1 ou S=-1) l'amplitude est nulle à l'emplacement des noeuds, comme sur cette illustration.
+</div>
+<br />
+Dans le cas général, le signal total peut se décomposer en :
+<ul class="lilli"><li>une onde stationnaire, dont l'amplitude est fonction de la distance au point de réflexion</li>
+<li>une onde progressive, dont l'amplitude est indépendante du lieu</li></ul>
+Illustration : <a href="swr_anim.html">animation interactive</a><br />
+
+<div class="boite"><img class="rightim" src="form_6a.png"><br />
+On caractérise le phénomène par le <b>Rapport d'Ondes Stationnaires</b> ou <b>ROS</b>
+(<i>Standing Wave Ratio</i> ou <b><i>SWR</i></b>), ou rapport de l'amplitude maxi sur l'amplitude mini du signal total
+lorsqu'on se déplace le long de la ligne.<br />
+</div>
+On peut facilement exprimer SWR en fonction du module du coefficient de réflexion <b>S</b> (dans l'hypothèse d'une réflexion à une seule extrémité de la ligne):
+<center><img src="form_6b.png"></center>
+Tout comme <b>S</b>, ce rapport est utilisé pour caractériser la qualité d'une adaptation d'impédance (SWR = 1 lorsque l'adaptation est parfaite).<br />
+(<b>Attention</b> : par abus de langage, on appelle parfois "Taux d'ondes stationnaires" ou "TOS" la valeur absolue de S)
+
+<h2>1.8 Résonances dans une ligne</h2>
+Si un milieu de propagation unidimensionnel présente des réflexions aux 2 extrémités, l'amplitude des ondes stationnaires
+peut dépasser la valeur du signal d'excitation pour certaines fréquences, ce qu'on peut qualifier de <b>résonance</b>.<br />
+Le phénomène est exploité depuis des milliers d'années dans les instruments de musique. Comme application plus récente
+on peut citer le laser.<br />
+Le phénomène peut se généraliser à un milieu à 2 dimensions (membrane vibrante, surface d'un liquide) ou a 3 dimensions
+(cavité résonnante).<br />
+
+<h4>Exemple N°8</h4>
+<img src="sch_1T1ac.png"><br />
+On prend toujours une ligne de longueur 100ns, avec une mesure de tension <b>v1</b> au premier tiers et une autre
+<b>v2</b> à la moitié de sa longueur.</br>
+Les deux extémités voient une impédance de 1 Ohm, soit un coefficient de réflexion de -0.96 de chaque coté.</br>
+<img src="wav_1T1acN.png"><br />
+<ul class="lilli"><li>à 5 MHz, on observe un maximum de tension au milieu, avec une surtension de 25 par rapport à la source,
+en effet à cette fréquence on a un ventre au milieu et un noeud à chaque extrémité de la ligne.</li>
+<li>à 10 MHz on observe un noeud au centre et à chaque extrémité, cependant que la prise du premiers tiers est proche d'un ventre
+(qui doit se trouver au premier quart)</li>
+<li>à 15 Mhz on observe un ventre au centre et un noeud au premier tiers</li>
+</ul>
+<img src="wav_1T1acZN.png"><br />
+En zoomant sur v0 et v3, on observe qu'aux fréquences multiples de 5 MHz, les impédances d'entrée et de sortie de la ligne passent par
+la valeur 1 Ohm, ce qui correspond à un tour complet sur l'abaque de Smith.<br /><br />
+Une ligne avec des coefficients de réflexion de <b>même signe</b> aux deux extrémités est dite <b>demi-onde</b>
+car sa fréquence de résonance fondamentale est celle pour laquelle sa longueur correspond à une demi longueur d'onde.
+
+<h4>Exemple N°9</h4>
+<img src="sch_1T2500ac.png"><br />
+On prend toujours une ligne de longueur 100ns, avec une mesure de tension <b>v1</b> au premier tiers et une autre
+<b>v2</b> à la moitié de sa longueur.</br>
+L'extrémité gauche voit une impédance de 1 Ohm (S = -0.96), l'extrémité droite une impédance de 2500 Ohm (S = 0.96).
+<img src="wav_1T2500acN.png"><br />
+<ul class="lilli"><li>à 2.5 MHz, on observe un noeud à l'entrée, un ventre à la sortie.</li>
+<li>à 7.5 MHz également, avec un autre ventre au premier tiers</li>
+<li>à 12.5 Mhz comme à 2.5 MHz</li>
+</ul>
+A la sortie, on observe une surtension de 25 aux fréquences multiples <b>impaires</b> de 2.5 MHz.<br />
+A ces fréquences, l'impédance d'entrée de la ligne est 1 Ohm, soit la transformée de R<sub>L</sub>=2500 Ohms
+par un demi tour (ou N+1/2 tours) sur l'abaque de Smith, et son impédance de sortie est 2500 Ohm de manière similaire.<br />
+A ces fréquences particulières, la ligne réalise l'adaptation d'impédance d'une source de 1 Ohm vers une charge de 2500 Ohms !
+<br /><br />
+Une ligne avec des coefficients de réflexion de <b>signes opposés</b> aux extrémités est dite <b>quart d'onde</b>
+car sa fréquence de résonance fondamentale est celle pour laquelle sa longueur correspond à un quart de longueur d'onde.  
+<br /><br />
+Alors, pourquoi ces multiples fréquences de résonance ? la <a href="Harmonic_partials_on_strings.svg.png" target="_blank">
+réponse ici</a> (source <a href="http://commons.wikimedia.org/wiki/File:Harmonic_partials_on_strings.svg" target="_blank">
+Wikipedia</a>)
+
+</div>
+</body></html>
+

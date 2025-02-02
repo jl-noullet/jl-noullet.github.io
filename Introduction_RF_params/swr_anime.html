@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+<title>Standing Wave Animation</title>
+
+<script type="text/javascript" src="dat.gui.min.js"></script>
+</head>
+<body>
+<style type="text/css">
+table.bw { border: 2px solid black; border-collapse:collapse; }
+table.bw td { border: 1px solid green; background-color:white;
+		padding: 2px 8px 2px 10px; }
+h2 { margin-top: 50px; color: blue }
+h3 { margin-top: 40px; color: blue }
+h4 { background-color:#dfd; }
+</style>
+<center><h1>Reflexion and Standing Wave</h1>
+<small>&copy; J.L. Noullet 2016</small></center>
+<br />
+<canvas id="myCanvas" width="770" height="220" style="border:1px solid #bbbbbb;">
+Dommage, votre navigateur ne supporte pas l'élément canvas de HTML5...
+Pour voir l'animation interactive, utilisez un navigateur tel que Firefox, Opera ou Chrome.
+</canvas>
+
+<table class="bw">
+<tr><td>Reflexion Coefficient</td><td><span id="S_value">?</span></td></tr>
+<td>Z<sub>L</sub>/Z<sub>0</sub></td><td><span id="zl_value">?</span></td></tr>
+<td>Standing Wave Ratio SWR</td><td><span id="swr_value">?</span></td></tr>
+</table>
+<h4>Goal</h4>
+Observing the signals or waves in a transmission line with characteristic impedance <b>Z<sub>0</sub></b>
+connected to a line with characteristic impedance <b>Z<sub>L</sub></b>, in order to demonstrate
+the partial reflexion or <b>scattering</b> at the impedance discontinuity point.<br />
+<ul>
+<li>the horizontal axis represents the physical position along the line</li>
+<li>the time is represented by... the time itself (it may be suspended by means of the <b>pause</b> button)
+<li>the incident wave comes from the left end and propagates to the right, with constant amplitude and frequency</li>
+<li>the left end of the line is not seen, no reflexion is assumed there</li>
+<li>one may vary the <b>reflexion coefficient</b> from -1 to +1 (real values only),
+which is equivalent to varying <b>Z<sub>L</sub></b> form 0 to infinity (purely resistive impedance)</li>
+</ul>
+<h4>Different representations of the waves</h4>
+In permanent sinewave mode, only the <b>total wave</b> and the <b>transmitted wave</b> are observable.
+<ul><li>the incident wave and the reflected wave cannot be distinguished, they are the components of the total wave :<br />
+<b>total wave = <span style="color: #FF0000">incident wave</span> +
+ <span style="color: #00DD00">reflected wave</span></b></li>
+<li>The standing (or stationary) wave and the travelling wave are the components of another decomposition of the total wave :<br />
+<b>total wave = <span style="color: #DD00EE">travelling wave</span> +
+ <span style="color: #0000FF">standing wave</span></b></li>
+</ul>
+<h4>Vertical and horizontal grids</h4>
+<ul><li>the "quarter wave" lines represent the positions located at a distance from the discontinuity point which is
+a multiple of 1/4 wavelength.</li>
+<li>note that the nodes and antinodes of the standing wave are at these positions</li>
+<li>the "max/min" horizontal lines represent the max and min values of the total wave amplitude, the ratio of which is 
+the <b>Standing Wave Ratio</b> or <b>SWR</b></li>
+<li>note that the min and max points of the total wave appear at places located at a distance from the discontinuity
+point which is a multiple of 1/4 wavelength.</li>
+</ul>
+<h4>Making of this interactive document</h4>
+<ul><li>The animated graphics are implemented on a <b>HTML5 canvas element</b>,
+the curves are computed by a javascript program which is embedded in this web page</li>
+<li>The control menu is implemented by means of the
+<a href="http://workshop.chromeexperiments.com/examples/gui/">dat.gui.js</a> javascript library</li>
+<li>All this is free open-source software !</li>
+</ul>
+
+
+<script>
+
+var c=document.getElementById("myCanvas");
+var ctx=c.getContext("2d");
+
+// parametres en pixels
+var wi = 600;	// largeur zone animee (a droite il y a la legende des courbes)
+var wi2 = 770;	// largeur canvas
+var he = 220;
+var he2 = he/2;
+var xref = 440;	// trajet avant reflexion
+var dx = 4;	// pas horizontal pour le tracé
+
+// N.B. vitesse de propagation = 1, ==> unite de temps = 1 pixel !
+var pers = 200;	// periode spatiale et temporelle en pixels, pour le sinus
+var per = pers;
+var pw = 64;	// duree ou largeur d'impulsion en pixels
+var tr = 8;	// temps de montee et descente en pixels
+var w = ( 2 * Math.PI ) / pers;	// freq sinus en radians/pixel 
+var dt = 4;	// timestep, en pixels par periode de retrace (determinee par setInterval())
+		// il determine le facteur temps simule / temps reel  
+
+var t = 0;
+var a = 50;	// amplitude onde incidente (pixels)
+var b = 0;	// amplitude onde reflechie (pixels)
+
+var glo = {	// glossaire
+coef: 'Reflexion Coeff.',
+ondi: 'Incident',
+ondr: 'Reflected',
+ondt: 'Total',
+onds: 'Standing',
+ondp: 'Travelling',
+ondo: 'Transmitted',
+grdx: '1/4 wavelength',
+grdy: 'max / min',
+grid: 'Grid'
+};
+ 
+function pulse( t ) {
+t -= xref;
+if	( t < 0 )		return 0;
+else if ( t < tr ) 		return t / tr;
+else if ( t < pw )		return 1.0;
+else if ( t < ( pw + tr ) )	return 1.0 - ( t - pw )/tr;
+else				return 0;
+}
+
+// l'objet qui va engendrer le GUI
+var swr = new Object();
+// variables cachees
+swr.run = true;
+swr.refresh = true;
+// simples boutons
+swr.PLAY  = function() { this.run = true; };
+swr.PAUSE = function() { this.run = false; };
+swr.STEP  = function() { swr.redraw( t ); t += dt; if ( t > per ) t -= per; };
+// liste
+swr['Mode'] = 0;
+// variables ajustables via un item (controller)
+swr[glo.coef] = 0.2;
+swr[glo.ondi] = true;
+swr[glo.ondr] = true;
+swr[glo.ondt] = false;
+swr[glo.onds] = false;
+swr[glo.ondp] = false;
+swr[glo.grdx] = false;
+swr[glo.grdy] = false;
+// fonctions
+swr.precompute = function()
+	{
+	var v;
+	b = a * this[glo.coef];
+	var e = document.getElementById("S_value");
+	e.innerHTML = this[glo.coef].toFixed(2);
+	// impedance normalisee du cote droit
+	v = ( 1.0 + this[glo.coef] ) / ( 1.0 - this[glo.coef] );
+	e = document.getElementById("zl_value");
+	e.innerHTML = v.toPrecision(6);
+	// SWR
+	v = Math.abs( this[glo.coef] );
+	v = ( 1 + v ) / ( 1 - v );
+	e = document.getElementById("swr_value");
+	e.innerHTML = v.toPrecision(6);
+	}
+
+swr.changemode = function( newmode )
+	{
+	if	( newmode == 1 )
+		{
+		if	( swr.stat_ctr )
+			{ gui.remove( swr.stat_ctr ); swr.stat_ctr = 0; }
+		if	( swr.prog_ctr )
+			{ gui.remove( swr.prog_ctr ); swr.prog_ctr = 0; }
+		if	( swr.grdx_ctr )
+			{ swr.grid_folder.remove( swr.grdx_ctr ); swr.grdx_ctr = 0; }
+		if	( swr.grdy_ctr )
+			{ swr.grid_folder.remove( swr.grdy_ctr ); swr.grdy_ctr = 0; }
+		swr[glo.onds] = false; swr[glo.ondp] = false;
+		swr[glo.grdx] = false; swr[glo.grdy] = false;
+		per = xref * 2.2;
+		}
+	else	{
+		if	( !swr.stat_ctr )
+			swr.stat_ctr = gui.add( swr, glo.onds );
+		if	( !swr.prog_ctr )
+			swr.prog_ctr = gui.add( swr, glo.ondp );
+		if	( !swr.grdx_ctr )
+			swr.grdx_ctr = swr.grid_folder.add( swr, glo.grdx );
+		if	( !swr.grdy_ctr )
+			swr.grdy_ctr = swr.grid_folder.add( swr, glo.grdy );
+		per = pers;
+		}
+	}
+
+swr.precompute();
+
+var gui = new dat.GUI();
+// boutons
+gui.add( swr, 'PLAY' );
+gui.add( swr, 'PAUSE' );
+gui.add( swr, 'STEP' );
+// liste de modes
+swr.mode_ctr = gui.add( swr, 'Mode', { Sinus: 0, Pulse: 1 } );
+swr.mode_ctr.onFinishChange( swr.changemode );
+// grille
+swr.grid_folder = gui.addFolder( glo.grid );
+// slider
+gui.add( swr, glo.coef ).min(-1).max(1).step(0.1).onChange( function(value) {swr.precompute(); } );
+// toggles
+gui.add( swr, glo.ondi );
+gui.add( swr, glo.ondr );
+gui.add( swr, glo.ondt );
+// les autres elements dependent du mode ( mode 0 par defaut )
+swr.changemode( 0 );
+gui.width = 260;	// non documente! on l'a trouve dans dat.gui.js
+
+swr.legende = function()
+{
+var x = wi + 10;
+var y = 10;
+ctx.clearRect(wi,0,wi2,he);
+ctx.font="18px serif";
+
+ctx.beginPath();
+ctx.strokeStyle="#FF0000";
+ctx.fillStyle="#FF0000";
+ctx.lineWidth=1;
+ctx.moveTo(x, y);
+ctx.lineTo(x+25,y+20);
+ctx.stroke();
+ctx.fillText(glo.ondi,x+30,y+20);
+y += 25;
+ctx.beginPath();
+ctx.strokeStyle="#00DD00";
+ctx.fillStyle="#00DD00";
+ctx.lineWidth=1;
+ctx.moveTo(x, y);
+ctx.lineTo(x+25,y+20);
+ctx.stroke();
+ctx.fillText(glo.ondr,x+30,y+20);
+y += 25;
+ctx.beginPath();
+ctx.strokeStyle="#000000";
+ctx.fillStyle="#000000";
+ctx.lineWidth=1;
+ctx.moveTo(x, y);
+ctx.lineTo(x+25,y+20);
+ctx.stroke();
+ctx.fillText(glo.ondt,x+30,y+20);
+y += 25;
+ctx.beginPath();
+ctx.strokeStyle="#0000FF";
+ctx.fillStyle="#0000FF";
+ctx.lineWidth=1;
+ctx.moveTo(x, y);
+ctx.lineTo(x+25,y+20);
+ctx.stroke();
+ctx.fillText(glo.onds,x+30,y+20);
+y += 25;
+ctx.beginPath();
+ctx.strokeStyle="#DD00EE";
+ctx.fillStyle="#DD00EE";
+ctx.lineWidth=1;
+ctx.moveTo(x, y);
+ctx.lineTo(x+25,y+20);
+ctx.stroke();
+ctx.fillText(glo.ondp,x+30,y+20);
+y += 25;
+ctx.beginPath();
+ctx.strokeStyle="#EEAA00";
+ctx.fillStyle="#EEAA00";
+ctx.lineWidth=1;
+ctx.moveTo(x, y);
+ctx.lineTo(x+25,y+20);
+ctx.stroke();
+ctx.fillText(glo.ondo,x+30,y+20);
+}
+
+swr.redraw = function ( t )
+{
+// calculs preliminaires
+var i;		// indice de point dans les tableaux ( x/dx )
+var x;		// abcisse a partir du point de reflexion (negatif sur toute la ligne !)
+var Yi = new Array();
+var Yr = new Array();
+var Ys = new Array();
+var Yt = new Array();
+i = 0;			// ondes incidente et reflechie
+if	( this['Mode'] == 1 )
+	{
+	for	( x = 0; x >= -xref; x -= dx )
+		{
+		Yi[i] = a * pulse( t - x );
+		Yr[i] = b * pulse( t + x );
+		++i;
+
+		}
+	i = 0;			// onde transmise
+	for	( x = 0; x < wi; x += dx )
+		Yt[i++] = ( a + b ) * pulse( t - x );
+	}
+else	{
+	for	( x = 0; x >= -xref; x -= dx )
+		{
+		Yi[i] = a * Math.sin( w * ( t - x ) );
+		Yr[i] = b * Math.sin( w * ( t + x ) );
+		++i;
+		}
+	i = 0;			// onde transmise
+	for	( x = 0; x < wi; x += dx )
+		Yt[i++] = ( a + b ) * Math.sin( w * ( t - x ) );
+	i = 0;			// onde stationnaire (onde progressive en sera deduite)
+	if	( b > 0 )
+		{
+		for	( x = 0; x >= -xref; x -= dx )
+			Ys[i++] = 2 * b * Math.sin( w * t ) * Math.cos( w * x );
+		}
+	else	{
+		for	( x = 0; x >= -xref; x -= dx )
+			Ys[i++] = 2 * b * Math.cos( w * t ) * Math.sin( w * x );
+		}
+	}
+
+if	( this.refresh )
+	{
+	this.legende();
+	this.refresh = false;
+	}
+ctx.clearRect(0,0,wi,he);
+ctx.beginPath();
+// axe X et paroi
+ctx.strokeStyle="#666666";
+ctx.lineWidth=0.5;
+ctx.moveTo(0,he2);
+ctx.lineTo(wi,he2);
+ctx.moveTo(xref,0);
+ctx.lineTo(xref,he);
+ctx.stroke();
+// graduations
+if	( this[glo.grdx] )
+	{
+	ctx.strokeStyle="#66AAAA";
+	var quart = pers / 4;
+	ctx.beginPath();
+	for	( x = -quart; x >= -xref; x -= quart )
+		{
+		ctx.moveTo( xref + x, 0 );
+		ctx.lineTo( xref + x, he );
+		}
+	ctx.stroke();
+	}
+if	( this[glo.grdy] )
+	{
+	ctx.strokeStyle="#6666AA";
+	var y;
+	ctx.beginPath();
+	y = a + Math.abs(b);
+	ctx.moveTo( 0,    he2 - y );
+	ctx.lineTo( xref, he2 - y );
+	ctx.moveTo( 0,    he2 + y );
+	ctx.lineTo( xref, he2 + y );
+	y = a - Math.abs(b);
+	ctx.moveTo( 0,    he2 - y );
+	ctx.lineTo( xref, he2 - y );
+	ctx.moveTo( 0,    he2 + y );
+	ctx.lineTo( xref, he2 + y );
+	ctx.stroke();
+	}
+ctx.font="20px serif";
+ctx.fillStyle="#666666";
+ctx.fillText("Z",xref-30,20);
+ctx.fillText("Z",xref+10,20);
+ctx.font="13px serif";
+ctx.fillText("0",xref-16,24);
+ctx.fillText("L",xref+24,24);
+
+ctx.lineWidth=1;
+// onde incidente
+if	( this[glo.ondi] )
+	{
+	ctx.strokeStyle="#FF0000";
+	ctx.beginPath();
+	x = 0; i = 0;
+	ctx.moveTo( xref + x, he2 - Yi[i++] );
+	for	( x = -dx; x >= -xref; x -= dx )
+		{ ctx.lineTo( xref + x, he2 - Yi[i++] ); }
+	ctx.stroke();
+	}
+// onde reflechie
+if	( this[glo.ondr] )
+	{
+	ctx.strokeStyle="#00DD00";
+	ctx.beginPath();
+	x = 0; i = 0;
+	ctx.moveTo( xref + x, he2 - Yr[i++] );
+	for	( x = -dx; x >= -xref; x -= dx )
+		{ ctx.lineTo( xref + x, he2 - Yr[i++] ); }
+	ctx.stroke();
+	}
+// onde totale
+if	( this[glo.ondt] )
+	{
+	ctx.strokeStyle="#000000";
+	ctx.beginPath();
+	x = 0; i = 0;
+	ctx.moveTo( xref + x, he2 - ( Yi[i] + Yr[i] ) ); ++i;
+	for	( x = -dx; x >= -xref; x -= dx )
+		{ ctx.lineTo( xref + x, he2 - ( Yi[i] + Yr[i] ) ); ++i; }
+	ctx.stroke();
+	}
+// onde stationnaire
+if	( this[glo.onds] )
+	{
+	ctx.strokeStyle="#0000FF";
+	ctx.beginPath();
+	x = 0; i = 0;
+	ctx.moveTo( xref + x, he2 - Ys[i++] );
+	for	( x = -dx; x >= -xref; x -= dx )
+		{ ctx.lineTo( xref + x, he2 - Ys[i++] ); }
+	ctx.stroke();
+	}
+
+// onde progressive
+if	( this[glo.ondp] )
+	{
+	ctx.strokeStyle="#DD00EE";
+	ctx.beginPath();
+	x = 0; i = 0;
+	ctx.moveTo( xref + x, he2 - ( Yi[i] + Yr[i] - Ys[i] ) ); ++i;
+	for	( x = -dx; x >= -xref; x -= dx )
+		{ ctx.lineTo( xref + x, he2 - ( Yi[i] + Yr[i] - Ys[i] ) ); ++i; }
+	ctx.stroke();
+	}
+
+// onde transmise
+ctx.strokeStyle="#EEAA00";
+ctx.beginPath();
+x = 0; i = 0;
+ctx.moveTo( xref + x, he2 - Yt[i++] );
+for	( x = dx; x < ( wi - xref ); x += dx )
+	{ ctx.lineTo( xref + x, he2 - Yt[i++] ); }
+ctx.stroke();
+};
+
+function idlefunc()
+{
+if	( swr.run )
+	{
+	swr.STEP();
+	}
+}
+
+var mytimer = setInterval( idlefunc, 3 * 15.625 );	// en ms (min 15.625 ?)
+
+</script>
+<img src="swr_meter.jpg">
+</body>
+</html>
+

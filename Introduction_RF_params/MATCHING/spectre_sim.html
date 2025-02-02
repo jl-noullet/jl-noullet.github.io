@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+   <title>S-parameter simulation with Spectre</title>
+</head>
+<body text="#000000" bgcolor="#DDDDDD" link="#000099" vlink="#990099" alink="#000099">
+
+<style type="text/css">
+table.bw { border: 2px solid black; border-collapse:collapse; }
+table.bw td { border: 1px solid green; background-color:white;
+		padding: 1px 5px 1px 10px; }
+.bk { page-break-before: always; }
+h2 { margin-top: 50px; color: blue }
+h3 { margin-top: 40px; color: blue }
+h4 { background-color:#dfd; }
+.toc { list-style-type: none; }
+.toc ul{ list-style-type: none; }
+.toc li { margin: 0; font-size: 125% }
+.toc ul li { margin: 0px; font-size: 80% }
+li { margin-top: 10px; }
+ul ul li { margin-top: 3px; }
+.lilli li { margin-top: 3px; }
+img { margin-top: 4px; margin-bottom: 4px }
+.large { margin: 0 auto; -webkit-border-radius: 8px; -moz-border-radius: 8px; border-radius: 8px;
+width: 880px; padding-left: 10px; padding-right: 8px; background-color:white; }
+.boite { overflow: auto }
+.leftim { float: left; margin-right: 50px }
+.rightim { float: right; margin-left: 20px; margin-right: 20px}
+</style>
+<!-- marges pour chrome A4 portrait : TRBL 20 10 10 10 mm -->
+
+<div class="large">
+<center>
+<h1>S-parameter simulation with Spectre</h1>
+<small>&copy; Jean-Louis Noullet 2017</small></center>
+<br>The purpose of the S-parameter simulation with Cadence Spectre is to reproduce
+the measurements which can be done in the laboratory with a VNA (Vector Network Analyzer),
+and display the results on a Smith Chart.<br>
+Special signal sources called <b>ports</b> are used and for each port the simulator performs an
+AC analysis, while keeping the other ports passive.
+
+<h3>Simulation workflow</h3>
+<ol class="lilli">
+<li>create a schematic, including at least one <b>port</b> symbol instance</li>
+<li>open the ADE tool and generate the <b>netlist</b></li>
+<li>give default values to the <b>design variables</b> if relevant</li>
+<li>choose and parametrize the <b>sp</b> analysis</li>
+<li><b>run</b> the simulation</b>
+<li><b>plot</b> the results</li>
+</ol>
+<h3>Steps Details</h3>
+<h4>Schematic</h4>
+<div class="boite">
+<img src="smith_sch.png" class="rightim">
+<ul><li>The signal source is a port, from library <b>analogLib</b>.
+The port contains a generic voltage source and an internal resistance (here 50 Ohms)</li>
+<li>In this example all elements are technolgy independant parts from <b>analogLib</b></li>
+<li>In this example two elements have variable values, which can possibly be swept during the analysis</li>
+</ul>
+Do not forget :
+<ul><li>to put a ground terminal</b>
+<li>to do a <b>Check and Save</b> before continuing</li>
+</ul> 
+</div>
+<h4>Netlist</h4>
+<div class="boite">
+<img src="smith_netlist.png" class="rightim">
+This window is obtained from the schematic window using <b>Launch&nbsp;ADE&nbsp;L</b>.<br><br>
+
+A side effect of the netlist generation is the creation of <b>design variables</b> appear on the left.<br>
+Always enter a default value for each of these variables, even if you plan do sweep it.
+</div>
+<h4>SP Analysis</h4>
+<div class="boite">
+<img src="smith_choose_analysis.png" class="rightim">
+<ul><li>Select the <b>sp</b> analysis</li>
+<li>include at least one <b>port name</b> in the list (with a leadin '/')</li>
+<li>choose what to <b>sweep</b>
+	<ul><li>choosing frequency will work like a regular AC analysis</li>
+	<li>In the example, a design variable is swept, which implies operation at a fixed frequency</li>
+	</ul></li>
+<li>carefuly determine the <b>sweep range</b> and <b>step</b> (preferably stay between 500 and 5000 steps)</li>
+</ul>
+Then run the simulation (Simulation --->Run in the ADE&nbsp;L window), check the absence of errors.
+</div>
+<h4>Plot the results</h4>
+<div class="boite">
+<img src="smith_direct_plot.png" class="leftim">
+From the ADE&nbsp;L window, reach the Direct Plot Main Form:
+</div><hr>
+<div class="boite">
+<img src="smith_direct_plot2.png" class="rightim">
+Fill the Direct Plot Form
+<ul><li>as a <b>function</b>, just choose SP</li>
+<li>as a plot type, choose <b>Z-Smith</b> or <b>Y-Smith</b> (you will be able to change later anyway)</li>
+<li>clck the <b>S11</b> button, the graph should be displayed immediately</li>
+</ul>
+</div><hr>
+<img src="smith_normalized_plot.png"><br>
+The reflexion coefficient <b>S</b> at the port terminals is plotted in the complex plane, yielding the red curve.<br>
+The background is a normalized Z-Smith chart.<br><b>Normalized</b> mean that the Z scales are labelled considering a reference impedance of 1 Ohm.<br>
+(You may disable the normalization in order to have the labels drawn according to the actual port impedance.)<br><br>
+The curve starts on the real axis, at the intersection with the <b>constant real impedance part circle</b> labelled 2,
+which denotes a pure resistance of 2.0*50 Ohms (the inductance has a negligible effect due its default value of 1pH).<br>
+Then, while the parallel capacitance increases, the curve goes down ("capacitive half circle").<br>
+The curve follows a <b>constant admittance real part circle</b>, since the parallel capacitor does not change the real part of the admittance.<br><br>
+You may switch to a Y-Smith chart in order to view the admittance circles (Graph-->Properties-->Graph Options-->Grid Type).<br><br>
+By moving the cursor along the curve, it is possible to read the local value of the swept variable (1pF in the example).
+
+
+
+
+</div></body></html>
