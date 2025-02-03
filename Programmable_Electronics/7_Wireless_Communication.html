@@ -62,8 +62,9 @@ The radio equivalent of this is called "near field communication" (NFC)</p>
 <li>The fluctuations of electric and magnetic fields propagate through space at a finite speed, the value of which can be derived from the electrostatic constant (permittivity) and the magnetic constant (permeability)</li>
 </ul>
 <p>This implies the existence of waves, and also that these waves are electric and magnetic at the same time, hence <a href="https://en.wikipedia.org/wiki/Electromagnetic_radiation">electromagnetic</a>.</p>
-<p>The electric field and the magnetic field are perpendicular to the propagation direction (transversal wave), and perpendicular to each other.<br>By definition, the polarization is the direction of the electric field (vertical on the figure below).<br>Special antenna designs create a <a href="circular_polarization.gif">circular polarization</a> where the E and B vectors rotate in time</p>
+<p>The electric field and the magnetic field are perpendicular to the propagation direction (transversal wave), and perpendicular to each other.<br>By definition, the polarization is the direction of the electric field (vertical on the figure below).<br>Special antenna designs create a <a href="circular_polarization.gif">circular polarization</a> where the E and B vectors rotate in time (circular polarization can be viewed as the sum of a vertically polarized wave and an horizontally polarized one, with a phase shift of 90 degrees)</p>
 <img src="vertical_polarization.png">
+<p>These polarizations are also observed with light.</p> 
 <p>The existence of waves requires that energy is stored in the transmission medium. But electromagnetic waves may travel in vacuum, so during some time, physicists assumed the existence of an undetectable medium called "aether" to hold this energy. With the special relativity, Einstein convinced everyone that electromagnetic energy is simply stored in vacuum.<p>
 
 <h3>7.2.3 Hertzian waves</h3>
@@ -99,7 +100,7 @@ In signal processing, the spectrum is a representation of a signal as a function
 </ul>
 Examples of well known source bandwidths:
 <ul><li>analog audio (telephone quality) : 3 kHz</li>
-<li>analog audio (high fidelity) : 20 kHz</li>
+<li>analog audio (high fidelity stereo) : 2 x 15 kHz</li>
 <li>analog television (SD-TV) : 7 MHz</li>
 <li>digital information : proportional to the bit rate, ratio depending on the analog encoding</li>
 </ul>
@@ -113,28 +114,38 @@ Considering a given modulation technology, the channel bandwidth is proportional
 <li>desired bandwidth</li>
 <li>operational constraints vs available technology</li>
 </ul>
-The lower bound of the usable radio spectrum is determined by:
+<p>The lower bound of the usable radio spectrum is determined by:</p>
 <ul><li>The requirement that the carrier frequency be great compared with the channel bandwidth, in order to leave space for several channels</li>
-<li>the huge size of equipments dealing with large bandwidths (like kilometers long antennas)</li>
+<li>the huge size of equipments dealing with large wavelengths (like kilometers long antennas)</li>
 </ul>
-In practice, frequencies lower than 30 kHz are used only for very special needs (communication with submarines).</p>
-<p>The higher bound of the usable radio spectrum is where optical (infrared) methods become more usable, and depends on technology evolutions,
+<p>In practice, frequencies lower than 30 kHz are used only for very special needs (communication with submarines).</p>
+<p>The higher bound of the usable radio spectrum is where optical (infrared) methods become more suitable, and depends on technology evolutions,
 a limit of 300 GHz is admitted in 2025.</p>
-<p>Fair use of the radio spectrum relies on rules enforced by governemental authorities. These rules cut the spectrum into bands, each one strictly reserved to a determined application and subject to transmitted power limitations, geographical limits and time constraints</p>
-<p>A small fraction of the spectrum is occupied by the ISM bands (Industrial, Scientific and Medical), which are available for general use for any purpose, without any license, but with low transmitted power limit allowing only a short range. Home appliances like remote controls, Bluetooth and Wifi work in ISM bands.</p>
+<div class="boite">
+<div class="rightim"><a href="US_frequencies_chart.pdf"><img src="US_frequencies_chart_thumbnail.png"></a></div>
+<p>Fair use of the radio spectrum relies on rules enforced by governemental authorities (examples : <a href="US_frequencies_chart.pdf">US</a>, <a href="EU_frequencies_tables.pdf">EU</a>). These rules cut the spectrum into bands, each one strictly reserved to a determined application and subject to transmitted power limitations, geographical limits and time constraints.</p>
+<p>A small fraction of the spectrum is occupied by the ISM bands (Industrial, Scientific and Medical), which are available for general use for any purpose, without any license, but with low transmitted power limit allowing only a short range.</p>
+</div>
+<p>Home appliances like remote controls, Bluetooth, Wifi and toys work in ISM bands.<br>
+(full size chart: <a href="https://www.ntia.gov/sites/default/files/publications/january_2016_spectrum_wall_chart_0.pdf">www.ntia.gov/sites/default/files/publications/january_2016_spectrum_wall_chart_0.pdf</a>)</p>
 
 <h3>7.3.3 Modulation</h3>
 
 <p>In the transceiver, the carrier is modulated by the source signal in order to carry the information.</p>
 <p>The simplest form of modulation is the On-Off keying, which was historically used to transmit messages with the Morse code. Nowadays, On-Off keying is used for transmitting binary data between digital devices. It is an extreme case of amplitude modulation.</p>
+<div class="boite"><img class="rightim" src="AM_FM_modulation.png">
 <p>Modulation techniques fall into 3 categories:
 <ul><li>Amplitude Modulation AM</li>
 <li>Frequency Modulation FM</li>
 <li>Phase Modulation</li>
 </ul>
-In theory, frequency modulation and phase modulation are similar, frequency being the derivative of phase. In practice modulation and demodulation processes for frequency and phase are different</p>
+<p>In theory, frequency modulation and phase modulation are similar, frequency being the derivative of phase.<br>
+In practice modulation and demodulation solutions for frequency and phase are implemented differently</p>
+</div>
+<div class="boite"><img class="rightim" src="crystal_radio.png">
 <p>Demodulation of AM may be the simplest, using a diode to extract the envelope of the received RF signal. The first generation audio receivers were called "crystal radio" because a natural galena crystal (PbS, lead sulfide) was used as semiconductor diode.</p>
-<p>The theoretical channel bandwidth for AM is twice the source bandwidth (6 kHz for 3 kHz audio).</p>
+<p>The theoretical channel <a href="https://en.wikipedia.org/wiki/Amplitude_modulation">bandwidth for AM</a> is twice the source bandwidth (6 kHz for 3 kHz audio).</p>
+</div>
 <p>FM was introduced in order to improve the quality of audio broadcasting, up to High Fidelity, as soon as progresses in technology opened new, higher frequency bands, in the VHF band (around 100 MHz), where wider channel widths (such as 250 kHz) were allowed.</p>
 <p>Demodulation of FM is more complex, involving clipping to remove any unwanted amplitude fluctuation, filtering through a linear slope filter, followed par amplitude demodulation.</p> 
 <p>The channel <a href="https://en.wikipedia.org/wiki/Frequency_modulation">bandwidth for FM</a> is theoretically infinite and complicated to calculate (based on Bessel's functions). A simplified approximation is Carson's rule, giving the channel bandwidth as twice the frequency deviation added to the source bandwidth.</p>
@@ -147,22 +158,81 @@ In theory, frequency modulation and phase modulation are similar, frequency bein
 </ul></li>
 <li>FM :
 <ul><li>immunity against amplitude fluctuations</li>
-<li>increasing the frequency deviation gives control on signal quality at the expense of greater channel bandwidth</li>
+<li>increasing the frequency deviation gives control on signal quality at the expense of channel bandwidth</li>
 <li>signal quality maintained up to complete loss, in case of interferring transmission the strongest masks the other</li>
 </ul></li></ul>
 </p>
-<p>Phase modulation is used mainly for digital transmission (as well as AM and FM), with the help of IQ modulation and demodulation made affordable in digital form</p> 
+<p><a href="https://en.wikipedia.org/wiki/Phase-shift_keying">Phase modulation</a> is used mainly for digital transmission (as well as AM and FM), with the help of <a href="https://en.wikipedia.org/wiki/Quadrature_amplitude_modulation">quadrature amplitude (QAM or IQ)</a> modulation and demodulation, which become more affordable in digital form</p>
+
+<h2>7.4  The Superheterodyne receiver</h2>
+
+<h3>7.4.1 The filtering requirement</h3>
+<p>The received radio signal needs to be filtered by a band-pass filter, for two reasons :</p>
+<ul><li>channel separation : separating the desired contents from other transmission occurring in nearby frequencies</li>
+<li>sensitivity improvement : rejecting out-of-band noise</li>
+</ul>
+<p>The sensitivity of a receiver is not limited by the amplification gain (which can be increased as much as desired), but by the noise present at the first amplification stage. The noises sources can be classified as:</p>
+<ul><li><a href="https://en.wikipedia.org/wiki/Johnson%E2%80%93Nyquist_noise">Thermal noise</a>, shot noise and other atomic-scale sources</li>
+<li>other natural noise sources, like atmospheric and cosmic activity</li>
+<li>noise from human activity, like radio and electrical power</li> 
+</ul>
+<p>Thermal noise is a major concern, it is present in the whole specrum, it is unavoidable and can be fought only by reducing the temperature of the whole equipment (which is done only for extremely demanding applications)</p>
+<p>So reducing the amplification bandwidth to the minimum required is the first solution to improve the sensitivity of a receiver</p>
+<p>But if the bandwidth is small compared to the carrier frequency, making such a narrow-band filter is difficult (because of the very high value of its Q factor).<br>
+If we add the requirement of making it tunable in order to let the user choose a channel, this turns to be just impossible.<br>
+This problem may be solved by means of frequency translation, which is the principle of the super-heterodyne receiver</p>
+
+<h3>7.4.2 The mixer as a frequency translator</h3>
+
+<p>The ideal mixer is a multiplier, generating the product of two signals</p>
+<p>If we consider two periodic signals :</p>
+<pre>	A(t) = cos(F<sub>A</sub>t)
+	B(t) = cos(F<sub>B</sub>t)</pre>
+<p>their product is :</p>
+<pre>	A(t)B(t) = 0.5( cos( (F<sub>A</sub>+F<sub>B</sub>)t ) + cos( (F<sub>A</sub>-F<sub>B</sub>)t )</pre>
+<p>If we consider B(t) as a constant reference signal, and A(t) as one component of the signal to process, we observe that we get two copies of A(t), translated on the f axis by +- F<sub>B</sub>. One of these copies can be selected for subsequent processing, by filtering</p>
+<p>If the mixer is non-ideal, it will present additional components at frequencies 0(DC), F<sub>A</sub>, F<sub>B</sub>, and higher harmonics, which can all be removed by filtering as well</p> 
+
+<h3>7.4.3 The superheterodyne receiver</h3>
+<div class="boite"><img class="rightim" src="mixer.png"> 
+<p>The idea is to use a local oscillator LO giving a reference frequency close to the carrier frequency RF, and a mixer to translate the incoming signal to a much lower frequency band said IF (intermediate frequency).</p>
+<p>Then the channel bandwidth filtering around IF would be made easier, requiring a moderate Q factor.</p>
+<p>In addition, tuning the receiver would be done mainly at the local oscillator, then the IF stages would need no tuning.</p>
+<p>In the figure, f<sub>RF</sub> is lower than f<sub>LO</sub>. If it were higher, at the same distance, the signal would be translated at the same place, so the receiver actually accepts two carrier frequencies, the desired one, and another one, 2*f<sub>IF</sub> apart, called the
+"image frequency", generally unwanted.</p>
+
+<p>For solving this problem, in the classic <a href="https://en.wikipedia.org/wiki/Superheterodyne_receiver">superheterodyne receiver</a>, a pre-filter is inserted ahead of the mixer to attenuate the image frequency. This filter needs a moderate Q factor, but it has to be tuned in parallel with the local oscillator</p>
+<p>In spite of these complications, the superheterodyne is still the most successful receiver architecture</p>
+</div>
+
+<h3>7.4.4 The digitally configurable radio</h3>
+<p>To take advantage from the digital technology, some analog elements of a radio receiver or transmitter may be replaced by digital implementations, notably: </p>
+<ul><li>the local oscillator, which is implemented as a frequency synthesizer, generating a digitally specified arbitrary frequency, based on a fixed-frequency reference oscillator</li>
+<li>the IF processing, consisting of analog-to-digital (ADC) conversion followed by digital filtering</li>
+<li>the modulation and demodulation, fully digital, covering AM, FM and PM</li>
+</ul>
+<p>The expected benefit is an increased flexibility, with the ability to program the carrier frequency, the intermediate frequency, the channel bandwidth, the modulation scheme and other parameters</p>
+<p>There are less analog elements, but their quality is critical:</p>
+<ul><li>the variable-gain input amplifier (LNA for Low Noise Amplifier)</li>
+<li>the <a href="https://en.wikipedia.org/wiki/Gilbert_cell">mixer</a> (the superheterodyne architecture is still relevant)</li>
+<li>the <a href="https://en.wikipedia.org/wiki/Voltage-controlled_oscillator">Voltage Controlled Oscillator</a> (VCO) which is part of the PLL (<a href="https://en.wikipedia.org/wiki/Phase-locked_loop">Phase Locked Loop</a>) inside the frequency synthesizer</li>
+</ul>
+<p>In some cases, IF filtering and demodulation by software if feasible, leading to the "software defined radio" concept.</p>
+<p>As an example, the figure below is the simplified diagram of the <a href="WUCAM/CC1101/CC1101.pdf">CC1101</a> integrated circuit by Texas Instruments.<br>
+It is a single chip half-duplex transceiver (transmitter and receiver) for digital data, with a superheterodyne receive section. It targets low cost, ultra low power communication.</p>
+<img src="CC1101_diagram.png">
+<p>The frequency synthesizer provides the carrier source for transmission and the local oscillator for reception.<br>
+it has two outputs with a 90 degrees phase shift, in order to drive two mixers performing quadrature demodulation (IQ) for reception.</p>
+<p>For transmission, the frequency synthesizer supports FM and PM, while AM is performed by the power amplifier PA (AM connexion is missing on the diagram).</p>
+<p>For reception, the two IF channels I (in-phase) and Q (quadrature) are pre-filtered and converted to digital in order to be further filtered and demodulated digitally.</p>
+<p>Benefits of digital IQ demodulation : Considering that I and Q are respectively the real and imaginary parts of a complex number representing the instant value of the signal, the signal magnitude and its phase can be computed digitally.</p>
+<p>The magnitude provides the AM demodulation without requiring any further filtering (unlike the diode-based envelope detector), while the phase provides phase demodulation and, after derivation, frequency demodulation. The phase signal may also help to set apart the image signal.</p>  
+ 
+<h2>7.5 The antenna and the range limitations</h2>
 
 
 
-
-
-<h2>7.  The Super-Heterodyne receiver</h2>
-	<h3>7. The filtering requirement</h3>
-	<h3>7. The mixer as a frequency translator</h3>
-	<h3>7. The super-heterodyne receiver</h3>
-	<h3>7. The digital configurable transceiver</h3>
-<h2>7.  The antenna and the impedance matching</h2>
+<h3>7.  The line-of-sight limitations</h3>
 <h2>7.  The challenges and tradeoffs of wireless transmission</h2>
 
 https://en.wikipedia.org/wiki/Horizon
@@ -175,7 +245,7 @@ https://en.wikipedia.org/wiki/Horizon
 
 
 
-
+<a href=""> </a>
 
 </div>
 </body>
