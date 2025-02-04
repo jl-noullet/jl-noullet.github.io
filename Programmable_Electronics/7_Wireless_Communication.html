@@ -230,9 +230,54 @@ it has two outputs with a 90 degrees phase shift, in order to drive two mixers p
  
 <h2>7.5 The antenna and the range limitations</h2>
 
+<p>Antennas come in a variety of shapes, then in order to compare them, their gain relative to an hypothetical isotropic antenna is used, expressed in dBi ("i" for isotropic)</p>
+<p>The gain is mesured in the direction of maximum signal, then a positive gain is normally obtained, thanks to the fact that real antennas yield an anisotropic radiation, which concentrate power in some directions.</p>
+<p>The greatest gain is obtained with the most directive antennas<p>
+<p>The antennas being reversible, the gain applies to transmission and reception as well</p>
+
+<h3>7.5.1 The reference models : dipole and monopole</h3> 
+<p>Analytic modeling of antennas is feasible only in simple cases, the dipole is the best known among these.</p>
+<div class="boite"><img class=rightim src="monopole_and_dipole_antenna.png">
+<p>The dipole is a pair of colinear conductive segments fed from the center by a balanced (symmetrical) signal. If the lenghth of each segment is γ/4 (a quarter of the wavelength), its theoretical impedance is purely resistive (73 Ohms), which facilitates coupling with the transmitter or receiver. Its radiation is omnidirectional in the plane perpendicular to the segments, but is minimal in the direction pointed by the segments, its <a href="dipole_radiation_pattern.png">radiation pattern</a> is shaped like a torus.Its theoretical gain is 2.19 dBi.</p>
+<p>The <a href="https://en.wikipedia.org/wiki/Monopole_antenna">monopole antenna</a> can be derived from the dipole, by putting an infinite conductive "ground" plane in place of the symmetry plane, where the potential is already zero in the dipole model. Then it has an impedance of 36.5 Ohms and a gain of 5.2 dBi.</p>
+</div>
+
+<div class="boite"><img class=rightim src="base_loaded_antenna.png">
+<p>It is totally possible to have segment length different from the reference value γ/4, then the radiation pattern, the impedance and the gain will be different. A non-resistive impedance can be corrected using a matching network between the antenna and the transmission line</p>  
+<p>In practice, for large wavelengths, the monopole is frequently implemented as a mast, using earth as a ground plane. For shorter wavelengths, the chassis or body of an equipment or vehicle can be considered as a non-ideal ground plane.</p>
+<p>A monopole antenna may be significantly shorter than γ/4, in this case its impedance can be made real by means of a series inductor, this assembly is called a "base loaded antenna". For hand-held devices, this assembly is conveniently protected by a molded plastic sleeve.</p>
+</div>
+
+<h3>7.5.2 The range formulas</h3>
+<p>In open space, the received power decreases with the distance, according to a very general "inverse square law"(proportional to 1/d<sup>2</sup>).</p>
+<p>This is more precisely expressed by Friis' formula :<br>
+<img src="friis_G.png">
+where Pt and Pr are the transmitted and received electrical power, Gt and Gr are the respective antenna gains, γ is the wavelength and d the distance. Note: Gt and Gr are expressed as linear values, not dB.</p>
+<p>We observe that the received power is proportional to γ<sup>2</sup>, which implies that higher frequencies reach shorter ranges. This disadvantage is related with the fact that higher frequencies use smaller antennas, due to the role of γ as a scaling factor.</p>
+<p>We can compare this with optics : the light power received by an absorbing object is proportional to the area of the wavefront it intercepts, so we can imagine that the radio antenna has a "virtual" or "effective" area, scaled by γ<sup>2</sup> and G.<p>
+<p><a href="https://www.cv.nrao.edu/~sransom/web/Ch3.html">Theoretical calculations</a> give the average effective area of any antenna, which is also the effective area of the ideal isotropic antenna :<br>
+<img src="friis_Ai.png">
+The effective area of an arbitrary antenna in the direction of maximum signal is its gain multiplied by this value. This leads to the other form of Friis' formula :<br>
+<img src="friis_A.png"><p>
+<p>In the case an antenna using a reflector to concentrate the beam, the effective area is approximately the physical area of the reflector, so the it can be increased regardless of the wavelength.<br>
+In this case, higher frequencies are freed from the γ disadvantage mentioned above, and in the case of reflector at both ends, they even benefit from a short γ.</p>
+<p>The greatest range ever achieved by a human made radio link is the communication with space probe Voyager 1 :</p>
+<ul><li>distance (january 2025) : 24800000000 km (24.8 Tm, 23 light-hours)
+<li>frequencies : 2.1 GHz, 2,3 GHz and 8.4 GHz
+<li>spaceborn antenna : 3.7 m diameter
+<li>ground antennaes : 70 m diameter
+</ul>
 
 
-<h3>7.  The line-of-sight limitations</h3>
+
+https://en.wikipedia.org/wiki/Friis_transmission_equation
+https://en.wikipedia.org/wiki/Isotropic_radiator
+https://www.cv.nrao.edu/~sransom/web/Ch3.html
+https://www.cv.nrao.edu/~sransom/web/A5.html
+https://web.archive.org/web/20180901040049/https://www.cv.nrao.edu/course/astr534/AntennaTheory.html
+https://science.nrao.edu/opportunities/courses/era
+<h2>7.  The line-of-sight limitations</h2>
+
 <h2>7.  The challenges and tradeoffs of wireless transmission</h2>
 
 https://en.wikipedia.org/wiki/Horizon
