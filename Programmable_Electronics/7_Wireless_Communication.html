@@ -12,9 +12,11 @@
 <h1>7. Wireless Communication</h1>
 </center>
 
+<div class="boite"><img class="leftim" src="pylone.jpg">
 <p>Wireless communication, also called radio communication, is the art of transmitting information by means of electromagnetic waves.</p>
 <p>Radio engineering was the first application of electron tubes (also named vacuum tubes or valves), and the strong demand for radio communication stimulated the development of electronic devices, initially based on vacuum and later on semi-conductor materials in solid state.</p>
 <p>This also stimulated the development of signal processing methods based on the spectral representation of signals, the theory of which was already ready (complex numbers, Fourier transform) but had served few applications.</p>
+</div>
 
 <h2>7.1 Waves</h2>
 <div class="boite">
@@ -37,27 +39,27 @@ The radio equivalent of this is called "near field communication" (NFC)</p>
 <li>some energy is stored in the "propagation medium"</li>
 </ul></p>
 <p>One may object that in modern physics, no instantaneous action may even exist. But we are permitted to consider an action as instantaneous if the propagation delay is negligible in the timescale of the observed events, or in radio vocabulary, if the distance is negligible compared with the wavelength.</p>  
-<p>Notably when we analyze electrical circuits represented as interconnected components like resistors, capacitors,etc.. (said "lumped elements"), we consider that the interaction between them is propagated instantaneously by the wiring. But when working with high frequency signal (familiarly called RF signals for Radio Frequency signals), more sophisticated models become necessary, like transmission lines and "distributed elements")</p>
+<p>Notably when we analyze electrical circuits represented as interconnected components like resistors, capacitors,etc.. (said "lumped elements"), we consider that the interaction between them is propagated instantaneously by the wiring. But when working with high frequency signal (familiarly called RF signals for Radio Frequency signals), more sophisticated models become necessary, like transmission lines and "distributed elements".</p>
 
 <h2>7.2 Electromagnetic Waves</h2>
 
 <h3>7.2.1 Electric and magnetic fields</h3>
-<p>A spectacular example of "action at a distance" is the influence of a magnet on ferrous objects or other magnets. During centuries, physicists considered this action as instantaneous and then not implying waves.<br>The same remark applies to the electrostatic forces</p> 
+<p>A spectacular example of "action at a distance" is the influence of a magnet on ferrous objects or other magnets. During centuries, physicists considered this action as instantaneous and then not implying waves.<br>The same remark applies to the electrostatic forces.</p> 
 <p>At the same time, the study of static magnetic and electrostatic fields found no interaction between them.</p>
 <div class="boite">
 <img class="rightim" src="biot_savart.png">
 <p>But on the dynamic side, several laws of electromagnetism exist which connect magnetics and electrostatics:
 <ul>
-<li><a href="https://en.wikipedia.org/wiki/Biot%E2%80%93Savart_law">Biot-Savart law</a> : an electric current creates a magnetic field, the lines of force of which are circles lying in planes perpendicular to the current. More generally, any motion of an electric charge creates such a magnetic field.<br>A practical application is the coil or electromagnet, where the magnetic fields produced by <a href="loop_field.png">current loops</a> add together (see <a href="https://en.wikipedia.org/wiki/Amp%C3%A8re%27s_circuital_law">Ampere's law</a>).</li>
+<li><a href="https://en.wikipedia.org/wiki/Biot%E2%80%93Savart_law">Biot-Savart law</a> (1820) : an electric current creates a magnetic field, the lines of force of which are circles lying in planes perpendicular to the current. More generally, any motion of an electric charge creates such a magnetic field.<br>A practical application is the coil or electromagnet, where the magnetic fields produced by <a href="loop_field.png">current loops</a> add together (see <a href="https://en.wikipedia.org/wiki/Amp%C3%A8re%27s_circuital_law">Ampere's law</a>).</li>
 </ul></p>
 </div>
 <div class="boite">
 <img class="rightim" src="induction_law.png">
-<ul><li><a href="https://en.wikipedia.org/wiki/Faraday%27s_law_of_induction">Faraday's law of induction</a> : between the terminals of a conductor moving in such a manner that its motion cuts a magnetic field, a voltage appears, called "electromotive force". More generally, if the magnetic flux traversing a circuit loop varies in time, an electromotive force appears. This is the operating principle of generators (dynamos, alternators) and transformers</li>
+<ul><li><a href="https://en.wikipedia.org/wiki/Faraday%27s_law_of_induction">Faraday's law of induction</a> (1831) : between the terminals of a conductor moving in such a manner that its motion cuts a magnetic field, a voltage appears, called "electromotive force". More generally, if the magnetic flux traversing a circuit loop varies in time, an electromotive force appears. This is the operating principle of generators (dynamos, alternators) and transformers.</li>
 </ul></div>
 
 <h3>7.2.2 Maxwell's equations</h3>
-<p>Amazingly soon after Ampere's and Faraday's works, Maxwell formulated an unified generalization of all the laws of electricity and magnetism, known as <a href="https://en.wikipedia.org/wiki/Maxwell%27s_equations">Maxwell's equations</a>. These equations have two remarkable consequences :
+<p>Amazingly soon after Ampere's and Faraday's works, Maxwell formulated an unified generalization of all the laws of electricity and magnetism, known as <a href="https://en.wikipedia.org/wiki/Maxwell%27s_equations">Maxwell's equations</a> (1865). These equations have two remarkable consequences :
 <ul><li>If an electric field varies in time, this creates a varying magnetic field, and conversely</li>
 <li>The fluctuations of electric and magnetic fields propagate through space at a finite speed, the value of which can be derived from the electrostatic constant (permittivity) and the magnetic constant (permeability)</li>
 </ul>
@@ -65,16 +67,16 @@ The radio equivalent of this is called "near field communication" (NFC)</p>
 <p>The electric field and the magnetic field are perpendicular to the propagation direction (transversal wave), and perpendicular to each other.<br>By definition, the polarization is the direction of the electric field (vertical on the figure below).<br>Special antenna designs create a <a href="circular_polarization.gif">circular polarization</a> where the E and B vectors rotate in time (circular polarization can be viewed as the sum of a vertically polarized wave and an horizontally polarized one, with a phase shift of 90 degrees)</p>
 <img src="vertical_polarization.png">
 <p>These polarizations are also observed with light.</p> 
-<p>The existence of waves requires that energy is stored in the transmission medium. But electromagnetic waves may travel in vacuum, so during some time, physicists assumed the existence of an undetectable medium called "aether" to hold this energy. With the special relativity, Einstein convinced everyone that electromagnetic energy is simply stored in vacuum.<p>
+<p>The existence of waves requires that energy is stored in the transmission medium. But electromagnetic waves may travel in vacuum, so during some time, physicists assumed the existence of an undetectable medium called "aether" to hold this energy. With the special relativity, Einstein convinced everyone that electromagnetic energy is simply stored in vacuum (1905).<p>
 
 <h3>7.2.3 Hertzian waves</h3>
-<p>Scientific experiments led by Herz confirmed the predicted properties of electromagnetic waves, including optical-like properties (reflexion, refraction, polarization).<p>
-<p>Herz produced waves using resonant circuits excited by pulses obtained by means of sparks (brief electric arcs)</p> 
+<p>Scientific experiments led by Hertz confirmed the predicted properties of electromagnetic waves, including optical-like properties (reflexion, refraction, polarization)(1888).<p>
+<p>Hertz produced waves using resonant circuits excited by pulses obtained by means of sparks (brief electric arcs).</p> 
 <p>As soon as he knew about this, Marconi started to develop commercial wireless communication solutions based on these "hertzian waves" also named "radio waves".</p>
 
 <h3>7.2.4 The light</h3>
-<p>Young's experiments with <a href="https://en.wikipedia.org/wiki/Young%27s_interference_experiment">optical interferences</a> proved that light is a wave, permitted measurement of its wavelength, and matched colors with wavelengths</p>
-<p>Measuring light's speed appeared very difficult, but at the time of Maxwell's works, some results were available. Observing that the speed of light was very close to the speed of electromagnetic waves which he had predicted independantly, Maxwell concluded that light is an electromagnetic wave, together with <a href="https://en.wikipedia.org/wiki/Infrared">infrared</a> and <a href="https://en.wikipedia.org/wiki/Ultraviolet">ultraviolet</a>.</p>
+<p>Young's experiments with <a href="https://en.wikipedia.org/wiki/Young%27s_interference_experiment">optical interferences</a> proved that light is a wave (1807), permitted measurement of its wavelength, and matched colors with wavelengths.</p>
+<p>Measuring light's speed appeared very difficult, but at the time of Maxwell's works, some results were available. Observing that the speed of light was very close to the speed of electromagnetic waves which he had predicted independantly, Maxwell suggested that light is an electromagnetic wave, together with <a href="https://en.wikipedia.org/wiki/Infrared">infrared</a> and <a href="https://en.wikipedia.org/wiki/Ultraviolet">ultraviolet</a>. Hertz confirmed this by experiments (1888).</p>
 
 <h3>7.2.5 The scaling principle</h3>
 <p>At that point, it is necessary to recall that similar results are obtained if the linear dimensions of electric devices (inductors, capacitors, antennas) are scaled proportionnaly to the wavelength.</p>
@@ -148,9 +150,9 @@ In practice modulation and demodulation solutions for frequency and phase are im
 </div>
 <p>FM was introduced in order to improve the quality of audio broadcasting, up to High Fidelity, as soon as progresses in technology opened new, higher frequency bands, in the VHF band (around 100 MHz), where wider channel widths (such as 250 kHz) were allowed.</p>
 <p>Demodulation of FM is more complex, involving clipping to remove any unwanted amplitude fluctuation, filtering through a linear slope filter, followed par amplitude demodulation.</p> 
-<p>The channel <a href="https://en.wikipedia.org/wiki/Frequency_modulation">bandwidth for FM</a> is theoretically infinite and complicated to calculate (based on Bessel's functions). A simplified approximation is Carson's rule, giving the channel bandwidth as twice the frequency deviation added to the source bandwidth.</p>
-<p>AM and FM are also used for individual voice communication for aviation (AM), marine (FM), walkie-talkie (AM and FM).</p>
-<p>Comparison between AM and FM for audio:
+<p>The channel <a href="https://en.wikipedia.org/wiki/Frequency_modulation">bandwidth for FM</a> is theoretically infinite and complicated to calculate (based on Bessel's functions). A simplified approximation is Carson's rule, giving the channel bandwidth as twice the sum of frequency deviation and source bandwidth.</p>
+<p>AM and FM are also used for voice communication for aviation (AM), marine (FM), walkie-talkie (AM and FM).</p>
+<p>Comparison between AM and FM for audio :
 <ul><li>AM : 
 <ul><li>sensitivity to amplitude fluctuations</li>
 <li>minimum channel bandwidth (with possible further reduction with <a href="https://en.wikipedia.org/wiki/Single-sideband_modulation">SSB</a></li>
@@ -162,12 +164,12 @@ In practice modulation and demodulation solutions for frequency and phase are im
 <li>signal quality maintained up to complete loss, in case of interferring transmission the strongest masks the other</li>
 </ul></li></ul>
 </p>
-<p><a href="https://en.wikipedia.org/wiki/Phase-shift_keying">Phase modulation</a> is used mainly for digital transmission (as well as AM and FM), with the help of <a href="https://en.wikipedia.org/wiki/Quadrature_amplitude_modulation">quadrature amplitude (QAM or IQ)</a> modulation and demodulation, which become more affordable in digital form</p>
+<p><a href="https://en.wikipedia.org/wiki/Phase-shift_keying">Phase modulation</a> is used mainly for digital transmission (as well as AM and FM), with the help of <a href="https://en.wikipedia.org/wiki/Quadrature_amplitude_modulation">quadrature amplitude (QAM or IQ)</a> modulation and demodulation, which become more affordable in digital form.</p>
 
 <h2>7.4  The Superheterodyne receiver</h2>
 
 <h3>7.4.1 The filtering requirement</h3>
-<p>The received radio signal needs to be filtered by a band-pass filter, for two reasons :</p>
+<p>The received radio signal needs to be filtered by a narrow band-pass filter, for two reasons :</p>
 <ul><li>channel separation : separating the desired contents from other transmission occurring in nearby frequencies</li>
 <li>sensitivity improvement : rejecting out-of-band noise</li>
 </ul>
@@ -177,10 +179,10 @@ In practice modulation and demodulation solutions for frequency and phase are im
 <li>noise from human activity, like radio and electrical power</li> 
 </ul>
 <p>Thermal noise is a major concern, it is present in the whole specrum, it is unavoidable and can be fought only by reducing the temperature of the whole equipment (which is done only for extremely demanding applications)</p>
-<p>So reducing the amplification bandwidth to the minimum required is the first solution to improve the sensitivity of a receiver</p>
+<p>So reducing the amplification bandwidth to the minimum required is the first solution to improve the sensitivity of a receiver.</p>
 <p>But if the bandwidth is small compared to the carrier frequency, making such a narrow-band filter is difficult (because of the very high value of its Q factor).<br>
 If we add the requirement of making it tunable in order to let the user choose a channel, this turns to be just impossible.<br>
-This problem may be solved by means of frequency translation, which is the principle of the super-heterodyne receiver</p>
+This problem may be solved by means of frequency translation, which is the principle of the super-heterodyne receiver.</p>
 
 <h3>7.4.2 The mixer as a frequency translator</h3>
 
@@ -190,8 +192,8 @@ This problem may be solved by means of frequency translation, which is the princ
 	B(t) = cos(F<sub>B</sub>t)</pre>
 <p>their product is :</p>
 <pre>	A(t)B(t) = 0.5( cos( (F<sub>A</sub>+F<sub>B</sub>)t ) + cos( (F<sub>A</sub>-F<sub>B</sub>)t )</pre>
-<p>If we consider B(t) as a constant reference signal, and A(t) as one component of the signal to process, we observe that we get two copies of A(t), translated on the f axis by +- F<sub>B</sub>. One of these copies can be selected for subsequent processing, by filtering</p>
-<p>If the mixer is non-ideal, it will present additional components at frequencies 0(DC), F<sub>A</sub>, F<sub>B</sub>, and higher harmonics, which can all be removed by filtering as well</p> 
+<p>If we consider B(t) as a constant reference signal, and A(t) as one component of the signal to process, we observe that we get two copies of A(t), translated on the f axis by +- F<sub>B</sub>. One of these copies can be selected for subsequent processing, by filtering.</p>
+<p>If the mixer is non-ideal, it will present additional components at frequencies 0(DC), F<sub>A</sub>, F<sub>B</sub>, and higher harmonics, which can all be removed by filtering as well.</p> 
 
 <h3>7.4.3 The superheterodyne receiver</h3>
 <div class="boite"><img class="rightim" src="mixer.png"> 
@@ -201,8 +203,8 @@ This problem may be solved by means of frequency translation, which is the princ
 <p>In the figure, f<sub>RF</sub> is lower than f<sub>LO</sub>. If it were higher, at the same distance, the signal would be translated at the same place, so the receiver actually accepts two carrier frequencies, the desired one, and another one, 2*f<sub>IF</sub> apart, called the
 "image frequency", generally unwanted.</p>
 
-<p>For solving this problem, in the classic <a href="https://en.wikipedia.org/wiki/Superheterodyne_receiver">superheterodyne receiver</a>, a pre-filter is inserted ahead of the mixer to attenuate the image frequency. This filter needs a moderate Q factor, but it has to be tuned in parallel with the local oscillator</p>
-<p>In spite of these complications, the superheterodyne is still the most successful receiver architecture</p>
+<p>For solving this problem, in the classic <a href="https://en.wikipedia.org/wiki/Superheterodyne_receiver">superheterodyne receiver</a>, a pre-filter is inserted ahead of the mixer to attenuate the image frequency. This filter needs a moderate Q factor, but it has to be tuned in parallel with the local oscillator.</p>
+<p>In spite of these complications, the superheterodyne is still the most successful receiver architecture.</p>
 </div>
 
 <h3>7.4.4 The digitally configurable radio</h3>
@@ -211,7 +213,7 @@ This problem may be solved by means of frequency translation, which is the princ
 <li>the IF processing, consisting of analog-to-digital (ADC) conversion followed by digital filtering</li>
 <li>the modulation and demodulation, fully digital, covering AM, FM and PM</li>
 </ul>
-<p>The expected benefit is an increased flexibility, with the ability to program the carrier frequency, the intermediate frequency, the channel bandwidth, the modulation scheme and other parameters</p>
+<p>The expected benefit is an increased flexibility, with the ability to program the carrier frequency, the intermediate frequency, the channel bandwidth, the modulation scheme and other parameters.</p>
 <p>There are less analog elements, but their quality is critical:</p>
 <ul><li>the variable-gain input amplifier (LNA for Low Noise Amplifier)</li>
 <li>the <a href="https://en.wikipedia.org/wiki/Gilbert_cell">mixer</a> (the superheterodyne architecture is still relevant)</li>
@@ -238,12 +240,12 @@ it has two outputs with a 90 degrees phase shift, in order to drive two mixers p
 <h3>7.5.1 The reference models : dipole and monopole</h3> 
 <p>Analytic modeling of antennas is feasible only in simple cases, the dipole is the best known among these.</p>
 <div class="boite"><img class=rightim src="monopole_and_dipole_antenna.png">
-<p>The dipole is a pair of colinear conductive segments fed from the center by a balanced (symmetrical) signal. If the lenghth of each segment is γ/4 (a quarter of the wavelength), its theoretical impedance is purely resistive (73 Ohms), which facilitates coupling with the transmitter or receiver. Its radiation is omnidirectional in the plane perpendicular to the segments, but is minimal in the direction pointed by the segments, its <a href="dipole_radiation_pattern.png">radiation pattern</a> is shaped like a torus.Its theoretical gain is 2.19 dBi.</p>
+<p>The dipole is a pair of colinear conductive segments fed from the center by a balanced (symmetrical) signal. If the lenghth of each segment is γ/4 (a quarter of the wavelength), its theoretical impedance is purely resistive (73 Ohms), which facilitates coupling with the transmitter or receiver. Its radiation is omnidirectional in the plane perpendicular to the segments, but is minimal in the direction pointed by the segments, its <a href="dipole_radiation_pattern.png">radiation pattern</a> is shaped like a torus. Its theoretical gain is 2.2 dBi.</p>
 <p>The <a href="https://en.wikipedia.org/wiki/Monopole_antenna">monopole antenna</a> can be derived from the dipole, by putting an infinite conductive "ground" plane in place of the symmetry plane, where the potential is already zero in the dipole model. Then it has an impedance of 36.5 Ohms and a gain of 5.2 dBi.</p>
 </div>
 
 <div class="boite"><img class=rightim src="base_loaded_antenna.png">
-<p>It is totally possible to have segment length different from the reference value γ/4, then the radiation pattern, the impedance and the gain will be different. A non-resistive impedance can be corrected using a matching network between the antenna and the transmission line</p>  
+<p>It is totally possible to have a segment length different from the reference value γ/4, then the radiation pattern, the impedance and the gain will be different. A non-resistive impedance can be corrected using a <a href="../Introduction_RF_params">matching network between the antenna and the transmission line</a>.</p>  
 <p>In practice, for large wavelengths, the monopole is frequently implemented as a mast, using earth as a ground plane. For shorter wavelengths, the chassis or body of an equipment or vehicle can be considered as a non-ideal ground plane.</p>
 <p>A monopole antenna may be significantly shorter than γ/4, in this case its impedance can be made real by means of a series inductor, this assembly is called a "base loaded antenna". For hand-held devices, this assembly is conveniently protected by a molded plastic sleeve.</p>
 </div>
@@ -259,38 +261,77 @@ where Pt and Pr are the transmitted and received electrical power, Gt and Gr are
 <img src="friis_Ai.png">
 The effective area of an arbitrary antenna in the direction of maximum signal is its gain multiplied by this value. This leads to the other form of Friis' formula :<br>
 <img src="friis_A.png"><p>
+<div class="boite"><img class="rightim" src="DSN_antenna.jpg">
 <p>In the case an antenna using a reflector to concentrate the beam, the effective area is approximately the physical area of the reflector, so the it can be increased regardless of the wavelength.<br>
-In this case, higher frequencies are freed from the γ disadvantage mentioned above, and in the case of reflector at both ends, they even benefit from a short γ.</p>
+In this case, higher frequencies are freed from the γ disadvantage mentioned above, and in the case of reflector at both ends,<br> they even benefit from a short γ.</p>
 <p>The greatest range ever achieved by a human made radio link is the communication with space probe Voyager 1 :</p>
 <ul><li>distance (january 2025) : 24800000000 km (24.8 Tm, 23 light-hours)
 <li>frequencies : 2.1 GHz, 2,3 GHz and 8.4 GHz
 <li>spaceborn antenna : 3.7 m diameter
-<li>ground antennaes : 70 m diameter
+<li>ground antennas : 34 m, 70 m diameter, with liquid helium cooled LNAs
+</ul></div>
+<p>Besides the well known parabolic reflector, there are other solutions to increase the effective aperture of an antenna :</p>
+
+<div class="boite"><img class="rightim" src="helical_array.jpg">
+<ul><li>the antenna array : a number of similar antennas are placed in a plane perpendicular to the target direction, their radiations interfere to create a maximum in this direction.<br> A possible refinement is the phased array, where the target direction is varied by adjusting the phase shift between elements of the array. This is used to make radars without mechanical moving parts.</li></ul>
+</div>
+<div class="boite"><img class="rightim" src="yagi.png">
+<ul><li>the Yagi antenna : insulated conductors called directors are placed in front of a dipole, while a simple reflector is placed behind. All elements are parallel, in the same plane. By proper sizing and spacing of the element, a moderate directivity is achieved.</li>
 </ul>
+</div>
+<h3>7.5.3 The horizon</h3>
+<p>Like light, radio waves propagate along a straight line, unless refracted, diffracted or reflected.</p>
+<img src="horizon.png">
+<p>Due to the spherical shape of Earth, straight line propagation, also called "line of sight", is limited to the <a href="https://en.wikipedia.org/wiki/Horizon">horizon</a>, making the maximum range dependant on the altitude of the transmitter and the receiver.</p>
+<p>Example : between an aircraft flying at 12000 m altitude and a ground station at 130 m altitude, the line-of-sight range is 431 km</p>
+<p>But the atmosphere is not homogeneous, its density and thus its refractive index decrease with altitude, which curve light rays and radio waves towards the ground, increasing the line-of-sight range. Temperature gradients may also contribute, in either direction. A visual effect of this bending is the "sun flattening" at sunset. Typical refraction is known to increase the line-of-sight range by typically 15%</p>
+<p>Due to the conductivity of ground, induced currents in the ground tend to guide radio waves along the Earth's curvature. These <a href="https://en.wikipedia.org/wiki/Ground_wave">ground waves</a> may allow a worldwide range, but work only for low frequecies, better below 3 MHz and still usable up to 30 MHz. Navigational uses of ground waves include Non Directional Beacons (NDBs) below 530 kHz</p>
+<div class="boite"><img class="rightim" src="ionospheric_reflection.jpg">
+<p>The <a href="https://en.wikipedia.org/wiki/Ionosphere">Ionosphere</a> is a collection of ionized gas layers in the upper atmosphere, from 48 km to 965 km altitude. Ionized gases are conductive, so these layers may reflect radio waves. These reflexions, together with ground reflexions, may creates paths far beyond line-of-sight, possibly worldwide. This effect is unreliable and is rarely usable above 30 MHz, but is still considered as a emergency backup solution in case of failure of satellite communication. It is also used for Over-The-Horizon (OTH) radar.</p>
+</div>
 
+<h2>7.6 Channel separation</h2>
+<p>There is an obvious need for preventing radio users from interfering with each other, this is done at a global level by dividing the radio spectrum into bands reserved for distinct usages, like broadcasting, navigation, military, etc...</p>
+<p>In each of these bands, many channels may be needed, so further multiplexing solutions may be implemented</p>
+<h3>7.6.1 Frequency multiplexing</h3>
+<p>In these cases, channels are separated by the carrier frequency. A channel separation or carrier interval is defined, which has to be larger than the channel bandwidth in order to account for inaccuracies in carrier frequency and imperfect band filtering in transmit end receive</p>
+<p>This is the prefered solution for streaming transmissions, like audio and video broadcast and navigation beacons</p>
+<h3>7.6.2 Time multiplexing</h3>
+<p>Channels use the same frequency but different time slots</p>
+<p>Packet multiplexing is the most flexible, suitable for digital data. Timeslots may be predefined or not, in the second case, packets are emitted at random instants.<br>
+ This scheme was intensively developed for the Ethernet wired network, specified as <a href="https://en.wikipedia.org/wiki/Carrier-sense_multiple_access_with_collision_detection">Carrier-Sense Multiple Access with Collision Detection (CSMA/CD)</a>, and is applied to packet radio as well.</p>
+<h3>7.6.3 Code-division multiple access (CDMA)</h3>
+<p>This technique consists of letting multiple stations transmit at the same time on the same carrier frequency,
+and let the receiver separate the contents by means of advanced signal processing, based on statistical properties of the code used by each station. This a spread spectrum technique, occupying a band much larger than the source bandwidth, but possibly compatible with extremely weak signal-to-noise ratios.</p>
+<p>A remarkable exemple is the <a href="https://en.wikipedia.org/wiki/GPS_signals">GPS system</a>, where multiple satellites transmit on the same frequency.</p>
 
-
-https://en.wikipedia.org/wiki/Friis_transmission_equation
-https://en.wikipedia.org/wiki/Isotropic_radiator
-https://www.cv.nrao.edu/~sransom/web/Ch3.html
-https://www.cv.nrao.edu/~sransom/web/A5.html
-https://web.archive.org/web/20180901040049/https://www.cv.nrao.edu/course/astr534/AntennaTheory.html
-https://science.nrao.edu/opportunities/courses/era
-<h2>7.  The line-of-sight limitations</h2>
-
-<h2>7.  The challenges and tradeoffs of wireless transmission</h2>
-
-https://en.wikipedia.org/wiki/Horizon
-
-
-
-
-
-
-
-
-
-<a href=""> </a>
+<h2>7.7 challenges and tradeoffs of wireless transmission</h2>
+<p>In general the desired qualities of a radio transmission are some or all of these :</p>
+<ul><li>Wide bandwidth</li>
+<li>Minimal error rate</li>
+<li>Maximal range</li>
+<li>Minimal occupation of the spectrum</li>
+<li>Minimal power consumption</li>
+<li>Minimal size of equipment</li>
+</ul>
+<p>It should be understood that for a given state-of-the-art, improving one of theses qualities can be done only at the expense of sacrifying one or more of the others</p>
+<p>Managing these trade-offs is made easier by the introduction of digital technologies</p>
+<p>An intermediate parameter which helps understanding the interaction between these qualities is the signal-to-noise ratio SNR.</p>
+<p>As an example, let us consider how the range is affected by the other qualities :</p>
+<ul><li>the max range is determined by the minimum SNR required by the demodulator</li>
+<li>increasing the bandwidth increases the received noise, thus degrading the SNR</li> 
+<li>reducing the error rate is done by lifting the minimum SNR requirement</li> 
+<li>reducing the spectrum occupation width implies modulation techniques that require a higher SNR</li> 
+<li>reducing the transmitted power reduces the effective SNR</li> 
+<li>reducing the size of the equipment implies an antenna with a smaller effective area, then reducing the effective SNR</li> 
+</ul> 
+<p>As a real life example, let us consider the GPS system:</p>
+<ul><li>first priority is range, which has to reach 22000 km in open space</li>
+<li>second priority is moderate transmitting power, limited by satellite weight considerations</li>
+<li>third priority is receiver size, which should be a hand-held device</li>
+</ul>
+<p>These constraints imply an extremely low SNR at the receiver, far below unity.
+This is compensated by sacrifying bandwidth (50 bits/s) and occupation of the spectrum (more than 1 MHz)</p>
 
 </div>
 </body>
