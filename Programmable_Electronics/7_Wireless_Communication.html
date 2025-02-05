@@ -58,6 +58,7 @@ The radio equivalent of this is called "near field communication" (NFC)</p>
 <ul><li><a href="https://en.wikipedia.org/wiki/Faraday%27s_law_of_induction">Faraday's law of induction</a> (1831) : between the terminals of a conductor moving in such a manner that its motion cuts a magnetic field, a voltage appears, called "electromotive force". More generally, if the magnetic flux traversing a circuit loop varies in time, an electromotive force appears. This is the operating principle of generators (dynamos, alternators) and transformers.</li>
 </ul></div>
 
+<div class="nob">
 <h3>7.2.2 Maxwell's equations</h3>
 <p>Amazingly soon after Ampere's and Faraday's works, Maxwell formulated an unified generalization of all the laws of electricity and magnetism, known as <a href="https://en.wikipedia.org/wiki/Maxwell%27s_equations">Maxwell's equations</a> (1865). These equations have two remarkable consequences :
 <ul><li>If an electric field varies in time, this creates a varying magnetic field, and conversely</li>
@@ -68,7 +69,7 @@ The radio equivalent of this is called "near field communication" (NFC)</p>
 <img src="vertical_polarization.png">
 <p>These polarizations are also observed with light.</p> 
 <p>The existence of waves requires that energy is stored in the transmission medium. But electromagnetic waves may travel in vacuum, so during some time, physicists assumed the existence of an undetectable medium called "aether" to hold this energy. With the special relativity, Einstein convinced everyone that electromagnetic energy is simply stored in vacuum (1905).<p>
-
+</div>
 <h3>7.2.3 Hertzian waves</h3>
 <p>Scientific experiments led by Hertz confirmed the predicted properties of electromagnetic waves, including optical-like properties (reflexion, refraction, polarization)(1888).<p>
 <p>Hertz produced waves using resonant circuits excited by pulses obtained by means of sparks (brief electric arcs).</p> 
@@ -78,6 +79,7 @@ The radio equivalent of this is called "near field communication" (NFC)</p>
 <p>Young's experiments with <a href="https://en.wikipedia.org/wiki/Young%27s_interference_experiment">optical interferences</a> proved that light is a wave (1807), permitted measurement of its wavelength, and matched colors with wavelengths.</p>
 <p>Measuring light's speed appeared very difficult, but at the time of Maxwell's works, some results were available. Observing that the speed of light was very close to the speed of electromagnetic waves which he had predicted independantly, Maxwell suggested that light is an electromagnetic wave, together with <a href="https://en.wikipedia.org/wiki/Infrared">infrared</a> and <a href="https://en.wikipedia.org/wiki/Ultraviolet">ultraviolet</a>. Hertz confirmed this by experiments (1888).</p>
 
+<div class="nob">
 <h3>7.2.5 The scaling principle</h3>
 <p>At that point, it is necessary to recall that similar results are obtained if the linear dimensions of electric devices (inductors, capacitors, antennas) are scaled proportionnaly to the wavelength.</p>
 <img src="LC_scaling.png">
@@ -85,6 +87,7 @@ The radio equivalent of this is called "near field communication" (NFC)</p>
 <ul><li>Radio wavelengths (from 1mm to 10km) are compatible with man-made electric circuits</li>
 <li>Light (from 0.1µm to 10µm) is generated and sensed by microscopic events, governed by quantum physics</li>
 </ul></p>  
+</div>
 
 <h3>7.2.6 The electromagnetic spectrum</h3>
 <p>In optics, the spectrum is a representation of light intensity as a function of wavelength.<br>
@@ -92,6 +95,7 @@ In signal processing, the spectrum is a representation of a signal as a function
 <img src="electromagnetic_spectrum.png">
 <p>It should be noted that the transitions between different zones of the spectrum are not sharp, some are rather a matter of convention.</p>
   
+<div class="nob">
 <h2>7.3 Carrier and Modulation</h2>
 
 <h3>7.3.1 Bandwidths</h3>
@@ -107,7 +111,7 @@ Examples of well known source bandwidths:
 <li>digital information : proportional to the bit rate, ratio depending on the analog encoding</li>
 </ul>
 Considering a given modulation technology, the channel bandwidth is proportional to the source bandwidth. The ratio depends on the modulation scheme.</p>
-
+</div>
 <h3>7.3.2 Carrier</h3>
 
 <p>To establish a radio link, a carrier frequency is chosen in the spectrum, according to:
@@ -152,6 +156,7 @@ In practice modulation and demodulation solutions for frequency and phase are im
 <p>Demodulation of FM is more complex, involving clipping to remove any unwanted amplitude fluctuation, filtering through a linear slope filter, followed par amplitude demodulation.</p> 
 <p>The channel <a href="https://en.wikipedia.org/wiki/Frequency_modulation">bandwidth for FM</a> is theoretically infinite and complicated to calculate (based on Bessel's functions). A simplified approximation is Carson's rule, giving the channel bandwidth as twice the sum of frequency deviation and source bandwidth.</p>
 <p>AM and FM are also used for voice communication for aviation (AM), marine (FM), walkie-talkie (AM and FM).</p>
+<div class="nob">
 <p>Comparison between AM and FM for audio :
 <ul><li>AM : 
 <ul><li>sensitivity to amplitude fluctuations</li>
@@ -165,7 +170,7 @@ In practice modulation and demodulation solutions for frequency and phase are im
 </ul></li></ul>
 </p>
 <p><a href="https://en.wikipedia.org/wiki/Phase-shift_keying">Phase modulation</a> is used mainly for digital transmission (as well as AM and FM), with the help of <a href="https://en.wikipedia.org/wiki/Quadrature_amplitude_modulation">quadrature amplitude (QAM or IQ)</a> modulation and demodulation, which become more affordable in digital form.</p>
-
+</div>
 <h2>7.4  The Superheterodyne receiver</h2>
 
 <h3>7.4.1 The filtering requirement</h3>
@@ -184,6 +189,7 @@ In practice modulation and demodulation solutions for frequency and phase are im
 If we add the requirement of making it tunable in order to let the user choose a channel, this turns to be just impossible.<br>
 This problem may be solved by means of frequency translation, which is the principle of the super-heterodyne receiver.</p>
 
+<div class="nob">
 <h3>7.4.2 The mixer as a frequency translator</h3>
 
 <p>The ideal mixer is a multiplier, generating the product of two signals</p>
@@ -194,7 +200,7 @@ This problem may be solved by means of frequency translation, which is the princ
 <pre>	A(t)B(t) = 0.5( cos( (F<sub>A</sub>+F<sub>B</sub>)t ) + cos( (F<sub>A</sub>-F<sub>B</sub>)t )</pre>
 <p>If we consider B(t) as a constant reference signal, and A(t) as one component of the signal to process, we observe that we get two copies of A(t), translated on the f axis by +- F<sub>B</sub>. One of these copies can be selected for subsequent processing, by filtering.</p>
 <p>If the mixer is non-ideal, it will present additional components at frequencies 0(DC), F<sub>A</sub>, F<sub>B</sub>, and higher harmonics, which can all be removed by filtering as well.</p> 
-
+</div>
 <h3>7.4.3 The superheterodyne receiver</h3>
 <div class="boite"><img class="rightim" src="mixer.png"> 
 <p>The idea is to use a local oscillator LO giving a reference frequency close to the carrier frequency RF, and a mixer to translate the incoming signal to a much lower frequency band said IF (intermediate frequency).</p>
@@ -207,6 +213,7 @@ This problem may be solved by means of frequency translation, which is the princ
 <p>In spite of these complications, the superheterodyne is still the most successful receiver architecture.</p>
 </div>
 
+<div class="nob">
 <h3>7.4.4 The digitally configurable radio</h3>
 <p>To take advantage from the digital technology, some analog elements of a radio receiver or transmitter may be replaced by digital implementations, notably: </p>
 <ul><li>the local oscillator, which is implemented as a frequency synthesizer, generating a digitally specified arbitrary frequency, based on a fixed-frequency reference oscillator</li>
@@ -220,6 +227,7 @@ This problem may be solved by means of frequency translation, which is the princ
 <li>the <a href="https://en.wikipedia.org/wiki/Voltage-controlled_oscillator">Voltage Controlled Oscillator</a> (VCO) which is part of the PLL (<a href="https://en.wikipedia.org/wiki/Phase-locked_loop">Phase Locked Loop</a>) inside the frequency synthesizer</li>
 </ul>
 <p>In some cases, IF filtering and demodulation by software if feasible, leading to the "software defined radio" concept.</p>
+</div>
 <p>As an example, the figure below is the simplified diagram of the <a href="WUCAM/CC1101/CC1101.pdf">CC1101</a> integrated circuit by Texas Instruments.<br>
 It is a single chip half-duplex transceiver (transmitter and receiver) for digital data, with a superheterodyne receive section. It targets low cost, ultra low power communication.</p>
 <img src="CC1101_diagram.png">
@@ -227,9 +235,11 @@ It is a single chip half-duplex transceiver (transmitter and receiver) for digit
 it has two outputs with a 90 degrees phase shift, in order to drive two mixers performing quadrature demodulation (IQ) for reception.</p>
 <p>For transmission, the frequency synthesizer supports FM and PM, while AM is performed by the power amplifier PA (AM connexion is missing on the diagram).</p>
 <p>For reception, the two IF channels I (in-phase) and Q (quadrature) are pre-filtered and converted to digital in order to be further filtered and demodulated digitally.</p>
+
+<div class="nob">
 <p>Benefits of digital IQ demodulation : Considering that I and Q are respectively the real and imaginary parts of a complex number representing the instant value of the signal, the signal magnitude and its phase can be computed digitally.</p>
 <p>The magnitude provides the AM demodulation without requiring any further filtering (unlike the diode-based envelope detector), while the phase provides phase demodulation and, after derivation, frequency demodulation. The phase signal may also help to set apart the image signal.</p>  
- 
+</div>
 <h2>7.5 The antenna and the range limitations</h2>
 
 <p>Antennas come in a variety of shapes, then in order to compare them, their gain relative to an hypothetical isotropic antenna is used, expressed in dBi ("i" for isotropic)</p>
@@ -250,6 +260,7 @@ it has two outputs with a 90 degrees phase shift, in order to drive two mixers p
 <p>A monopole antenna may be significantly shorter than γ/4, in this case its impedance can be made real by means of a series inductor, this assembly is called a "base loaded antenna". For hand-held devices, this assembly is conveniently protected by a molded plastic sleeve.</p>
 </div>
 
+<div class="nob">
 <h3>7.5.2 The range formulas</h3>
 <p>In open space, the received power decreases with the distance, according to a very general "inverse square law"(proportional to 1/d<sup>2</sup>).</p>
 <p>This is more precisely expressed by Friis' formula :<br>
@@ -257,6 +268,7 @@ it has two outputs with a 90 degrees phase shift, in order to drive two mixers p
 where Pt and Pr are the transmitted and received electrical power, Gt and Gr are the respective antenna gains, γ is the wavelength and d the distance. Note: Gt and Gr are expressed as linear values, not dB.</p>
 <p>We observe that the received power is proportional to γ<sup>2</sup>, which implies that higher frequencies reach shorter ranges. This disadvantage is related with the fact that higher frequencies use smaller antennas, due to the role of γ as a scaling factor.</p>
 <p>We can compare this with optics : the light power received by an absorbing object is proportional to the area of the wavefront it intercepts, so we can imagine that the radio antenna has a "virtual" or "effective" area, scaled by γ<sup>2</sup> and G.<p>
+</div>
 <p><a href="https://www.cv.nrao.edu/~sransom/web/Ch3.html">Theoretical calculations</a> give the average effective area of any antenna, which is also the effective area of the ideal isotropic antenna :<br>
 <img src="friis_Ai.png">
 The effective area of an arbitrary antenna in the direction of maximum signal is its gain multiplied by this value. This leads to the other form of Friis' formula :<br>
@@ -270,6 +282,8 @@ In this case, higher frequencies are freed from the γ disadvantage mentioned ab
 <li>spaceborn antenna : 3.7 m diameter
 <li>ground antennas : 34 m, 70 m diameter, with liquid helium cooled LNAs
 </ul></div>
+
+<div class="nob">
 <p>Besides the well known parabolic reflector, there are other solutions to increase the effective aperture of an antenna :</p>
 
 <div class="boite"><img class="rightim" src="helical_array.jpg">
@@ -278,6 +292,7 @@ In this case, higher frequencies are freed from the γ disadvantage mentioned ab
 <div class="boite"><img class="rightim" src="yagi.png">
 <ul><li>the Yagi antenna : insulated conductors called directors are placed in front of a dipole, while a simple reflector is placed behind. All elements are parallel, in the same plane. By proper sizing and spacing of the element, a moderate directivity is achieved.</li>
 </ul>
+</div>
 </div>
 <h3>7.5.3 The horizon</h3>
 <p>Like light, radio waves propagate along a straight line, unless refracted, diffracted or reflected.</p>
@@ -305,7 +320,8 @@ In this case, higher frequencies are freed from the γ disadvantage mentioned ab
 and let the receiver separate the contents by means of advanced signal processing, based on statistical properties of the code used by each station. This a spread spectrum technique, occupying a band much larger than the source bandwidth, but possibly compatible with extremely weak signal-to-noise ratios.</p>
 <p>A remarkable exemple is the <a href="https://en.wikipedia.org/wiki/GPS_signals">GPS system</a>, where multiple satellites transmit on the same frequency.</p>
 
-<h2>7.7 challenges and tradeoffs of wireless transmission</h2>
+<div class="nob">
+<h2>7.7 Challenges and tradeoffs of wireless transmission</h2>
 <p>In general the desired qualities of a radio transmission are some or all of these :</p>
 <ul><li>Wide bandwidth</li>
 <li>Minimal error rate</li>
@@ -316,6 +332,7 @@ and let the receiver separate the contents by means of advanced signal processin
 </ul>
 <p>It should be understood that for a given state-of-the-art, improving one of theses qualities can be done only at the expense of sacrifying one or more of the others</p>
 <p>Managing these trade-offs is made easier by the introduction of digital technologies</p>
+</div>
 <p>An intermediate parameter which helps understanding the interaction between these qualities is the signal-to-noise ratio SNR.</p>
 <p>As an example, let us consider how the range is affected by the other qualities :</p>
 <ul><li>the max range is determined by the minimum SNR required by the demodulator</li>
