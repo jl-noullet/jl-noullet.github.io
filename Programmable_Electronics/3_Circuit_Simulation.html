@@ -95,20 +95,20 @@ So nowadays (in 2023) LTSPICE is freely offered by <a href="https://www.analog.c
 <h3>3.2.1 The schematic editor</h3>
 <p>The operation of the editor is pretty obvious.<br>
 Notice that the right mouse button allows to abort the current command and otherwise gives access to a context menu.<br>
-There is no "Edit" menu with "copy, paste, delete", instead in the toolbar there is a copy button (which, in fact, duplicates) and a delete button (scissors)</p>
+There is no "Edit" menu with "copy, paste, delete", instead in the toolbar there is a Duplicate Mode button and a Delete Mode button</p>
 
 <h4>Components libraries</h4>
-<p>The toolbar has buttons for some frequently used components like ground, resistors, capacitors, etc... , then every other component can be found in the components libraries (the button representing a logic AND gate, quite misleading).<br>
+<p>The toolbar has buttons for some frequently used components like ground, resistors, capacitors, etc... , then every other component can be found in the components libraries (the button representing an IC).<br>
 Note that the independant voltage source (providing DC, pulse, PWM, etc...) is simply  named "voltage".</p>
 
 <h4>Labels</h4>
-<p>In order to be able to find the desired nodes for plotting, it is recommended to put a label on each one (the button representing a sign).<br>
+<p>In order to be able to find the desired nodes for plotting, it is recommended to put a label on each one (using the Label Net button).<br>
 Note that unconnected wires bearing the same label are simulated as a single net, this may be used to simplify the drawing of common signals like power supplies.</p>
 
 <h4>Simulation commands and other SPICE directives</h4>
 <p>The simulation commands are stored on the schematic in text form, using the legacy SPICE syntax.<br>
-They can be generated easily using the Edit Simulation Command in the Simulate menu.</p>
-<p>Other SPICE directives, known as "dot commands" because they begin with a '.' character, can be placed using the last button ".op" of the toolbar.</p>
+They can be generated easily using Configure Analysis in the Simulate menu.</p>
+<p>Other SPICE directives, known as "dot commands" because they begin with a '.' character, can be placed using the Spice Directive button.</p>
 <p>A notable example is the <b>.step</b> directive which can be used to iterate a simulation (of any type) for different values of a component parameter</p>
 
 <h4>Parametrized design</h4>
@@ -124,7 +124,7 @@ The expression should be enclosed in curly braces <b>{}</b> (even if it contains
 <p>To create a cell or subcircuit to place into a hierarchical schematic, do the following :</p>
 <ol><li>create the schematic of the cell as a regular schematic</li>
 <li>define each terminal of the cell by placing a label on the relevant node, with Port Type set as Input, Ouput or Bi-Direct</li>
-<li>after saving the schematic, select Open this Sheet's Symbol in the hierarchy menu, the program will propose to generate a symbol, accept</li>
+<li>after saving the schematic, select Open or Generate this Sheet's Symbol in the Hierarchy menu, the program will propose to generate a symbol, accept</li>
 <li>if desired, modify the outline of the symbol and the placement of the pins</li>
 </ol>
 <p>Then the new symbol is available to be inserted in a higher level schematic, it can be found in the component library, after changing the top directory to the relevant location.</p>
@@ -142,8 +142,11 @@ Likewise, the component named <b>bi</b> is a configurable current source.</p>
 
 <h3>3.2.3 Waveform viewer</h3>
 <p>When a simulation ends, the waveform viewer opens an empty black window. Then signals can be added usind Add Trace in the context menu.</p>
-<p>Signals are overlayed in the same horizontal strip. To view them separately, create more strips with Add Plot Pane</p>
-<p>A cursor can be added by clicking on a signal name, then it can be dragged horizontally. A second cursor can be added by clicking again on the same name.</p>
+<p>Signals are overlayed in the same horizontal strip. To view them separately, create more strips with Add Plot Pane.</p>
+<p>A cursor can be added by clicking on a signal name, then it can be dragged horizontally. A small window indicates the signal value at its position. A second cursor can be added by clicking again on the same name. To remove the cursors, just close their small window.</p>
+<p>It is possible to display the FFT (Fast Fourier Transform, or Discrete Fourier Transform) of transient analysis results. While the waveform window is selected, use the command "FFT" in the View menu.<br>
+If the signal is periodic, try to frame exactly an integral number of periods. Otherwise, select a Windowing Function in order to smooth the discontinuities at the ends of the interval to be transformed.</p>
+
 
 <h2>3.3 Simulation examples</h2>
 
