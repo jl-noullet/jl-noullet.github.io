@@ -37,10 +37,24 @@ Since working on one bit at a time would be inefficient, data are organized in b
 
 <h3>5.1.3 Text</h3>
 
+<div class = "boite">
+<img class="rightim" src="typewriter.jpg">
 <p>A binary word may be used to represent a text character. It appears that 8 bits are sufficient for representing the letters used by latin alphabets,
-so the starting point was a code known as <a href="https://en.wikipedia.org/wiki/ASCII">ASCII</a>, representing all the characters of an american typewriter (for which 7 bits would have been sufficient).<br>
-Several solutions were proposed to extend this code to non-latin languages, the most successful being UTF-8, which uses a variable-length code, compatible with ASCII.</p>
-<p>A piece of text is represented as a sequence of bytes, called a string. It is a common practice to use the zero byte (null character) to mark the end of the string.</p>
+so the starting point was a code known as <a href="https://en.wikipedia.org/wiki/ASCII">ASCII</a>, representing all the characters of an american typewriter (for which 7 bits would have been sufficient).</p>
+<p>The first 32 codepoints are "non-printable characters" or "control characters", notably :</p>
+<ul>
+<li>NUL (0) : terminator for text strings</li>
+<li>TAB (9 = '\t' ) : skip to the next column</li>
+<li>LF (10 = 0x0A = '\n' = CTRL-J) : go to the next line</li>
+<li>CR (13 = 0x0D = '\r' = CTRL-M) : go to the first position in the line</li>
+</ul>
+<p>CR and LF are a constant source of trouble, because there is no common agreement on how to terminate a text line:</p>
+<ul><li>Microsoft Windows : CR-LF</li>
+<li>Unix, Linux : LF</li>
+<li>MAC-OS (old) : CR</li>
+</ul>
+<p>Several solutions were proposed to extend this code to non-latin languages, the most successful being UTF-8, which uses a variable-length code, compatible with ASCII.</p>
+</div>
 
 <div class="nob">
 <h3>5.1.4 Addresses</h3>
@@ -51,8 +65,8 @@ The lines are numbered in sequence, and their numbers are called the addresses, 
 
 <h3>5.1.5 Instructions</h3>
 <p>Programs in machine code are sequences of instructions coded and stored as compact binary words. The code is architecture-specific and not readable by humans.<br>When the instruction word size is fixed, the archicture is called RISC (Reduced Instruction Set Computer), otherwise it is called CISC (Complex Instruction Set Computer).</p>
-<ul><li>Programs written in languages like assembly, C, C++, Java are translated into binary code in advance, by a program called compiler (or assembler).</li>
-<li>Programs written in scripting languages like bash, javascript, python, php are translated during execution, by a program called interpreter.</li>
+<ul><li>Programs written in languages like <b>assembly, C, C++, Java</b> are translated into binary code in advance, by a program called compiler (or assembler).</li>
+<li>Programs written in scripting languages like <b>bash, javascript, python, php</b> are translated during execution, by a program called interpreter.</li>
 </ul>
 
 <h3>5.1.6 Bit Level Operations</h3>
@@ -127,8 +141,8 @@ Non volatile memory can be :</p>
 <li>EEPROM (Electrically Erasable and Programmable ROM) which can be written but is treated as ROM by the application programs</li>
 <li>FLASH memory, which is just a high density EEPROM where erasing is done one large blocks instead of single words</li>
 </ul>
-<p>In modern microcontrollers, programs are generally stored in flash memory. The CPU can read this memory, but not write into it.<br>
-Writing requires either an external hardware or a dedicated peripheral, and takes much more time than a regular memory access.</p>
+<p>In modern microcontrollers, programs are generally stored in flash memory. The CPU can read this memory, but not write directly into it.<br>
+Writing requires either an external hardware or a dedicated internal peripheral, and takes much more time than a regular memory access.</p>
 <p>A small amount of OTP-ROM is sometimes present to store the program which is used to write programs into the flash memory under control of the development computer. Such a program is called the bootloader.</p> 
 </div>
 
@@ -270,7 +284,7 @@ When people talk about "The Arduino" they refer to the board, or to the microcon
 <p>The Uno board can be powered by the USB (5 Volts nominal, 4.5 Volts min.) or by an external supply from 6 to 14 Volts, thanks to a 5 Volts voltage regulator. The board also has a 3.3 Volts regulator for the needs of shields.
 
 <p>Note: Around year 2000 the standard supply voltage for microcontrollers was shifted from 5 Volts to 3.3 Volts, this change was also applied to every digital chip communicating with SPI, I2C, UART.<br>
-The ATmega328P could run from 3.3 Volts at a reduced clock frequency, but Arduino chose to stick to 5 Volts. For this reason, the accessory boards or "shields" frequently include voltage translator ICs to ensure compatibility with 3.3V chips.</p>
+The ATmega328P could run from 3.3 Volts at a reduced clock frequency, but Arduino chose to stick to 5 Volts. For this reason, the accessory boards or "shields" frequently include voltage translator (ICs or resistor bridges) to ensure compatibility with 3.3V chips.</p>
 
 <div class="nob">
 <h3>5.3.2 The Arduino software</h3>
@@ -296,7 +310,7 @@ The IDE contains the following software components :</p>
 </ul>
 </div>
 
-<p>However, the system is more open that it seems at first sight. With some efforts it is possible to split the source code, use legacy C text formatting (snprintf), perform direct access to the peripheral registers, and use interrupts (all this thanks to the <a href="https://www.nongnu.org/avr-libc/user-manual/modules.html">avr-libc</a> library)</p>
+<p>However, the system is more open that it seems at first sight. With some efforts it is possible to split the source code, use legacy C string functions (strtod(), snprintf(), strcmp(), strlen(), atoi()), perform direct access to the peripheral registers, and use interrupts (all this thanks to the <a href="https://www.nongnu.org/avr-libc/user-manual/modules.html">avr-libc</a> library)</p>
 
 <p>The C/C++ standards require a main() function with 2 optional arguments, returning an int.<br>
 This is not adapted to the microcontroller, where the program cannot receive any argument and must never return.<br>
