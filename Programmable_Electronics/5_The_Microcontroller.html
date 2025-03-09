@@ -7,6 +7,9 @@
  <title>The Microcontroller</title>
 </head>
 <body>
+<style>
+p { margin-bottom: 0 }
+</style>
 <div class="large">
 <center>
 <h1>5. The Microcontroller</h1>
@@ -23,23 +26,65 @@ While desktop computers may also contain electro-magnetic devices like hard disc
 <h2>5.1 Binary words and memory addresses</h2>
 
 <h3>5.1.1 Words</h3>
-<p>Internally, computer work on binary data or bits.<br>
-Since working on one bit at a time would be inefficient, data are organized in binary words, which are fixed size collections of bits. For interoperability reasons, the word size is frequently a multiple of 8 bits.</p>
-<p>An 8-bit binary word is an octet or byte.</p>
+<p>Internally, computers work on binary data or bits.<br>
+Since working on one bit at a time would be inefficient, data are organized in binary words, which are fixed size collections of bits.</p>
+<p>In order to simplify memory addressing (see below), the word size is frequently a multiple of 8 bits, and most frequently used word size are 8, 16, 32 and 64 bits.<br>
+An 8-bit binary word is an octet or byte.</p>
 
 <h3>5.1.2 Numbers</h3>
-<p>A binary word may represent a number, for this purpose a weight is assigned to each bit:</p>
-<ul><li>the bit with the smallest weight (which is 1), is the LSB (Least Significant Bit)</li>
-<li>the bit with the greatest weight is the MSB (Most Significant Bit)</li>
+<h4>Natural numbers</h4>
+<p>A binary word may be considered as the representation of a natural or integral number using radix-2 or base-2 system, where each bit is assigned a weight which is a power of 2</p>
+<ul><li>the bit with the smallest weight (which is 2<sup>0</sup> = 1), is the LSB (Least Significant Bit)</li>
+<li>the bit with the greatest weight (which is 2<sup>N-1</sup>) is the MSB (Most Significant Bit)</li>
 </ul>
-<p>Signed integer number representation in computers normally uses the <a href="https://en.wikipedia.org/wiki/Two%27s_complement">two's complement</a> scheme, while fractionnal numbers said <a href="https://en.wikipedia.org/wiki/IEEE_754">floating point numbers</a> are represented by words divided in three fields: sign bit, exponent and mantissa.</p>
-<p>Reading binary data is uneasy for humans, so developers prefer to use base-16 or <a href="https://en.wikipedia.org/wiki/Hexadecimal">hexadecimal</a> numbers to represent binary words comfortably in documentation and programs.</p>
+<h4>Floating point numbers</h4>
+<p>Real numbers or fractional numbers may be represented approximately by <a href="https://en.wikipedia.org/wiki/IEEE_754">floating point numbers</a>, using a combination of three fields: sign bit, exponent and mantissa.<br>The exponent is used to compute a multiplier in the form of a power of 2, in a manner similar to the way we use powers of 10 to write real numbers in scientific notation.</p>
 
+<h4>Signed integer numbers</h4>
+<p>Using a dedicated bit for representing the sign of a number while the others represent the magnitude or absolute value seems natural, however another solution called <a href="https://en.wikipedia.org/wiki/Two%27s_complement">two's complement</a> was preferred, permitting an easier implementation of hardware adders and subtractors using logic gates.</p>
+<p>This solution may look confusing, partly because of its incorrect name, since this name should be <b>complement to 2<sup>N</sup></b>, with N being the word size used.</b>
+<div class="boite"><img class="rightim" src="reveil.jpg"><p>A simple analogy may help understanding this solution : from this clock picture, one can read "10h39" or as well "21 to 11" or "11h minus 21". Then the position of the minutes pointer (minutes hand) car be interpreted as :<p>
+<ul><li>an unsigned number : 39</li>
+<li>a signed number : -21</li>
+</ul>
+<p>Observations :</p>
+<ul><li>the difference between these 2 interpretations is 60</li>
+<li>the minutes hand displays time in minutes <b>modulo 60</b></li>
+<li>any clockwise motion of the minutes hand performs an addition to the read value, the same way in both interpretations</li>
+<li>a negative value is represented by its "complement to 60"</li>
+</ul>
+<p>In computer jargon, this could be called <b>60's complement</b></p>
+</div>
+<div class="boite"><img class="leftim" src="angles.png"><p>Another very similar analogy is the representation of an angle, like the heading of a ship or the bearing of a daymark or beacon.</p>
+<p>In the example picture, 330° and -30° are two interpretations of the same heading. If we do a 155° turn to the right, this adds 155 to both numbers, which yields respectively 485° and 125°, which result in the same position <b>modulo 360</b>.</p>
+<p>In modern navigation, a <b>360's complement</b> notation is preferred preferred over a negative angle for a westwards heading.</p>
+</div>  
+<p>Summary: if the word size is <b>N bits</b>:</p>
+<ul><li>a negative number X is represented by <b>2<sup>N</sup> - |X|</b></li>  
+<li>the range of signed numbers is <b>-2<sup>N-1</sup> to 2<sup>N-1</sup> - 1</b>, overlaid on unsigned numbers from <b>0 to 2<sup>N</sup> - 1</b></li>
+<li>the MSB may be interpreted as a sign bit</b></li>
+<li>a given binary word may be interpreted as signed or unsigned, the choice is <b>implicit</b></li>
+<li>the operation of the hardware adder and substractor do not depend on this choice (but multipliers do)</li>
+<li>overflow or underflow of simple hardware adders and subtractors is equivalent to a <b>modulo 2<sup>N</sup></b> operation</li> 
+</ul>
+<h4>Hexadecimal representation of numbers</h4>
+<p>Reading binary data is unpractical for humans, and conversion from binary to decimal and conversely is painful, so developers prefer to use base-16 also called <a href="https://en.wikipedia.org/wiki/Hexadecimal">hexadecimal</a> system to represent binary words comfortably in documentation and programs.</p>
+<p>In hexadecimal, each group of 4 bits is translated into an hex digit (from 0 to F)</p>
+<div class="boite"><img class="rightim" src="FFFEplus2.jpg">
+<p>Practical number ranges :
+<table class="bw"><tr><td></td><td colspan="2">8 bits</td><td colspan="2">16 bits</td><td colspan="2">32 bits</td></tr>
+<tr><td>largest positive</td><td>7F</td><td>127</td><td>7FFF</td><td>32767</td><td>7FFFFFFF</td><td>"2G"</td></tr>
+                <tr><td>-1</td><td>FF</td><td>-1</td><td>FFFF</td><td>-1</td><td>FFFFFFFF</td><td>-1</td></tr>
+<tr><td>largest negative</td><td>80</td><td>-128</td><td>8000</td><td>-32768</td><td>80000000</td><td>"-2G"</td></tr>
+<tr><td>largest unsigned</td><td>FF</td><td>255</td><td>FFFF</td><td>65535</td><td>FFFFFFFF</td><td>"4G"</td></tr>
+</table></p>
+<p>Practical tip: a signed number is negative if it begins with :<br><b>8, 9, A, B, C, D, E or F</b></p>
+</div>
 <h3>5.1.3 Text</h3>
-
+<p>A binary word may be used to represent a text character.</p>
 <div class = "boite">
 <img class="rightim" src="typewriter.jpg">
-<p>A binary word may be used to represent a text character. It appears that 8 bits are sufficient for representing the letters used by latin alphabets,
+<p>It appears that 8 bits are sufficient for representing the letters used by latin alphabets,
 so the starting point was a code known as <a href="https://en.wikipedia.org/wiki/ASCII">ASCII</a>, representing all the characters of an american typewriter (for which 7 bits would have been sufficient).</p>
 <p>The first 32 codepoints are "non-printable characters" or "control characters", notably :</p>
 <ul>
@@ -56,16 +101,22 @@ so the starting point was a code known as <a href="https://en.wikipedia.org/wiki
 <p>Several solutions were proposed to extend this code to non-latin languages, the most successful being UTF-8, which uses a variable-length code, compatible with ASCII.</p>
 </div>
 
-<div class="nob">
 <h3>5.1.4 Addresses</h3>
-<p>In computer memory, data words are stored in 1D-arrays, which can be considered as tables where each line contains a binary word.<br>
-The lines are numbered in sequence, and their numbers are called the addresses, which are themselves handled in binary form.<p>
-<p>Many computers can read or write words which are larger than 8 bits, but to preserve the capability or writing or reading single bytes, the adresses are always byte addresses.</p>
-</div>
+<p>In computer memory, data words are stored in 1D-arrays, which can be considered as tables where each row contains a binary word.<br>
+The rows are numbered in sequence, and their numbers are called addresses, which are themselves handled in binary form.<p>
+<p>Many computers can read or write words which are larger than 8 bits, but to preserve the capability or writing or reading single bytes, the adresses are always byte addresses. There are two standard ways to interpret a sequence of bytes as a number,
+this choice is called <a href="https://en.wikipedia.org/wiki/Endianness">endianness</a>.</p>
+<table class="bw" width="97%"><tr><td><img src="little_endian.png"></td><td><img src="big_endian.png"></td></tr>
+<tr><td>Little Endian: the weights are in the same order as the byte addresses : the least significant byte is at the first address.<br>
+This is similar to the way dates are written in continental Europe, like 31-12-2024.</td>
+<td>Big Endian: the weights are in the opposite order, the most significant byte coming first in memory.<br>
+This is the way numbers are written in western decimal notation (Hindu–Arabic numeral system).</td></tr>
+</table>
+<p>None of these choices offers a proven advantage over the other. For historical reasons, nowadays most computers are little-endian internally, while several well established data standards, like the internet protocol, use big-endian byte streams.</p> 
 
 <h3>5.1.5 Instructions</h3>
-<p>Programs in machine code are sequences of instructions coded and stored as compact binary words. The code is architecture-specific and not readable by humans.<br>When the instruction word size is fixed, the archicture is called RISC (Reduced Instruction Set Computer), otherwise it is called CISC (Complex Instruction Set Computer).</p>
-<ul><li>Programs written in languages like <b>assembly, C, C++, Java</b> are translated into binary code in advance, by a program called compiler (or assembler).</li>
+<p>Programs in machine code are sequences of instructions coded and stored as compact binary words. The code is architecture-specific and not readable by humans. In the assembly languages, each of these codes is represented by an alphanumeric symbol meant to be human-friendly.<br>When the instruction word size is uniform, the architecture is called RISC (Reduced Instruction Set Computer), otherwise it is called CISC (Complex Instruction Set Computer).</p>
+<ul><li>Programs written in languages like <b>C, C++, Java</b> are translated into binary code in advance, by a program called compiler.</li>
 <li>Programs written in scripting languages like <b>bash, javascript, python, php</b> are translated during execution, by a program called interpreter.</li>
 </ul>
 
