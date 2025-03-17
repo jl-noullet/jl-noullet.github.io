@@ -383,6 +383,15 @@ The setup() function is called once, then the loop() function call is repeated i
 <tr><td>attachInterrupt()</td><td>configure an external interrupt linked to one pin</td></tr>
 </table>
  
+<p>Primitive types sizes (in bits):</p>
+<table class="bw">
+<tr><td></td><td>&nbsp;bool</td><td>&nbsp;char&nbsp;&nbsp;</td><td>&nbsp;short&nbsp;</td><td>&nbsp;int&nbsp;&nbsp;&nbsp;</td><td>&nbsp;long</td></tr> 
+<tr><td>C++/Arduino</td><td>8</td><td>8</td><td>16</td><td><b>16</b></td><td>32</td></tr> 
+<tr><td>C++/PC</td><td>8 or 32</td><td>8</td><td>16</td><td>32</td><td>32 or 64</td></tr> 
+<tr><td>Java</td><td>8 or 16?</td><td><b>16</b></td><td>16</td><td>32</td><td>64</td></tr> 
+</table>
+
+
 <h3>5.3.3 The microcontroller as a PC peripheral</h3>
 <p>The USB to UART bridge which is on the Uno board is viewed by the host computer as a CDC (Communication Device Class) USB device.<br>
 This means that, beside the two possibilities offered by the Arduino IDE, any program running on the host computer may dialog with the target microcontroller, using the standard serial communication interface of the computer (the COM ports in Windows, the TTYs on Linux).</p> 
