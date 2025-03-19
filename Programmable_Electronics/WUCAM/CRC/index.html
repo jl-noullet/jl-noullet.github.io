@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+ <link rel="stylesheet" href="../../polycop.css" />
+ <style>
+ textarea { font-size: 22px }
+ input { font-size: 22px; cursor: pointer; background-color: #DDFFEE }
+ table { margin-left: 24px } 
+ td { padding-bottom: 8px }
+ </style>
+ <title>Cyclic Redundancy Check</title>
+</head>
+
+<body>
+<div class="large">
+<center>
+
+<h1>Cyclic Redundancy Check for WUCAM</h1>
+</center>
+
+<h2>1. Introduction</h2>
+<p>Wireless communication of digital data is exposed to unavoidable errors, the main causes of which are :</p>
+<ul><li>natural and artificial electromagnetic noise</li>
+<li>message collisions</li>
+</ul>
+<p>In order to keep the system reliable and safe, an <b>error detection code</b> should be defined. This code is :</p>
+<ul><li>calculated by the transmitter node and appended to each message</li>
+<li>calculated again by the receiver node and compared with the received code</li>
+</ul>
+<p>The error detection code is a mathematical summary or digest of the <b>payload</b> (the useful content of the message)</p>
+<p>The simplest solution used were parity checks and checksums, later more efficient solutions were discovered.<br> The CRC (Cyclic Redundancy Check) is the most widespread one, its benefit is a very simple hardware implementation.</p>
+<p>By definition, the CRC is the remainder of the <a href="https://en.wikipedia.org/wiki/Polynomial_long_division" target="_blank">polynomial division</a> of the message by a <b>reference polynomial</b>.<br>
+In this context, bits of the message, the reference polynomial, and the CRC, are coefficients of polynomial terms, so these coefficients can take only two values, 0 and 1, and are processed according to the <a href="https://en.wikipedia.org/wiki/GF(2)" target="_blank">Galois Field theory</a>.</p>
+<p>Important properties of the CRC are:</p>
+<ul><li>it can be computed incrementally along the bit stream of the message, the CRC being updated for each bit of the message
+(only the remainder of the division is kept, the quotient if discarded on the fly)</li>
+<li>the value of the polynomials is not meaningful and is never computed</li>
+<li>this computation requires a minimum amount of memory, the size of the CRC itself</li>
+<li>the size of the CRC is determined by the reference polynomial degree</li>
+<li>polynomials of various degrees (from 5 to 32) are established as standards, greater polynomials are used for longer messages or more noisy environments</li>
+</ul>
+
+<h2>2. Implementation, from hardware to software</h2>
+
+<p>As an example, let us consider the 8-bit CRC specified for the 1-wire communication bus created by Maxim (now a division of Analog Devices) for various <a href="DS1921G.pdf" target="_blank">integrated sensors</a>.</p>
+
+<h3>2.1 Hardware implementation</h3>
+<p>The interactive diagram below is derived from the <a href="MAXIM_CRC8_DS1921G.png" target="_blank">original schematic</a>, where each square box represents a 1-bit memory (a flip-flop), the whole forming a shift register with some XOR gates inserted. This is a synchronous circuit, an implicit clock signal is sent to every flip-flop, causing it to capture its input signal.</p>
+<p>The most significant bits associated with the higher degree terms of the polynomial are drawn on the left side, just to be consistent with the "left shift" instruction performed by every CPU.</p>
+
+<object id="obj1" type="image/svg+xml" data="CRC8_logic.svg"></object>
+
+<p><i>To run a simulation step, set the input bit and click the clock pulse button.</i></p> 
+<h3>2.2 Software implementation</h3>
+<p>Our microcontrollers have separate <b>bit shift</b> and <b>xor</b> instructions which act on full words, so the shift register cannot be cut to insert XOR gates, so we have to separate the <b>shift operation</b> from the <b>xor</b> operation.</p>
+<p>Because of this separation, we need to store the result of the shifted MSB xored by the input bit in an additional 1-bit variable "bitX".<br>
+The collective xor operation is perfomed only if bitX is set. This operation is done with a binary constant 0x31 expressing the reference polynomial coefficients (except the highest degree one, which is implicit).</p>
+
+<object id="obj2" type="image/svg+xml" data="CRC8_soft.svg"></object>
+
+<p><i>To run a simulation step, set the input bit, click the shift left button, and then the apply xor button if it appears.</i></p> 
+
+<h2>3. The AIXM CRC32 from Eurocontrol</h2>
+
+<h3>Specification</h3>
+<p>For the WUCAM (Wireless Unmanned Cargo Aircraft Model), a 32-bit CRC is specified.<br>
+The <a href="aixm_primer_4-5.pdf" target="_blank">AIXM CRC32</a> created by Eurocontrol (European Organisation for the Safety of Air Navigation) is chosen, since it is already agreed by ICAO for air digital communication.</p>
+<p>The AIXM polynomial, also known as CRC32Q, is defined as :
+<pre>1 + x + x^3 + x^5 + x^7 + x^8 + x^14 + x^16 + x^22 + x^24 + x^31 + x^32
+In binary (highest degree term removed):
+11010101100000101000001010000001</pre></p>
+<p>After reversing the bit order to match our convention for left shift, this gives the following constant for the xor operation:</p>
+<pre>Ox814141AB</pre>
+<p>Notes about the AIXM specification</p>
+<ul><li>the diagram in figure 6.1 contains errors and should not be used</li>
+<li>each byte of the payload should be processed MSB first</li>
+<li>the examples in table 6.1 can be used for checking the CRC implementations. In these examples, the payload is made of the ascii characters of the data items, without any separator or delimiter, for example the payload and CRC for the last line are:</p>
+<pre>480637N0163411E78246.7      0x5E5DC940</pre></li>
+<li>the java code given in appendix is a direct translation of the hardware solution (with xor gates inserted in the shift register), so it requires a separate variable for each bit. This is correct, but would be very inefficient if translated into a microcontroller program</li>
+</ul>
+
+<h3>On-line simulator</h3>
+
+<table>
+<tr><td>payload</td><td><textarea name="targ" id="targ" rows="3" cols="64"></textarea></td></tr>
+<tr><td><input type="button" value="Ascii to CRC" onclick="string2crc()"></td><td></td></tr>
+<tr><td><input type="button" value="Hex to CRC" onclick="hex2crc()"></td><td></td></tr>
+<tr><td>CRC</td><td><textarea name="crc" id="crc" rows="1" cols="64"></textarea></td></tr>
+</table>
+
+</div>
+
+<script>
+// To run on local file, use a minimal server like "python -m http.server 8000 -d ."
+// global context
+let view = {}; let view2= {};			// svg elements
+let state  = { biti: 1, bit0: 0, reg: 0 };	// logic variables for CRC8_logic.svg (obj1)
+let state2 = { biti: 1, bitx: 0, reg: 0 };	// logic variables for CRC8_soft.svg (obj2)
+state2['mode'] = 0;				// mode 0 -> shift, mode 1 -> xor
+ 
+const poly = 0x31;	// X8 + X5 + X4 + 1 <==> (1)00110001 <==> (x+1)(x7+x6+x5+x3+x2+x+1)    
+const xor_hilight = "#FF00AA";
+
+///////////////////////////////////////////////////////
+// display functions for CRC8_logic.svg (obj1)
+function show_biti0() {
+	view.biti.innerHTML = state.biti;
+	view.bit0.innerHTML = state.bit0;
+	}
+function show_reg() {
+	let r = state.reg;
+	for	( i = 1; i <= 8; i++ )
+		{
+		view.reg[i].innerHTML = ( r & 1 );
+		r >>=1;
+		}
+	}
+// compute functions for CRC8_logic.svg (obj1)
+function compute_bit0() {
+	state.bit0 = state.biti ^ ( state.reg >> 7 );
+	}
+function compute_crc_step() {
+	compute_bit0();
+	state.reg <<= 1;
+	state.reg &= 0xFF;
+	if	( state.bit0 )
+		state.reg ^= poly;
+	console.log(state.reg.toString(16));
+	compute_bit0();
+	}
+// view preparation for CRC8_logic.svg (obj1)
+document.getElementById("obj1").onload = function() {
+	let doc = document.getElementById("obj1").contentDocument;
+	if	( doc == null )
+		alert("please browse this document on an HTTP serveur, not a file");
+	// bits
+	view.biti = doc.getElementById("biti");	// inkscape text
+	view.bit0 = doc.getElementById("bit0");
+	view.reg = [];
+	for	( i = 1; i <= 8; i++ )
+		view.reg[i] = doc.getElementById("bit"+i);
+	// buttons
+	let butin = doc.getElementById("input");	// all elements in group are made clickable
+	butin.style['cursor'] = 'pointer';		// hand
+	butin.onclick = function() {
+		state.biti ^= 1;
+		compute_bit0();
+		show_biti0();
+		};
+	let butck = doc.getElementById("clock");	// all elements in group are made clickable
+	butck.style['cursor'] = 'pointer';		// hand
+	butck.onclick = function() {
+		compute_crc_step();
+		show_biti0();
+		show_reg();
+		};
+	compute_bit0();
+	show_biti0();
+	show_reg();
+	};
+///////////////////////////////////////////////////////
+// display functions for CRC8_soft.svg (obj2)
+function show2_biti() {
+	view2.biti.innerHTML = state2.biti;
+	}
+function show2_reg() {
+	view2.bitx.innerHTML = state2.bitx;
+	let r = state2.reg;
+	for	( i = 1; i <= 8; i++ )
+		{
+		view2.reg[i].innerHTML = ( r & 1 );
+		r >>=1;
+		}
+	}
+function show2_button() {
+	if	( state2.mode == 1 )
+		{	// xor
+		view2.but_label.innerHTML = "apply xor";
+		view2.but_bg.style['fill'] = xor_hilight;
+		view2.bitx_path.style['stroke'] = xor_hilight;
+		}
+	else	{	// shift
+		view2.but_label.innerHTML = "shift left";
+		view2.but_bg.style['fill'] = "#00c800";
+		view2.bitx_path.style['stroke'] = "#000000";
+		}
+	}
+// compute functions for CRC8_soft.svg (obj2)
+function compute2_crc_shift() {
+	state2.bitx = state2.biti ^ ( ( state2.reg >> 7 ) & 1 ); // bit 7 before shift
+	state2.reg <<= 1;
+	state2.reg &= 0xFF;
+	if	( state2.bitx == 0 )
+		console.log("   " + state2.reg.toString(16));
+	}
+function compute2_crc_xor() {
+	if	( state2.bitx )
+		state2.reg ^= poly;	
+	console.log("   " + state2.reg.toString(16));
+	}
+// context-sensitive button
+function button_action() {
+	if	( state2.mode == 1 )
+		{
+		compute2_crc_xor();
+		state2.mode = 0;
+		show2_button();
+		}
+	else	{
+		compute2_crc_shift();
+		if	( state2.bitx )
+			{
+			state2.mode = 1;
+			show2_button();
+			}
+		}
+	show2_reg();
+	}
+// view preparation for CRC8_soft.svg (obj2)
+document.getElementById("obj2").onload = function() {
+	let doc = document.getElementById("obj2").contentDocument;
+	// bits
+	view2.biti = doc.getElementById("biti");	// inkscape text
+	view2.bitx = doc.getElementById("bitx");
+	view2.bitx_path = doc.getElementById("bitx_path");
+	view2.reg = [];
+	for	( i = 1; i <= 8; i++ )
+		view2.reg[i] = doc.getElementById("bit"+i);
+	// buttons
+	let butin = doc.getElementById("input");	// all elements in group are made clickable
+	butin.style['cursor'] = 'pointer';		// hand
+	butin.onclick = function() {
+		state2.biti ^= 1;
+		show2_biti();
+		};
+	let butck = doc.getElementById("clock");	// all elements in group are made clickable
+	butck.style['cursor'] = 'pointer';		// hand
+	butck.onclick = button_action;
+	view2.but_label = doc.getElementById("but_label");
+	view2.but_bg = doc.getElementById("pulser");
+	show2_biti();
+	show2_reg();
+	};
+
+/////////////////////////////////////////////////////////////
+// HEX utility functions
+
+// unsigned int to hex ( toString(16) is signed ! )
+function uint32toHex( x ) {
+var hi = ( x >> 16 ) & 0xFFFF;
+var lo = x & 0xFFFF;
+return hi.toString(16).padStart(4,'0') + lo.toString(16).padStart(4,'0');
+}
+
+// hex bytes text to typed array
+function hex2bin( sx ) {
+var len, i, j;
+len = sx.length;
+if	( ( len % 2 ) != 0 )
+	return 1;
+len2 = len / 2;
+var bin2 = new Uint8Array( len2 );
+j = 0;
+for	( i = 0; i < len; i += 2 )
+	{
+	val = parseInt( sx.substr(i,2), 16 );
+	if	( Number.isNaN( val ) )
+		return 2;
+	bin2[j++] = val;
+	}
+return bin2;
+}
+
+////////////////////////////////////////////////////////
+// CRC 32 verification calculator
+
+// CRC of a binary buffer (AIXM polynomial 0x814141AB)
+function crc_aixm( buf, size ) {
+var crc = 0, i, j, msbin, msbreg, lebyte, bit;
+for	( j = 0; j < size; j++ )
+	{
+	lebyte = buf[j];
+	for	( i = 0; i < 8; i++ )
+		{
+		msbin  = lebyte >> 7;
+		msbreg = crc >> 31;
+		bit = ( msbin ^ msbreg ) & 1;
+		crc <<= 1;
+		if	( bit )
+			crc ^= 0x814141AB;
+		lebyte <<= 1;
+        	}
+	};
+return crc;
+}
+
+// form callback function : CRC of submitted plain text
+function string2crc() {
+var sx = document.getElementById("targ").value;
+var bin = new TextEncoder().encode(sx);
+var crc = crc_aixm( bin, bin.length );
+// var resu = crc.toString(16).padStart(8, '0');
+var resu = uint32toHex(crc);
+// console.log( resu );
+document.getElementById("crc").value = resu;
+}
+
+// form callback function : CRC of submitted hex text
+function hex2crc() {
+var sx = document.getElementById("targ").value;
+var bin = hex2bin( sx );
+var resu, crc;
+if	( ( typeof bin ) == 'number' )
+	resu = 'error #' + bin;
+else	{
+	crc = crc_aixm( bin, bin.length );
+	// resu = crc.toString(16).padStart(8, '0');
+	resu = uint32toHex(crc);
+	}
+document.getElementById("crc").value = resu;
+}
+
+</script>
+</body></html>
+
