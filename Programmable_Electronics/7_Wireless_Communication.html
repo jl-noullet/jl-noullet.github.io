@@ -283,18 +283,28 @@ In this case, higher frequencies are freed from the γ disadvantage mentioned ab
 <li>ground antennas : 34 m, 70 m diameter, with liquid helium cooled LNAs
 </ul></div>
 
-<div class="nob">
-<p>Besides the well known parabolic reflector, there are other solutions to increase the effective aperture of an antenna :</p>
+<h3>7.5.3 Other solutions to adapt the effective aperture of an antenna</h3>
 
 <div class="boite"><img class="rightim" src="helical_array.jpg">
 <ul><li>the antenna array : a number of similar antennas are placed in a plane perpendicular to the target direction, their radiations interfere to create a maximum in this direction.<br> A possible refinement is the phased array, where the target direction is varied by adjusting the phase shift between elements of the array. This is used to make radars without mechanical moving parts.</li></ul>
 </div>
 <div class="boite"><img class="rightim" src="yagi.png">
-<ul><li>the Yagi antenna : insulated conductors called directors are placed in front of a dipole, while a simple reflector is placed behind. All elements are parallel, in the same plane. By proper sizing and spacing of the element, a moderate directivity is achieved.</li>
+<ul><li>the Yagi antenna : insulated conductors called directors are placed in front of a dipole, while a simple reflector is placed behind. All elements are parallel, in the same plane. By proper sizing and spacing of the element, a moderate directivity is achieved by shaping the electric field. The directivity is better in the polarisation plane, this is why for terrestrial communication, Yagi antennas use frequently an horizontal polarization.</li>
 </ul>
 </div>
+
+<div class="boite"><img class="leftim" src="indoor_loop_antenna.jpg"><img class="rightim" src="direction_finder_antenna.jpg">
+<ul><li>the Loop antenna : Instead of sensing the electric field like the dipole antenna does, the loop antenna, a simple coil, senses the magnetic field. Its impedance can be controlled by means of the number of turns, and made real by adding a capacitor in parallel. This makes it beneficial for low frequencies, where a dipole or monopole antenna would be impractical indoors or for vehicles and portable devices.<br>
+Its directivity makes it useful for navigation radio-goniometers or direction finders (ADF) using low frequency Non Directiontal Beacons (NDB)</li>
+</ul>
 </div>
-<h3>7.5.3 The horizon</h3>
+
+<div class="boite"><img class="leftim" src="ferrite_antenna.jpg">
+<ul><li>the Ferrite antenna : like the loop antenna, it senses the magnetic field. The ferromagnetic material shapes the magnetic fiels, increasing the effective aperture. It has been much used for long waves and medium waves portable radio sets, and is also relevant for automatic direction finders (ADF).</li>
+</ul>
+</div>
+
+<h3>7.5.4 The horizon</h3>
 <p>Like light, radio waves propagate along a straight line, unless refracted, diffracted or reflected.</p>
 <img src="horizon.png">
 <p>Due to the spherical shape of Earth, straight line propagation, also called "line of sight", is limited to the <a href="https://en.wikipedia.org/wiki/Horizon">horizon</a>, making the maximum range dependant on the altitude of the transmitter and the receiver.</p>
