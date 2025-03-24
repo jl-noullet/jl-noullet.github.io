@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+ <link rel="stylesheet" href="../polycop.css" />
+ <title>WUCAM Specification</title>
+</head>
+<body>
+<style>
+ul	{ margin-top: 6px }
+p	{ margin-bottom: 6px }
+</style>
+<div class="large">
+<center>
+<h1>WUCAM Specification V0.9 preliminary</h1>
+</center>
+
+<h3>Radio communication parameters</h3>
+
+<ul>
+<li>unlicensed ISM band EU433
+	<ul><li>UHF 433.05 MHz to 434.79 MHz</li>
+	<li>emitted power &lt; 10mW</li>
+	<li>channel occupation &lt; 10% of time</li>
+	</ul></li>
+<li>nominal carrier frequency : 434.000 MHz, single shared channel</li>
+<li>half-duplex transceiver</li>
+<li>digital smooth frequency modulation GFSK (Gaussian Frequency Shift Keying)
+	<ul><li>frequency deviation +- 19 kHz</li>
+	<li>max data rate 38.4 kbit/s</li>
+	<li>receiver bandwidth 102 kHz</li>
+	</ul></li>
+<li>hardware formatted packets
+	<ul><li>variable length up to 61 bytes</li>
+	<li>hardware managed preamble (32 bits) and sync pattern (32 bits)</li>
+	<li>hardware computed CRC (16 bits)</li>
+	</ul></li>
+<li>additionnal error detection: software computed <a href="CRC" target="_blank">CRC32-AIXM</a></li>
+<li>integrated single chip digital transceiver <a href="CC1101/CC1101.pdf" target="_blank">CC1101</a> by TI</li>
+</ul>
+
+<h3>Message format</h3>
+
+<object id="obj1" type="image/svg+xml" data="packet.svg"></object>
+
+<p>On this diagram, field lengths (blue) are indicated in bytes</p>
+<p>Fields PREAMBLE (bit sync pattern), SYNC WORD (byte sync pattern) and CRC16 are automatically managed by the CC1101 hardware.<p>
+<p>The FIFO CONTENTS fields are managed by software (FIFO means First-In First-Out buffer).</p>
+<ul><li>Before transmission, the software must write these fields in the TX FIFO (transmit buffer)</li>
+<li>Upon reception, the software must read these fields from the RX FIFO (receive buffer)</li>
+</ul>
+<p>The LEN field (length) is created by the software, but read by the CC1101 in both transmission and reception, for determining where the message ends. This is the total length of the other fields in the FIFO (maximum 61 bytes)</p>
+<p>The ADR, OPCODE and CRC fields are WUCAM-specific</p>
+<ul><li>ADR contains the flight number (aircraft identification) on 7 bits, with the MSB set when the message comes from the WUCAM</li>
+<li>OPCODE (operation code) on 8 bits identifies the type of the message, determining the interpretation of the other fields</li>
+<li>CRC32 is present only on some specific messages requiring a higher safety level. It is computed on the whole FIFO contents except itself.</li>
+</ul>   
+<p>At 38.4 kbits/s, the total RF time taken by a message is :</p>
+<pre>Trf = (LEN + 11) * 0.208 ms</pre>
+
+<h3>Message definition</h3>
+<p><i>Work in progress</i></p>
+<ul>
+<li>Pilot commands
+<ul>
+<li>flight plan upload (list of waypoints)</li>
+<li>flight level change</li>
+<li>turn to new heading</li> 
+<li>proceed direct to waypoint)</li>
+<li>resume flight plan</li>
+</ul></li>
+<li>Periodic report contents
+<ul>
+<li>timestamp (1s resolution)</li>
+<li>position in Cautra coordinates system</li>
+<li>barometric altitude</li>
+<li>heading</li>
+<li>ground speed</li>
+</ul></li>
+<li>On-demand reports
+<ul>
+<li>current flight plan</li>
+<li>known waypoints coordinates</li>
+</ul></li>
+<li>Simulation directives
+<ul>
+<li>pause-resume</li>
+<li>periodic reports period (min 1s)</li>
+<li>simulation acceleration coefficient</li>
+</ul></li>
+</ul>
+
+
+

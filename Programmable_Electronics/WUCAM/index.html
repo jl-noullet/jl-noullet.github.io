@@ -4,7 +4,7 @@
  <meta charset="utf-8" />
  <meta name="viewport" content="width=device-width, initial-scale=1" />
  <link rel="stylesheet" href="../polycop.css" />
- <title>Proposal for the IATSED Transversal Project in 2025</title>
+ <title>The WUCAM Project</title>
 </head>
 <body>
 <style>
@@ -13,9 +13,8 @@ p	{ margin-bottom: 6px }
 </style>
 <div class="large">
 <center>
-<h1>IATSED Transversal Project<br>
-Proposal for 2025</h1>
-<i>Jean-Louis Noullet</i>
+<h1>WUCAM (Wireless Unmanned Cargo Aircraft Model)</h1>
+<i>Jean-Louis Noullet - ENAC 2025</i>
 </center>
 
 <p>For the purpose of simulation, the model of a complex system is usually split into a number of software modules, some representing components of the system and some representing the communication links between these components.</p>
@@ -31,15 +30,14 @@ Later, in order to improve realism or broaden the range of observable use cases,
 <li>validation of a real life hardware prototype.</li>
 </ul></p>
 
-<h3>Proposed contribution of Programmable Electronics</h3>
+<h3>The airborne system model</h3>
 
-<p>This contribution will be an illustration of the <b>"hardware in the loop"</b> concept.</p>
-<p>The airborne system will be emulated by a remote electronic module, the WUCAM (Wireless Unmanned Cargo Aircraft Model), communicating with the ground system by means of a real radio link.</p>
+<p>The airborne system is emulated by an autonomous electronic module, the WUCAM (Wireless Unmanned Cargo Aircraft Model), which does not fly but contains a simple flight simulator, able to communicate with the ground system by means of a real radio link.</p>
 <p>On the ground side, the main simulation program, running on a personal computer, will have access to this wireless link through a microcontroller based radio module, connected to the personal computer via an USB link.</p>
 
 <h3>Implementation details</h3>
 
-<p>The WUCAM will be available, ready to use.</p>
+<p>The WUCAM is provided, already programmed with a firmware ready for a virtual flight.</p>
 <p>The ground based module will consist of an Arduino board (fitted with an ATMEL ATmega328 microcontroller), bearing a radio board fitted with a Texas Instruments CC1101 UHF radio chip with antenna.</p>
 <p>The students will have to develop the software on the PC side (Java) and on the ATmega328 (C++) in order to:
 <ul>
@@ -48,16 +46,7 @@ Later, in order to improve realism or broaden the range of observable use cases,
 <li>transmit simulation directives to the WUCAM</li>
 </ul></p>
 
-<p>Components of the ATmega328 firmware will be developed and tested during the Programmable Electronics lab sessions.</p>
-<p class="bk">These sessions will address :
-<ul>
-<li>communication with the personal computer by means of an asynchronous serial link over USB (a generic terminal emulator will be used on the PC side)</li>
-<li>communication with the radio chip by mean of the SPI bus</li>
-<li>measurement of radio parameters, frequency calibration</li>
-<li>computation of CRC error detection binary words</li>
-</ul></p>
-
-<h3>Overview of the WUCAM specification</h3>
+<h3>WUCAM features</h3>
 
 <p>The goal of the WUCAM is to provide simulation capabilities equivalent to those provided by the software solution Rejeu, limited
 to those required by the operational scenarios of the project.</p>
@@ -81,12 +70,12 @@ to those required by the operational scenarios of the project.</p>
 <ul>
 <li>timestamp (1s resolution)</li>
 <li>position in Cautra coordinates system (like Rejeu)</li>
-<li>barometric altitude</li>
-<li>heading</li>
-<li>ground speed</li>
+<li>barometric altitude (flight level)</li>
+<li>ground speed (X and Y components)</li>
 </ul></li>
 <li>On-demand reports
 <ul>
+<li>operational limits</li>
 <li>current flight plan</li>
 <li>known waypoints coordinates</li>
 </ul></li>
@@ -98,5 +87,9 @@ to those required by the operational scenarios of the project.</p>
 </ul></li>
 </ul></p>
 
-
-
+<h3>Documentation and software</h3>
+<ul><li><a href="wucam_spec.html" target="_blank">The WUCAM specification</a></li>
+<li><a href="CC1101/" target="_blank">The CC1101 digital UHF radio chip</a></li>
+<li><a href="CRC/" target="_blank">The CRC32 error detection code</a></li>
+<li><a href="LIB/" target="_blank">The C++, arduino-compatible, CC1101 drivers</a></li>
+</ul>
