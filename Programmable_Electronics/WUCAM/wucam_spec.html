@@ -54,7 +54,7 @@ p	{ margin-bottom: 6px }
 <p>The ADR, OPCODE and CRC fields are WUCAM-specific</p>
 <ul><li>ADR contains the flight number (aircraft identification) on 7 bits, with the MSB set when the message comes from the WUCAM</li>
 <li>OPCODE (operation code) on 8 bits identifies the type of the message, determining the interpretation of the other fields</li>
-<li>CRC32 is present only on some specific messages requiring a higher safety level. It is computed on the whole FIFO contents except itself.</li>
+<li>CRC32 is present only on some specific messages requiring a higher safety level. It is computed on the whole FIFO contents except LEN and itself (which is on LEN-4 bytes).</li>
 </ul>   
 <p>At 38.4 kbits/s, the total RF time taken by a message is :</p>
 <pre>Trf = (LEN + 11) * 0.208 ms</pre>
