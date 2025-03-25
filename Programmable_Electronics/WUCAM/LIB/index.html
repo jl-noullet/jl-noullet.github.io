@@ -7,6 +7,9 @@
  <title>CC1101 driver libraries</title>
 </head>
 <body>
+<style>
+i { font-style: normal; font-family: monospace, "Courier New"; color: #CC00DD }
+</style>
 <div class="large">
 <center>
 <h1>The CC1101 driver libraries for 8-bit microcontrollers</h1>
@@ -14,8 +17,42 @@
 
 <ul>
 <li><a target="_blank" href="cc1101_cal.zip">cc1101_cal.zip : CW emission for calibration</a><br>
-Note: constant FINE_TUNING in cc1101_constant.h should be adjusted and saved for use with the SAME board</li>
-<li><a href="#">cc1101_0.8.zip : packet GFSK packet transmit and receive</a></li>
+Note: constant FINE_TUNING in <b>cc1101_constant.h</b> should be adjusted, tested and then saved for use with the SAME board</li>
+<li><a href="cc1101_1.0.zip">cc1101_1.0.zip : packet GFSK packet transmit and receive</a></li>
 </ul>
+
+<h3>Release Notes about the <b>cc1101_1.0.zip</b> library</h3>
+
+<h4>Project setup</h4>
+<ol><li>create an empty Arduino project ("sketch")</li>
+<li>copy the 3 files of the library into the project folder</li>
+<li>in <b>cc1101_constants.h</b>, update the FINE_TUNING constant matching the board you are using</li>
+<li>in the <b>.ino</b> file, put this directive : <pre>#include "cc1101.h"</pre></li>
+</ol>  
+
+<h4>Driver Initialization</h4>
+<p>An global object <i>CC</i> of class CC1101 is already created. Its methods are available for driving the CC1101 transceiver.</p>
+
+<p>Call <i>CC.GFSK_radio_init()</i> to configure the transceiver for packet dialog with the WUCAM, according to the parameters described in <a href="../wucam_spec.html" target="_blank">the specification.</a></p>
+
+<p>A non-zero return value indicates a fatal error.</p>
+
+<h4>Packet reception</h4>
+
+<p>Each time a packet is received with a correct CRC16 error checking code, the CC1101 transceiver sets its GDO0 pin, which is connected to pin 2 of the Arduino. The user program should detect the rising transition of this pin, either by polling or by interrupt. (This pin is already configured as digital input by the library.)<p>
+
+<p>Then the program should call method <i>CC.extract_rx()</i>, which returns a pointer to a byte array just extracted from the RX FIFO. A side effect of this action is to reset the GDO0 pin, making it ready for the next packet.</p>
+
+<p>The first byte of the byte array indicates the length of the remaining bytes. The library does not separate wucam-specific fields like ADR, OPCODE AND CRC32, they should be processed by the user program</p>
+
+<h4>Packet emission</h4>
+
+<p>The user program should prepare a buffer containing the payload data, starting with ADR, and then call<br><i>CC.tx_if_can( const char * tbuf, byte len )</i>. This method will write the LEN byte followed by the payload data into the TX FIFO, and switch the transceiver in TX mode.</p>
+
+<p>A non-zero return value indicates that the packet was not transmitted because a packet was already in the process of reception or transmission. The user program should try again later.</p>
+
+<h4>Utility functions</h4>
+
+<p>Method <i> CC.format_rx_to_Serial( byte * rxdata )</i> may be used to display the contents of a received packet on the Serial output. This display includes hexadecimal and text representations, followed by 2 diagnostic values provided by the transceiver : the RSSI (Received Signal Strength Indicator) in dB, and the LQI (Link Quality Indicator) in arbitrary units (lower LQI means better link).</p>
 
 </body></html>
