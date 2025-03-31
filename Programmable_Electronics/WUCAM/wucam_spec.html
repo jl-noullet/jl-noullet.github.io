@@ -59,37 +59,93 @@ p	{ margin-bottom: 6px }
 <p>At 38.4 kbits/s, the total RF time taken by a message is :</p>
 <pre>Trf = (LEN + 11) * 0.208 ms</pre>
 
-<h3>Message definition</h3>
-<p><i>Work in progress</i></p>
-<ul>
-<li>Pilot commands
-<ul>
-<li>flight plan upload (list of waypoints)</li>
-<li>flight level change</li>
-<li>turn to new heading</li> 
-<li>proceed direct to waypoint)</li>
-<li>resume flight plan</li>
-</ul></li>
-<li>Periodic report contents
-<ul>
-<li>timestamp (1s resolution)</li>
-<li>position in Cautra coordinates system</li>
-<li>barometric altitude</li>
-<li>heading</li>
-<li>ground speed</li>
-</ul></li>
-<li>On-demand reports
-<ul>
-<li>current flight plan</li>
-<li>known waypoints coordinates</li>
-</ul></li>
-<li>Simulation directives
-<ul>
-<li>pause-resume</li>
-<li>periodic reports period (min 1s)</li>
-<li>simulation acceleration coefficient</li>
-</ul></li>
+<h3>Message contents</h3>
+
+<h4>Coordinate system and units</h4>
+<p>Like Rejeu, Wucam uses the Cautra coordinates system, which is a plane local orthogonal projection.<br>
+X is from West to East, Y is from South to North</p>
+<table class="bw">
+<tr><td>position</td><td>Nm (nautical mile, 1852m)</td></tr>
+<tr><td>speed</td><td>Knot (1 Nm/h)</td></tr>
+<tr><td>heading, angle</td><td>degree (0 to 359)</td></tr>
+<tr><td>altitude</td><td>Fligh level unit (100 feet)</td></tr>
+<tr><td>time</td><td>second</td></tr>
+</table>
+<p>Wucam identifies waypoints by numbers which are indexes in the waypoint list (starting with 0).<br>
+The mapping with 3 or 5 letters waypoint names should be handled by the ground system</p>
+
+<h4>Message categories</h4>
+<table class="bw">
+<tr><th>Dir.</th><th>Description</th><th>Opcode</th><th>Data</th><th>CRC</th><th>LEN</th></tr>
+<tr><th colspan="6">Pilot Orders, aknowledged by WILCO or UNABLE</th></tr>
+<tr><td>Up</td><td>New flight plan</td><td>0x70</td><td>List of waypoints (8 bits IDs)<br>maximum 55 waypoints</td><td>Y</td><td>Var</td></tr>
+<tr><td>Up</td><td>Proceed direct to</td><td>0x4A</td><td>Waypoint (8 bits ID)</td><td>Y</td><td>7</td></tr>
+<tr><td>Up</td><td>Turn</td><td>0x5E</td><td>New heading (degrees, 16 bits)</td><td>Y</td><td>8</td></tr>
+<tr><td>Up</td><td>Climb or Descend</td><td>0x14</td><td>New flight level (16 bits)</td><td>Y</td><td>8</td></tr>
+
+<tr><th colspan="6">Response to Pilot Orders</th></tr>
+<tr><td>Dn</td><td>WILCO: message understood and complied with</td><td>0x00</td><td>CRC of the order which is acknowledged</td><td>N</td><td>6</td></tr>
+<tr><td>Dn</td><td>UNABLE: message understood and refused</td><td>0x01</td><td>Error code (byte),<br>CRC of the order which is acknowledged</td><td>N</td><td>7</td></tr>
+
+<tr><th colspan="6">Pilot Info Requests</th></tr>
+<tr><td>Up</td><td>Request flight plan</td><td>0x71</td><td>None</td><td>N</td><td>2</td></tr>
+<tr><td>Up</td><td>Request waypoint coord</td><td>0x75</td><td>Start ID (byte)</td><td>N</td><td>3</td></tr>
+<tr><td>Up</td><td>Request altitude limits</td><td>0x15</td><td>None</td><td>N</td><td>2</td></tr>
+<tr><td>Up</td><td>Request rates</td><td>0x79</td><td>None</td><td>N</td><td>2</td></tr>
+
+
+<tr><th colspan="6">Pilot Info Request Answers</th></tr>
+<tr><td>Dn</td><td>Current flight plan</td><td>0x72</td><td>List of remaining waypoints (8-bit IDs)</td><td>Y</td><td>Var</td></tr>
+<tr><td>Dn</td><td>Waypoint coordinates</td><td>0x76</td><td>Start ID (byte),<br>X-Y pairs (Nm/100, 16bits signed)</td><td>Y</td><td>Var</td></tr>
+<tr><td>Dn</td><td>Altitude limits</td><td>0x16</td><td>Min and Max flight levels</td><td>Y</td><td>10</td></tr>
+<tr><td>Dn</td><td>Current rates</td><td>0x7A</td><td>Climb and Descend rate (ft/mn, 16 bits),<br>
+	Bank angle (degrees, 8 bits)</td><td>Y</td><td>11</td></tr>
+
+<tr><th colspan="6">Periodic position report</th></tr>
+<tr><td>Dn</td><td>Vector report</td><td>0x42</td><td>X, Y (Nm/100, 16bits signed),<br>
+	vector speed VX, VY (knots/10, 16 bits signed),<br> flight level (16 bits), timestamp (s, 16 bits)</td><td>N</td><td>14</td></tr>
+
+<tr><th colspan="6">Simulation directives </th></tr>
+<tr><td>Up</td><td>Pause</td><td>0x81</td><td>None</td><td>N</td><td>2</td></tr>
+<tr><td>Up</td><td>Resume</td><td>0x82</td><td>None</td><td>N</td><td>2</td></tr>
+<tr><td>Up</td><td>Set clock rate</td><td>0x83</td><td>Simulation speed multiplier (s/s byte)</td><td>N</td><td>3</td></tr>
+<tr><td>Up</td><td>Simulation Reset</td><td>0x84</td><td>None</td><td>N</td><td>2</td></tr>
+
+</table>
+
+<h4>Error codes for Unable</h4>
+<table class="bw">
+<tr><td>0x70</td><td>Unknown waypoint</td></tr>
+<tr><td>0x5E</td><td>Incorrect heading</td></tr>
+<tr><td>0x14</td><td>Out-of-range flight level</td></tr>
+</table>
+
+<h4>Messages approximate mapping</h4>
+<table class="bw">
+<tr><th>WUCAM</th><th>CPDLC</th><th>Rejeu</th></tr>
+<tr><td>Wilco</td><td>DM0</td><td></td></tr>
+<tr><td>Unable</td><td>DM1</td><td></td></tr>
+<tr><td>New Flight plan</td><td></td><td>SetPln (with time=origin)</td></tr>
+<tr><td>Request flight plan</td><td></td><td>GetPln</td></tr>
+<tr><td>Request waypoint coord</td><td></td><td>GetBeaconsInfos</td></tr>
+<tr><td>Proceed direct to</td><td>UM74</td><td>AircraftDirect</td></tr>
+<tr><td>Turn</td><td>UM94</td><td>AircraftHeading</td></tr>
+<tr><td>Climb or Descend</td><td>UM20,23</td><td>AircraftLevel (with rate=PERFO)</td></tr>
+<tr><td>Vector report</td><td></td><td>TrackMovedEvent</td></tr>
+<tr><td>Pause</td><td></td><td>ClockStop</td></tr>
+<tr><td>Resume</td><td></td><td>ClockStart</td></tr>
+<tr><td>Set clock rate</td><td></td><td>SetClock Rate</td></tr>
+</table>
+
+<h3>WUCAM autopilot features</h3>
+<ul><li>Flight plan : When a new flight plan is received, the current plan is entirely canceled, and a course is set to the first waypoint of the new plan.
+If the aircraft is too close to this waypoint, the waypoint is skipped.</li>
+<li>Direct to : a course is set to the new waypoint. If this waypoint is in the current flight plan, the plan will be continued after this waypoint is reached, otherwise the plan will be entirely canceled. In both cases, if the aircraft is too close to this waypoint when receiving the order, the waypoint is skipped.</li>
+<li>Free run : when the aircraft has reached the last waypoint of the plan, or the plan is empty, it continues at constant heading and altitude until receiving a new pilot order.</li>
+<li>Speed optimization : the autopilot sets the air speed and the climb and descend rates taking into account the altitude and the atmospheric conditions, applying a fuel economy strategy.<br>It reports the X and Y components of the ground speed computed from GPS and inertial instruments</li>
+<li>The autopilot computes the turn rate and the turn radius according to the nominal bank angle</li>
 </ul>
 
+<h3>Transmission errors handling</h3>
 
-
+</body></html>

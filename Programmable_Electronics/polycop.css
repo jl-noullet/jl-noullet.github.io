@@ -21,7 +21,7 @@ ul, ol { padding-inline-start: 46px; margin-inline-end: 20px; }
 
 td { vertical-align: top; }
 table.bw { border: 2px solid black; border-collapse:collapse; margin-left: 24px }
-table.bw td { border: 1px solid green; padding: 3px 8px 3px 10px; }
+table.bw td, table.bw th { border: 1px solid green; padding: 3px 8px 3px 10px; }
 .boite { overflow: auto; }	/* put leftim or rightim inside a div.boite */
 .leftim { float: left; margin-right: 50px }
 .rightim { float: right; margin-left: 20px; margin-right: 20px}
