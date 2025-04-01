@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<body>
+<p>Beacons from "traffic_small.txt" - Clic on a circle to get the name : <b><span id="tip">here</span></b></p>
+<div id="svg_container">
+</div>
+
+<script>
+
+function tip( nam ) {
+document.getElementById("tip").innerHTML = nam;
+}
+
+function txt2svg( text ) {
+// Rejeu beacons are in  -4014 : -4862 to 3943 : 3643
+// let svg = '<svg width="1000" viewBox="-4014 -3643 7957 8505">\n';
+// Wucam space is +-327.67, which is +- 2621 Rejeu beacons units
+let svg = '<svg width="1000" height="1000" viewBox="-2623 -2623 5246 5246">\n';
+svg += '<image width="4604.8438" height="4177.5811" preserveAspectRatio="none" style="image-rendering:optimizeQuality" xlink:href="france.png" id="image1" x="-1733.6188"  y="-2016.365" />';
+svg += '<g id="rejeu"><rect x="-2621" y="-2621" rx="0" ry="0" width="5242" height="5242" style="fill:none;stroke:#000;stroke-width:5" />';
+let eol = new RegExp("\r\n|\n", "g");
+let lines = text.split(eol);
+let mots, i, nam, x, y;
+let cnt = 0;
+for	( i = 0; i < lines.length; i++ ) {
+	mots = lines[i].trim().split(" ");
+	if	( mots.length == 3 ) {
+		nam = mots[0];
+		x = parseInt(mots[1]);
+		y = -parseInt(mots[2]); // attention en svg Y croit vers le BAS
+		if ( ( x > -2621 ) && ( x < 2621 ) && ( y > -2621 ) && ( y < 2621 ) ) {
+			if ( ( nam == 'POMEG' ) || ( nam == 'ETRAT' ) || ( nam == 'TOU' ) )
+				color = '#F00';
+			else	color = '#00F';
+			svg += '<circle cx="' + x + '" cy="' + y
+			+ '" r="20" style="fill:' + color + ';stroke:none;fill-opacity:0.5" onclick="tip(\''
+			+ nam + '\')" />\n';
+			cnt++;
+			}
+		}
+	}
+svg += '</g></svg>';
+document.getElementById("svg_container").innerHTML = svg;
+// console.log( svg );
+console.log( "number of waypoints :" + cnt );
+}
+// To run on local file, use a minimal server like "python -m http.server 8000 -d ."
+fetch('beacons_from_traffic_small.txt')
+  .then(response => response.text())
+  .then(text => txt2svg(text))
+
+</script>
+
+</body>
+</html>
