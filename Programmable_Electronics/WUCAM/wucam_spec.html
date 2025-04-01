@@ -13,7 +13,7 @@ p	{ margin-bottom: 6px }
 </style>
 <div class="large">
 <center>
-<h1>WUCAM Specification V0.9 preliminary</h1>
+<h1>WUCAM Specification V0.98 preliminary</h1>
 </center>
 
 <h3>Radio communication parameters</h3>
@@ -55,6 +55,7 @@ p	{ margin-bottom: 6px }
 <ul><li>ADR contains the flight number (aircraft identification) on 7 bits, with the MSB set when the message comes from the WUCAM</li>
 <li>OPCODE (operation code) on 8 bits identifies the type of the message, determining the interpretation of the other fields</li>
 <li>CRC32 is present only on some specific messages requiring a higher safety level. It is computed on the whole FIFO contents except LEN and itself (which is on LEN-4 bytes).</li>
+<li>In the DATA area, binary numbers are coded in little-endian, 2's complement when signed</li> 
 </ul>   
 <p>At 38.4 kbits/s, the total RF time taken by a message is :</p>
 <pre>Trf = (LEN + 11) * 0.208 ms</pre>
@@ -95,15 +96,16 @@ The mapping with 3 or 5 letters waypoint names should be handled by the ground s
 
 
 <tr><th colspan="6">Pilot Info Request Answers</th></tr>
-<tr><td>Dn</td><td>Current flight plan</td><td>0x72</td><td>List of remaining waypoints (8-bit IDs)</td><td>Y</td><td>Var</td></tr>
-<tr><td>Dn</td><td>Waypoint coordinates</td><td>0x76</td><td>Start ID (byte),<br>X-Y pairs (Nm/100, 16bits signed)</td><td>Y</td><td>Var</td></tr>
-<tr><td>Dn</td><td>Altitude limits</td><td>0x16</td><td>Min and Max flight levels</td><td>Y</td><td>10</td></tr>
+<tr><td>Dn</td><td>Current flight plan</td><td>0x72</td><td>List of remaining waypoints (8 bits IDs)</td><td>Y</td><td>Var</td></tr>
+<tr><td>Dn</td><td>Waypoint coordinates</td><td>0x76</td><td>Start ID (byte),<br>X-Y pairs (Nm/100, 16 bits signed)<br>
+		maximum 13 waypoints per request</td><td>Y</td><td>Var</td></tr>
+<tr><td>Dn</td><td>Altitude limits</td><td>0x16</td><td>Min and Max flight levels (16 bits)</td><td>Y</td><td>10</td></tr>
 <tr><td>Dn</td><td>Current rates</td><td>0x7A</td><td>Climb and Descend rate (ft/mn, 16 bits),<br>
 	Bank angle (degrees, 8 bits)</td><td>Y</td><td>11</td></tr>
 
-<tr><th colspan="6">Periodic position report</th></tr>
-<tr><td>Dn</td><td>Vector report</td><td>0x42</td><td>X, Y (Nm/100, 16bits signed),<br>
-	vector speed VX, VY (knots/10, 16 bits signed),<br> flight level (16 bits), timestamp (s, 16 bits)</td><td>N</td><td>14</td></tr>
+<tr><th colspan="6">Periodic position report (Automatic Aircraft Reporting)</th></tr>
+<tr><td>Dn</td><td>Vector report<br>(ground speed expressed as a vector)</td><td>0x42</td><td>X, Y (Nm/100, 16 bits signed),<br>
+	vector speed VX, VY (knots/10, 16 bits signed),<br>flight level (16 bits), timestamp (s, 16 bits)</td><td>N</td><td>14</td></tr>
 
 <tr><th colspan="6">Simulation directives </th></tr>
 <tr><td>Up</td><td>Pause</td><td>0x81</td><td>None</td><td>N</td><td>2</td></tr>
@@ -147,5 +149,18 @@ If the aircraft is too close to this waypoint, the waypoint is skipped.</li>
 </ul>
 
 <h3>Transmission errors handling</h3>
+
+<p>A first level of error detection is provided by the hardware-computed CRC16 included in every message.<br>
+A second level of error detection is provided by a software-computed CRC32 used only for pilot orders and responses to pilot info requests.
+<p>In every case, a message with a CRC error or any obvious inconsistency like length error is discarded by the receiver, which never notifies the sender of such an event.</p>
+<p>The protocol is asymmetrical, in case of message loss, corrective decisions are always made by the ground system. </p>
+<h4>Pilot orders</h4>
+<p>Pilot orders are acknowledged by the WUCAM. The acknowledge message (Wilco) contains a copy of the pilot order CRC32, which permits identification of the acknowleged message.</p>
+<p>A pilot order which is not acknowleged within 1 second must be retransmitted by the ground system. This protocol may cause orders to be duplicated, which is considered as normal.<br>
+For this reason, navigation orders are always absolute, so that their duplication is harmless.</p>
+<h4>Pilot info requests</h4>
+<p>If no correct response to an info request is received within 1 second, the ground system may repeat the request.</p>
+<h4>Automatic Aircraft Reporting</h4>
+<p>In case of loss, the reports cannot be retransmitted. The relative timestamp included in each report keeps the ground system aware of the evolution of the aircraft in time.</p>
 
 </body></html>

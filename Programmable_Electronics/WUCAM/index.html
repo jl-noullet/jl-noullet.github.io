@@ -38,7 +38,7 @@ Later, in order to improve realism or broaden the range of observable use cases,
 <h3>Implementation details</h3>
 
 <p>The WUCAM is provided, already programmed with a firmware ready for a virtual flight.</p>
-<p>The ground based module will consist of an Arduino board (fitted with an ATMEL ATmega328 microcontroller), bearing a radio board fitted with a Texas Instruments CC1101 UHF radio chip with antenna.</p>
+<p>The ground based module will consist of an Arduino board (fitted with an ATMEL ATmega328 microcontroller), bearing a radio board fitted with a CC1101 UHF digital radio chip with antenna.</p>
 <p>The students will have to develop the software on the PC side (Java) and on the ATmega328 (C++) in order to:
 <ul>
 <li>transmit APDLC pilot orders to the WUCAM in a secure way (i.e. with error detection and lost message retransmission)</li>
@@ -46,46 +46,14 @@ Later, in order to improve realism or broaden the range of observable use cases,
 <li>transmit simulation directives to the WUCAM</li>
 </ul></p>
 
-<h3>WUCAM features</h3>
+<h3>WUCAM limitations</h3>
 
-<p>The goal of the WUCAM is to provide simulation capabilities equivalent to those provided by the software solution Rejeu, limited
+<p>The goal of the WUCAM is to provide simulation capabilities equivalent to those provided by the software simulator Rejeu, limited
 to those required by the operational scenarios of the project.</p>
-<p>Radio parameters :
-<ul>
-<li>unlicensed UHF band EU433 (433.05 MHz to 434.79 MHz), power &lt; 10mW, channel occupation &lt; 10%</li>
-<li>hardware formatted packets, variable length up to 61 bytes</li>
-<li>half-duplex transceivers, with clear channel assignment</li>
-</ul></p>
-<p>Supported messages :
-<ul>
-<li>Pilot commands
-<ul>
-<li>flight plan upload (list of waypoints)</li>
-<li>flight level change (CPDLC 20) with optional climb rate</li>
-<li>turn to new heading (CPDLC 94)</li> 
-<li>proceed direct to waypoint (CPDLC 74)</li>
-<li>resume flight plan</li>
-</ul></li>
-<li>Periodic report contents
-<ul>
-<li>timestamp (1s resolution)</li>
-<li>position in Cautra coordinates system (like Rejeu)</li>
-<li>barometric altitude (flight level)</li>
-<li>ground speed (X and Y components)</li>
-</ul></li>
-<li>On-demand reports
-<ul>
-<li>operational limits</li>
-<li>current flight plan</li>
-<li>known waypoints coordinates</li>
-</ul></li>
-<li>Simulation directives
-<ul>
-<li>pause-resume</li>
-<li>periodic reports period (min 1s)</li>
-<li>simulation acceleration coefficient (like Rejeu)</li>
-</ul></li>
-</ul></p>
+<p>Notably take-off, final approach and landing are not supported in the current version.</p>
+
+<p>The WUCAM is reachable by means of a short range radio link using the unlicensed UHF band EU433 (433.05 MHz to 434.79 MHz), with constraints on transmitted power and channel occupation, limiting the size of messages and forcing a very compact encoding of data</p>
+
 
 <h3>Documentation and software</h3>
 <ul><li><a href="wucam_spec.html" target="_blank">The WUCAM specification</a></li>
