@@ -13,7 +13,7 @@ p	{ margin-bottom: 6px }
 </style>
 <div class="large">
 <center>
-<h1>WUCAM Specification V0.98 preliminary</h1>
+<h1>WUCAM Specification V1.0</h1>
 </center>
 
 <h3>Radio communication parameters</h3>
@@ -63,9 +63,10 @@ p	{ margin-bottom: 6px }
 <h3>Message contents</h3>
 
 <h4>Coordinate system and units</h4>
-<p>Like Rejeu, Wucam uses the Cautra coordinates system, which is a plane local orthogonal projection.<br>
-X is from West to East, Y is from South to North</p>
-<table class="bw">
+<p>Like Rejeu, Wucam uses the Cautra coordinates system, which is a plane local conformal projection.<br>
+X axis is directed to East, Y to North, the origin is at 47°N, 0°W (In France, Nouvelle Aquitaine region).<br>
+In WUCAM, X and Y are limited to +- 327.67 Nm, which covers most of France mainland.</p>
+<p>Units:</p><table class="bw">
 <tr><td>position</td><td>Nm (nautical mile, 1852m)</td></tr>
 <tr><td>speed</td><td>Knot (1 Nm/h)</td></tr>
 <tr><td>heading, angle</td><td>degree (0 to 359)</td></tr>
@@ -73,7 +74,7 @@ X is from West to East, Y is from South to North</p>
 <tr><td>time</td><td>second</td></tr>
 </table>
 <p>Wucam identifies waypoints by numbers which are indexes in the waypoint list (starting with 0).<br>
-The mapping with 3 or 5 letters waypoint names should be handled by the ground system</p>
+The mapping with 3 or 5 letters waypoint names should be handled by the ground system.</p>
 
 <h4>Message categories</h4>
 <table class="bw">
