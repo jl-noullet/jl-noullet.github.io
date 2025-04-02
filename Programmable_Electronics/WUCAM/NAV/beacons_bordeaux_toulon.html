@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <body>
-<p>Beacons from "traffic_small.txt" - Clic on a circle to get the name : <b><span id="tip">here</span></b></p>
+<p>Rejeu beacons from "traffic_small.txt" - Clic on a circle to get details : <b><span id="tip">here</span></b></p>
 <div id="svg_container">
 </div>
 
@@ -12,13 +12,15 @@ document.getElementById("tip").innerHTML = nam;
 }
 
 function txt2svg( text ) {
+const tsize = 20; const tx = -20; const ty = -12; 
 // Rejeu beacons are in  -4014 : -4862 to 3943 : 3643
 // let svg = '<svg width="1000" viewBox="-4014 -3643 7957 8505">\n';
 // Wucam space is +-327.67, which is +- 2621 Rejeu beacons units
 // let svg = '<svg width="1000" height="1000" viewBox="-2623 -2623 5246 5246">\n';
 let svg = '<svg width="100%" viewBox="-650 700 3000 1400">\n';
 svg += '<image width="4604.8438" height="4177.5811" preserveAspectRatio="none" style="image-rendering:optimizeQuality" xlink:href="france.png" id="image1" x="-1733.6188"  y="-2016.365" />';
-svg += '<g id="rejeu"><rect x="-2621" y="-2621" rx="0" ry="0" width="5242" height="5242" style="fill:none;stroke:#000;stroke-width:5" />';
+svg += '<g id="rejeu" style="font-size:' + tsize + ';font-family:\'Helsinki Narrow\';font-stretch:condensed;">';
+svg += '<rect x="-2621" y="-2621" rx="0" ry="0" width="5242" height="5242" style="fill:none;stroke:#000;stroke-width:5" />';
 let eol = new RegExp("\r\n|\n", "g");
 let lines = text.split(eol);
 let mots, i, nam, x, y;
@@ -32,12 +34,15 @@ for	( i = 0; i < lines.length; i++ ) {
 		// if ( ( x > -2621 ) && ( x < 2621 ) && ( y > -2621 ) && ( y < 2621 ) ) {
 		// LEBRI -849 -558 UVTIN -367 -862 to RUBAS 2336 -2125
 		if ( ( x > -600 ) && ( x < 2300 ) && ( y > 700 ) && ( y < 2100) ) {
-			if ( ( nam == 'POMEG' ) || ( nam == 'ETRAT' ) || ( nam == 'TOU' ) )
-				color = '#F00';
-			else	color = '#00F';
+			//if ( ( nam == 'POMEG' ) || ( nam == 'ETRAT' ) || ( nam == 'TOU' ) )
+			//	color = '#F00';
+			//else	color = '#00F';
+			color = '#FA0';
 			svg += '<circle cx="' + x + '" cy="' + y
-			+ '" r="20" style="fill:' + color + ';stroke:none;fill-opacity:0.5" onclick="tip(\''
-			+ nam + '\')" />\n';
+			+ '" r="16" style="fill:' + color + ';stroke:none;fill-opacity:0.5" onclick="tip(\''
+			+ cnt + ' ' + nam + '\')" />\n';
+			x += tx; y += ty;
+			svg += '<text x="' + x + '" y="' + y + '">' + nam + '</text>';
 			cnt++;
 			}
 		}
@@ -48,7 +53,7 @@ document.getElementById("svg_container").innerHTML = svg;
 console.log( "number of waypoints :" + cnt );
 }
 // To run on local file, use a minimal server like "python -m http.server 8000 -d ."
-fetch('beacons_from_traffic_small.txt')
+fetch('beacons_sorted_traffic_small.txt')
   .then(response => response.text())
   .then(text => txt2svg(text))
 
