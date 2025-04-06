@@ -4,7 +4,7 @@
  <meta charset="utf-8" />
  <meta name="viewport" content="width=device-width, initial-scale=1" />
  <link rel="stylesheet" href="../polycop.css" />
- <title>WUCAM Specification</title>
+ <title>WUCAM Specification V1.1</title>
 </head>
 <body>
 <style>
@@ -13,7 +13,7 @@ p	{ margin-bottom: 6px }
 </style>
 <div class="large">
 <center>
-<h1>WUCAM Specification V1.0</h1>
+<h1>WUCAM Specification V1.1</h1>
 </center>
 
 <h3>Radio communication parameters</h3>
@@ -44,13 +44,18 @@ p	{ margin-bottom: 6px }
 
 <object id="obj1" type="image/svg+xml" data="packet.svg"></object>
 
-<p>On this diagram, field lengths (blue) are indicated in bytes</p>
+<p>The LEN field is the total length of the <b>other fields</b> in the FIFO (maximum 61 bytes).<br>
+It is created by the software, but read by the CC1101 in both transmission and reception, for determining where the message ends.</p>
+
+<p>On this diagram:</p>
+<ul><li>Blue numbers are field lengths, in bytes</li>
+<li>Red numbers are indexes in the FIFO buffer (a copy of the FIFO contents)</li>
+</ul>
 <p>Fields PREAMBLE (bit sync pattern), SYNC WORD (byte sync pattern) and CRC16 are automatically managed by the CC1101 hardware.<p>
 <p>The FIFO CONTENTS fields are managed by software (FIFO means First-In First-Out buffer).</p>
 <ul><li>Before transmission, the software must write these fields in the TX FIFO (transmit buffer)</li>
 <li>Upon reception, the software must read these fields from the RX FIFO (receive buffer)</li>
 </ul>
-<p>The LEN field (length) is created by the software, but read by the CC1101 in both transmission and reception, for determining where the message ends. This is the total length of the other fields in the FIFO (maximum 61 bytes)</p>
 <p>The ADR, OPCODE and CRC fields are WUCAM-specific</p>
 <ul><li>ADR contains the flight number (aircraft identification) on 7 bits, with the MSB set when the message comes from the WUCAM</li>
 <li>OPCODE (operation code) on 8 bits identifies the type of the message, determining the interpretation of the other fields</li>
@@ -63,8 +68,9 @@ p	{ margin-bottom: 6px }
 <h3>Message contents</h3>
 
 <h4>Coordinate system and units</h4>
-<p>Like Rejeu, Wucam uses the Cautra coordinates system, which is a plane local conformal projection.<br>
-X axis is directed to East, Y to North, the origin is at 47°N, 0°W (In France, Nouvelle Aquitaine region).<br>
+<p>Wucam uses the same referential frame as Rejeu, which is a plane projection of a portion of Earth's surface.</p>
+<p>(This projection was specified by CAUTRA for the french IMAGE radar data archival system. It is a conformal stereographic projection based on the 1880 Clarke ellipsoid earth model.)</p>
+<p>X axis is directed to the East, Y to the North, the origin is at 47°N, 0°W (In France, Nouvelle Aquitaine region).<br>
 In WUCAM, X and Y are limited to +- 327.67 Nm, which covers most of France mainland.</p>
 <p>Units:</p><table class="bw">
 <tr><td>position</td><td>Nm (nautical mile, 1852m)</td></tr>
@@ -113,7 +119,7 @@ The mapping with 3 or 5 letters waypoint names should be handled by the ground s
 <tr><td>Up</td><td>Resume</td><td>0x82</td><td>None</td><td>N</td><td>2</td></tr>
 <tr><td>Up</td><td>Set clock rate</td><td>0x83</td><td>Simulation speed multiplier (s/s byte)</td><td>N</td><td>3</td></tr>
 <tr><td>Up</td><td>Simulation Reset</td><td>0x84</td><td>None</td><td>N</td><td>2</td></tr>
-
+<tr><td>Up</td><td>New flight plan with simulation reset</td><td>0x85</td><td>Like <b>New flight plan	0x70</b>,<br>but aircraft is moved instantly to first waypoint</td><td>Y</td><td>Var</td></tr>
 </table>
 
 <h4>Error codes for Unable</h4>
@@ -148,7 +154,7 @@ If the aircraft is too close to this waypoint, the waypoint is skipped.</li>
 <li>Speed optimization : the autopilot sets the air speed and the climb and descend rates taking into account the altitude and the atmospheric conditions, applying a fuel economy strategy.<br>It reports the X and Y components of the ground speed computed from GPS and inertial instruments</li>
 <li>The autopilot computes the turn rate and the turn radius according to the nominal bank angle</li>
 </ul>
-
+ 
 <h3>Transmission errors handling</h3>
 
 <p>A first level of error detection is provided by the hardware-computed CRC16 included in every message.<br>
