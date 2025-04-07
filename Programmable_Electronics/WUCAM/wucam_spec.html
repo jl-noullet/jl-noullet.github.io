@@ -40,7 +40,7 @@ p	{ margin-bottom: 6px }
 <li>integrated single chip digital transceiver <a href="CC1101/CC1101.pdf" target="_blank">CC1101</a> by TI</li>
 </ul>
 
-<h3>Message format</h3>
+<h3 id="msg_fmt">Message format</h3>
 
 <object id="obj1" type="image/svg+xml" data="packet.svg"></object>
 
@@ -59,7 +59,7 @@ It is created by the software, but read by the CC1101 in both transmission and r
 <p>The ADR, OPCODE and CRC fields are WUCAM-specific</p>
 <ul><li>ADR contains the flight number (aircraft identification) on 7 bits, with the MSB set when the message comes from the WUCAM</li>
 <li>OPCODE (operation code) on 8 bits identifies the type of the message, determining the interpretation of the other fields</li>
-<li>CRC32 is present only on some specific messages requiring a higher safety level. It is computed on the whole FIFO contents except LEN and itself (which is on LEN-4 bytes).</li>
+<li>CRC32 is present only on some specific messages requiring a higher safety level. It is computed on the whole FIFO contents except LEN and itself.</li>
 <li>In the DATA area, binary numbers are coded in little-endian, 2's complement when signed</li> 
 </ul>   
 <p>At 38.4 kbits/s, the total RF time taken by a message is :</p>
