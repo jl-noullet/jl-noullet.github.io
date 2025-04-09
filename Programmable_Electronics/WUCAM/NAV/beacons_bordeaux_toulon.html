@@ -4,7 +4,7 @@
 <p>Rejeu beacons from "traffic_small.txt" - Clic on a circle to get details : <b><span id="tip">here</span></b></p>
 <div id="svg_container">
 </div>
-
+<pre id="code_container"></pre>
 <script>
 
 function tip( nam ) {
@@ -25,19 +25,29 @@ let eol = new RegExp("\r\n|\n", "g");
 let lines = text.split(eol);
 let mots, i, nam, x, y;
 let cnt = 0;
+let code = "";
 for	( i = 0; i < lines.length; i++ ) {
 	mots = lines[i].trim().split(" ");
 	if	( mots.length == 3 ) {
 		nam = mots[0];
 		x = parseInt(mots[1]);
-		y = -parseInt(mots[2]); // attention en svg Y croit vers le BAS
-		// if ( ( x > -2621 ) && ( x < 2621 ) && ( y > -2621 ) && ( y < 2621 ) ) {
-		// LEBRI -849 -558 UVTIN -367 -862 to RUBAS 2336 -2125
-		if ( ( x > -600 ) && ( x < 2300 ) && ( y > 700 ) && ( y < 2100) ) {
-			//if ( ( nam == 'POMEG' ) || ( nam == 'ETRAT' ) || ( nam == 'TOU' ) )
-			//	color = '#F00';
-			//else	color = '#00F';
+		y = parseInt(mots[2]); 
+		// ci-dessous est le critere de selection pour la zone Bordeaux-Toulon (rectangulaire)
+		// N.B. on est toujours en 1/8 de Nm, comme traffic_small.txt
+		if ( ( x > -600 ) && ( x < 2300 ) && ( y < -700 ) && ( y > -2100) ) {
+			/* option sortie C pour WUCAM (toujours en 1/8 de Nm) *
+			code += x + ',' + y + ','; if ( ( cnt % 8 ) == 7 ) code += "\n";
+			//*/
+			/* option sortie java pour FXwucam.java (toujours en 1/8 de Nm) *
+			code += 'a("' + nam + '",' + x + ',' + y + ');'; if ( ( cnt % 4 ) == 3 ) code += "\n";
+			//*/
 			color = '#FA0';
+			/* option reperes centrage fond de carte *
+			if ( ( nam == 'POMEG' ) || ( nam == 'ETRAT' ) || ( nam == 'TOU' ) )
+				color = '#F00';
+			else	color = '#00F';
+			//*/
+			y = -y;	// attention en svg Y croit vers le BAS
 			svg += '<circle cx="' + x + '" cy="' + y
 			+ '" r="16" style="fill:' + color + ';stroke:none;fill-opacity:0.5" onclick="tip(\''
 			+ cnt + ' ' + nam + '\')" />\n';
@@ -49,6 +59,8 @@ for	( i = 0; i < lines.length; i++ ) {
 	}
 svg += '</g></svg>';
 document.getElementById("svg_container").innerHTML = svg;
+// option sortie C ou java pour WUCAM (toujours en 1/8 de Nm)
+code += '\n//' + cnt + '\n'; document.getElementById("code_container").innerHTML = code;
 // console.log( svg );
 console.log( "number of waypoints :" + cnt );
 }
