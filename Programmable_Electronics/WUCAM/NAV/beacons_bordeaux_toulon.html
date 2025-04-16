@@ -1,28 +1,40 @@
 <!DOCTYPE html>
 <html>
-<body>
-<p>Rejeu beacons from "traffic_small.txt" - Clic on a circle to get details : <b><span id="tip">here</span></b></p>
+<head>
+<meta name=viewport content="width=device-width, initial-scale=1">
+</head>
+<body onresize="resize_callback()">
+<h3>Subset of Rejeu beacons from "traffic_small.txt"</h3>
+<p><input type="checkbox" id="showi" onchange="show_indexes()"> Show Wucam indexes instead of names</p>
 <div id="svg_container">
 </div>
 <pre id="code_container"></pre>
 <script>
 
-function tip( nam ) {
-document.getElementById("tip").innerHTML = nam;
-}
+let opt_show_indexes = false;
+let lines;	// array of text lines, one per beacon
 
-function txt2svg( text ) {
+function show_indexes() {
+	opt_show_indexes = document.getElementById("showi").checked;
+	console.log( opt_show_indexes );
+	lines2svg();
+	}
+
+function resize_callback() {
+	// lines2svg();
+	}
+	
+function lines2svg( ww ) {
 const tsize = 20; const tx = -20; const ty = -12; 
 // Rejeu beacons are in  -4014 : -4862 to 3943 : 3643
 // let svg = '<svg width="1000" viewBox="-4014 -3643 7957 8505">\n';
 // Wucam space is +-327.67, which is +- 2621 Rejeu beacons units
-// let svg = '<svg width="1000" height="1000" viewBox="-2623 -2623 5246 5246">\n';
-let svg = '<svg width="100%" viewBox="-650 700 3000 1400">\n';
+ 
+let window_width = 1400;
+let svg = '<svg width="' + window_width + 'px" viewBox="-650 700 3000 1400">\n';
 svg += '<image width="4604.8438" height="4177.5811" preserveAspectRatio="none" style="image-rendering:optimizeQuality" xlink:href="france.png" id="image1" x="-1733.6188"  y="-2016.365" />';
 svg += '<g id="rejeu" style="font-size:' + tsize + ';font-family:\'Helsinki Narrow\';font-stretch:condensed;">';
 svg += '<rect x="-2621" y="-2621" rx="0" ry="0" width="5242" height="5242" style="fill:none;stroke:#000;stroke-width:5" />';
-let eol = new RegExp("\r\n|\n", "g");
-let lines = text.split(eol);
 let mots, i, nam, x, y;
 let cnt = 0;
 let code = "";
@@ -41,30 +53,47 @@ for	( i = 0; i < lines.length; i++ ) {
 			/* option sortie java pour FXwucam.java (toujours en 1/8 de Nm) *
 			code += 'a("' + nam + '",' + x + ',' + y + ');'; if ( ( cnt % 4 ) == 3 ) code += "\n";
 			//*/
-			color = '#FA0';
+			/* option sortie java pour Waypoints_BT.java *
+			code += '"' + nam + '",'; if ( ( cnt % 10 ) == 9 ) code += "\n";
+			//*/
+			color = '#F00';
 			/* option reperes centrage fond de carte *
 			if ( ( nam == 'POMEG' ) || ( nam == 'ETRAT' ) || ( nam == 'TOU' ) )
 				color = '#F00';
 			else	color = '#00F';
 			//*/
 			y = -y;	// attention en svg Y croit vers le BAS
-			svg += '<circle cx="' + x + '" cy="' + y
-			+ '" r="16" style="fill:' + color + ';stroke:none;fill-opacity:0.5" onclick="tip(\''
-			+ cnt + ' ' + nam + '\')" />\n';
+
+			// svg += '<circle cx="' + x + '" cy="' + y
+			// + '" r="16" style="fill:' + color + ';stroke:none;fill-opacity:0.5" />\n';
+
+			xl = x - 8; xr = x + 8; yt = y - 8; yb = y + 8;
+			svg += '<path d="M ' + xl + ',' + yb + ' H ' + xr + ' L ' + x + ',' + yt + ' Z" style="stroke:' + color + ';stroke-width:3;fill:none; "/>'
 			x += tx; y += ty;
-			svg += '<text x="' + x + '" y="' + y + '">' + nam + '</text>';
+			svg += '<text x="' + x + '" y="' + y + '">';
+			if	(opt_show_indexes)
+				svg += cnt; 
+			else	svg += nam;
+			svg += '</text>';
 			cnt++;
 			}
 		}
 	}
 svg += '</g></svg>';
 document.getElementById("svg_container").innerHTML = svg;
-// option sortie C ou java pour WUCAM (toujours en 1/8 de Nm)
-code += '\n//' + cnt + '\n'; document.getElementById("code_container").innerHTML = code;
+// option sortie C ou java
+code += '\n// ' + cnt + ' waypoints\n'; document.getElementById("code_container").innerHTML = code;
 // console.log( svg );
-console.log( "number of waypoints :" + cnt );
+// console.log( "number of waypoints :" + cnt );
 }
-// To run on local file, use a minimal server like "python -m http.server 8000 -d ."
+
+function txt2svg( text ) {
+	let eol = new RegExp("\r\n|\n", "g");
+	lines = text.split(eol);
+	lines2svg();
+	}
+
+// To run as local file, use a minimal server like "python -m http.server 8000 -d ."
 fetch('beacons_sorted_traffic_small.txt')
   .then(response => response.text())
   .then(text => txt2svg(text))

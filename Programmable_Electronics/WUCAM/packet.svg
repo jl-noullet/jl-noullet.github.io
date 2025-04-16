@@ -25,8 +25,8 @@
      inkscape:document-units="mm"
      showgrid="true"
      inkscape:zoom="1.0859962"
-     inkscape:cx="542.35917"
-     inkscape:cy="185.08352"
+     inkscape:cx="574.12724"
+     inkscape:cy="65.377761"
      inkscape:window-width="1920"
      inkscape:window-height="1027"
      inkscape:window-x="1912"
@@ -38,15 +38,15 @@
        units="mm"
        originx="-9.5"
        originy="-29.249996"
-       spacingx="2.0000001"
-       spacingy="1.9999996"
+       spacingx="1.9999999"
+       spacingy="0.99999994"
        empcolor="#0099e5"
        empopacity="0.30196078"
        color="#0099e5"
        opacity="0.14901961"
        empspacing="5"
-       enabled="false"
-       visible="false" />
+       enabled="true"
+       visible="true" />
   </sodipodi:namedview>
   <defs
      id="defs1" />
@@ -270,5 +270,10 @@
          x="93.588448"
          y="74.331871"
          sodipodi:role="line">0   1   2   3 ...                                    LEN-3        LEN</tspan></text>
+    <path
+       id="path5"
+       style="fill:none;stroke:#0000ff;stroke-width:0.3;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-dasharray:none"
+       d="m 127,66.999997 -4,-1.000008 m 0,0 4,-0.999992 z M 262.99999,66.999997 267,65.999989 m -78,0 h 78 l -4.00001,-0.999992 M 123,65.999989 h 44"
+       inkscape:label="len_span" />
   </g>
 </svg>

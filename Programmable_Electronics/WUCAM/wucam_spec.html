@@ -39,6 +39,8 @@ p	{ margin-bottom: 6px }
 <li>additionnal error detection: software computed <a href="CRC" target="_blank">CRC32-AIXM</a></li>
 <li>integrated single chip digital transceiver <a href="CC1101/CC1101.pdf" target="_blank">CC1101</a> by TI</li>
 </ul>
+<p><b>Notice:</b> These parameters are suitable for a classroom experiment. A real life implementation would use a dedicated frequency band licensed for air transport, with much greater transmission power, bandwidth and data rate.<br>
+But packet-based communication would certainly be relevant.</p>
 
 <h3 id="msg_fmt">Message format</h3>
 
@@ -49,7 +51,7 @@ It is created by the software, but read by the CC1101 in both transmission and r
 
 <p>On this diagram:</p>
 <ul><li>Blue numbers are field lengths, in bytes</li>
-<li>Red numbers are indexes in the FIFO buffer (a copy of the FIFO contents)</li>
+<li>Red numbers are indexes of bytes in the FIFO buffer (a copy of the FIFO contents)</li>
 </ul>
 <p>Fields PREAMBLE (bit sync pattern), SYNC WORD (byte sync pattern) and CRC16 are automatically managed by the CC1101 hardware.<p>
 <p>The FIFO CONTENTS fields are managed by software (FIFO means First-In First-Out buffer).</p>
@@ -79,6 +81,7 @@ In WUCAM, X and Y are limited to +- 327.67 Nm, which covers most of France mainl
 <tr><td>altitude</td><td>Fligh level unit (100 feet)</td></tr>
 <tr><td>time</td><td>second</td></tr>
 </table>
+<p>Integer encoding: To avoid sending floating point number to the Arduino (which is not efficient at handling them), WUCAM reports position in hundredths of nautical miles (16 bits integer), and speeds in tenths of knots (16 bits integer)</p> 
 <p>Wucam identifies waypoints by numbers which are indexes in the waypoint list (starting with 0).<br>
 The mapping with 3 or 5 letters waypoint names should be handled by the ground system.</p>
 
@@ -114,12 +117,12 @@ The mapping with 3 or 5 letters waypoint names should be handled by the ground s
 <tr><td>Dn</td><td>Vector report<br>(ground speed expressed as a vector)</td><td>0x42</td><td>X, Y (Nm/100, 16 bits signed),<br>
 	vector speed VX, VY (knots/10, 16 bits signed),<br>flight level (16 bits), timestamp (s, 16 bits)</td><td>N</td><td>14</td></tr>
 
-<tr><th colspan="6">Simulation directives </th></tr>
+<tr><th colspan="6">Simulation directives (not acknowledged)</th></tr>
 <tr><td>Up</td><td>Pause</td><td>0x81</td><td>None</td><td>N</td><td>2</td></tr>
 <tr><td>Up</td><td>Resume</td><td>0x82</td><td>None</td><td>N</td><td>2</td></tr>
 <tr><td>Up</td><td>Set clock rate</td><td>0x83</td><td>Simulation speed multiplier (s/s byte)</td><td>N</td><td>3</td></tr>
 <tr><td>Up</td><td>Simulation Reset</td><td>0x84</td><td>None</td><td>N</td><td>2</td></tr>
-<tr><td>Up</td><td>New flight plan with simulation reset</td><td>0x85</td><td>Like <b>New flight plan	0x70</b>,<br>but aircraft is moved instantly to first waypoint</td><td>Y</td><td>Var</td></tr>
+<tr><td>Up</td><td>Simulation Reset with New Flight Plan with </td><td>0x85</td><td>Like <b>New flight plan 0x70</b>,<br>but aircraft is moved instantly to first waypoint</td><td>Y</td><td>Var</td></tr>
 </table>
 
 <h4>Error codes for Unable</h4>
@@ -147,13 +150,26 @@ The mapping with 3 or 5 letters waypoint names should be handled by the ground s
 </table>
 
 <h3>WUCAM autopilot features</h3>
-<ul><li>Flight plan : When a new flight plan is received, the current plan is entirely canceled, and a course is set to the first waypoint of the new plan.
-If the aircraft is too close to this waypoint, the waypoint is skipped.</li>
-<li>Direct to : a course is set to the new waypoint. If this waypoint is in the current flight plan, the plan will be continued after this waypoint is reached, otherwise the plan will be entirely canceled. In both cases, if the aircraft is too close to this waypoint when receiving the order, the waypoint is skipped.</li>
-<li>Free run : when the aircraft has reached the last waypoint of the plan, or the plan is empty, it continues at constant heading and altitude until receiving a new pilot order.</li>
-<li>Speed optimization : the autopilot sets the air speed and the climb and descend rates taking into account the altitude and the atmospheric conditions, applying a fuel economy strategy.<br>It reports the X and Y components of the ground speed computed from GPS and inertial instruments</li>
-<li>The autopilot computes the turn rate and the turn radius according to the nominal bank angle</li>
+<h4>New Flight plan</h4>
+<p>When a new flight plan is received, the current plan is entirely erased, and a course is set from the current position to the first waypoint of the new plan.</p>
+<h4>Direct to waypoint</h4>
+<p>A course is set to the specified waypoint.</p>
+<ul><li>If this waypoint is in the current flight plan, the plan will be continued after this waypoint is reached.</li>
+<li>Otherwise the plan is suspended, and the aircraft will go into <b>free run</b> after passing above the specified waypoint.<br>
+However the plan will be resumed if another <b>Direct to</b> order is received, specifying a waypoint belonging to the plan.</li>
 </ul>
+<h4>Turn to new heading</h4>
+<p>When a <b>Turn to order</b> is received, the flight plan is suspended, and the aircraft will go into <b>free run</b> after completing the turn. The plan will be resumed if a <b>Direct to</b> order is received, specifying a waypoint belonging to the plan.</p>
+<h4>Waypoint skip</h4>
+<p>In any case, if the aircraft is too close to the target waypoint at the time the order is received, the waypoint is skipped. "Too close" means that the aircraft would have to move away from the waypoint before turning towards it, which would be a waste of time and fuel.</p>
+<h4>Free run</h4>
+<p>When the current flight plan is terminated or suspended, the aircraft continues at constant heading and altitude until receiving a new pilot order.<br>The pilot may issue a <b>Direct to</b> order to resume the suspended plan, or send a new plan.</p>
+<h4>Speed optimization</h4>
+<p>The autopilot sets the air speed and the climb and descend rates taking into account the altitude and the atmospheric conditions, applying a fuel economy strategy.<br>It reports the resulting ground speed as a vector (X and Y components)</p>
+<p>In general, higher speeds are achieved at higher altitudes.</p>
+<h4>Auto turn</h4>
+<p>The autopilot computes the turn rate and the turn radius according to the nominal bank angle, in order to limit the load factor<br>
+Note: In this context, the turn radius is proportional to the square of the speed.</p> 
  
 <h3>Transmission errors handling</h3>
 
@@ -166,7 +182,7 @@ A second level of error detection is provided by a software-computed CRC32 used 
 <p>A pilot order which is not acknowleged within 1 second must be retransmitted by the ground system. This protocol may cause orders to be duplicated, which is considered as normal.<br>
 For this reason, navigation orders are always absolute, so that their duplication is harmless.</p>
 <h4>Pilot info requests</h4>
-<p>If no correct response to an info request is received within 1 second, the ground system may repeat the request.</p>
+<p>If no correct response to an info request is received within 2 seconds, the ground system may repeat the request.</p>
 <h4>Automatic Aircraft Reporting</h4>
 <p>In case of loss, the reports cannot be retransmitted. The relative timestamp included in each report keeps the ground system aware of the evolution of the aircraft in time.</p>
 

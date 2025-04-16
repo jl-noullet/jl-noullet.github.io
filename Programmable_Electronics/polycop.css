@@ -4,7 +4,7 @@ body { background-color: #eee; }
 img { display: block; margin: 20px 0px 20px 24px }
 img.wide { margin-left: 0px }					
 h2 { margin-top: 40px; color: blue }
-h3 { margin-top: 30px; color: blue }
+h3 { margin-top: 30px; font-size: 28px; color: blue }
 h4 { background-color:#dfd; }
 p { margin-left: 24px; margin-right: 20px; }
 pre { margin: 6px 24px }
