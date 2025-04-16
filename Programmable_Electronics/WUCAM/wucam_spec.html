@@ -120,9 +120,9 @@ The mapping with 3 or 5 letters waypoint names should be handled by the ground s
 <tr><th colspan="6">Simulation directives (not acknowledged)</th></tr>
 <tr><td>Up</td><td>Pause</td><td>0x81</td><td>None</td><td>N</td><td>2</td></tr>
 <tr><td>Up</td><td>Resume</td><td>0x82</td><td>None</td><td>N</td><td>2</td></tr>
-<tr><td>Up</td><td>Set clock rate</td><td>0x83</td><td>Simulation speed multiplier (s/s byte)</td><td>N</td><td>3</td></tr>
+<tr><td>Up</td><td>Set clock rate (max. 8)</td><td>0x83</td><td>Simulation speed multiplier (s/s byte)</td><td>N</td><td>3</td></tr>
 <tr><td>Up</td><td>Simulation Reset</td><td>0x84</td><td>None</td><td>N</td><td>2</td></tr>
-<tr><td>Up</td><td>Simulation Reset with New Flight Plan with </td><td>0x85</td><td>Like <b>New flight plan 0x70</b>,<br>but aircraft is moved instantly to first waypoint</td><td>Y</td><td>Var</td></tr>
+<tr><td>Up</td><td>Simulation Reset with New Flight Plan</td><td>0x85</td><td>Like <b>New flight plan 0x70</b>, but aircraft is moved instantly to first waypoint</td><td>Y</td><td>Var</td></tr>
 </table>
 
 <h4>Error codes for Unable</h4>
@@ -170,7 +170,10 @@ However the plan will be resumed if another <b>Direct to</b> order is received, 
 <h4>Auto turn</h4>
 <p>The autopilot computes the turn rate and the turn radius according to the nominal bank angle, in order to limit the load factor<br>
 Note: In this context, the turn radius is proportional to the square of the speed.</p> 
- 
+<h4>Response to the flight plan request from the pilot</h4>
+<p>In this reports, WUCAM sends the list of remaining waypoints to reach according to the current plan.<br>
+The first in the list is the waypoint the aircraft is heading to.</p>
+<p>If the plan is suspended, the list is empty, this does not mean that the plan is erased. If a <b>Direct to</b> order is given towards a waypoint belonging to the plan, the plan will appear back again, next time the list is requested.</p>  
 <h3>Transmission errors handling</h3>
 
 <p>A first level of error detection is provided by the hardware-computed CRC16 included in every message.<br>
