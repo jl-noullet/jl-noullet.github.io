@@ -47,11 +47,11 @@ Note: constant FINE_TUNING in <b>cc1101_constant.h</b> should be adjusted, teste
 
 <h4>Packet emission</h4>
 
-<p>The user program should prepare a buffer containing the payload data, starting with LEN, and then call<br><i>CC.tx_if_can( const char * tbuf )</i>. This method will write the buffer contents into the TX FIFO, and switch the transceiver in TX mode.</p>
+<p>The user program should prepare a buffer containing the payload data, starting with LEN, and then call<br><i>CC.tx_if_can( const unsigned char * tbuf )</i>. This method will write the buffer contents into the TX FIFO, and switch the transceiver in TX mode.</p>
 
 <p>A non-zero return value indicates that the packet was not transmitted because a packet was already in the process of reception or transmission. The user program should try again later.</p>
 
-<p>(This method replaces the older method <i>CC.tx_if_can( const char * tbuf, byte len )</i>, with the benefit of an interface more consistent with <i>CC.extract_rx()</i> and with indexes shown on the <a href="../wucam_spec.html#msg_fmt" target="_blank">packet diagram</a>.<br>
+<p>(This method replaces the older method <i>CC.tx_if_can( const unsigned char * tbuf, byte len )</i>, with the benefit of an interface more consistent with <i>CC.extract_rx()</i> and with indexes shown on the <a href="../wucam_spec.html#msg_fmt" target="_blank">packet diagram</a>.<br>
 Nevertheless it is still available but not recommended.)</p>
   
 <h4>Utility functions</h4>
