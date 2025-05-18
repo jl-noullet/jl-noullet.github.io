@@ -18,10 +18,10 @@ i { font-style: normal; font-family: monospace, "Courier New"; color: #CC00DD }
 <ul>
 <li><a target="_blank" href="cc1101_cal.zip">cc1101_cal.zip : CW emission for calibration</a><br>
 Note: constant FINE_TUNING in <b>cc1101_constant.h</b> should be adjusted, tested and then saved for use with the SAME board</li>
-<li><a href="cc1101_1.1.zip">cc1101_1.1.zip : packet GFSK packet transmit and receive</a></li>
+<li><a href="cc1101_1.2.zip">cc1101_1.2.zip : packet GFSK packet transmit and receive</a></li>
 </ul>
 
-<h3>Release Notes about the <b>cc1101_1.1.zip</b> library</h3>
+<h3>Release Notes for the <b>cc1101_1.2.zip</b> library</h3>
 
 <h4>Project setup</h4>
 <ol><li>create an empty Arduino project ("sketch")</li>
@@ -56,7 +56,7 @@ Nevertheless it is still available but not recommended.)</p>
   
 <h4>Utility functions</h4>
 
-<p>Method <i> CC.format_rx_to_Serial( byte * rxdata )</i> may be used to display the contents of a received packet on the Serial output. This display includes hexadecimal and text representations, followed by 2 diagnostic values provided by the transceiver : the RSSI (Received Signal Strength Indicator) in dB, and the LQI (Link Quality Indicator) in arbitrary units (lower LQI means better link).</p>
+<p>Method <i> CC.format_rx_to_Serial( byte * rxdata, byte text_option = 0 )</i> may be used to display the contents of a received packet on the Serial output. This display includes the rxdata bytes displayed as hexadecimal values, then as ascii text if the option is set, followed by 2 diagnostic values provided by the transceiver : the RSSI (Received Signal Strength Indicator) in dB, and the LQI (Link Quality Indicator) in arbitrary units (lower LQI means better link).</p>
 
 
 </body></html>
