@@ -69,6 +69,11 @@ source. This is specified in the analysis directive, overriding the source descr
 
 <div class="nob">
 <h3>3.1.4 AC analysis</h3>
+<p>This analysis is based on the manual method used to describe the response of a linear system receiving a sinewave input signal of a given frequency. Thus all voltages and currents in the circuit are sinewaves of the same frequency, each one having its own amplitude and phase.<br>
+This the reason why the method uses complex numbers to represent the signals, as well as their ratios, like the
+<a href="https://en.wikipedia.org/wiki/Transfer_function">transfer function</a> of a system H(f) = Vout(f)/Vin(f) or the impedance of a 2-terminal component Z(f) = V(f)/I(f).</p>
+<p>The method is sometimes called "small signal analysis", because the assumption that the system is linear is valid only if the signals are small enough to avoid the non-linear behaviour of active components like semi-conductors.</p> 
+
 <p>The main use of the AC analysis is the production of "Bode plots", which are curves with :
 <ul><li>on the horizontal axis, the frequency of the signal, with a logarithmic scale</li>
 <li>on the vertical axis, the relative magnitude of the signal expressed in dB (which is another kind of logarithmic scale),
@@ -79,7 +84,7 @@ Note: the AC value is an abstract reference, it does not need to be "small" and 
 </div>
 
 <h3>3.1.5 Digital Circuits</h3>
-<p>It is possible to <a href="https://www.youtube.com/watch?v=kmUjuGaF8ew">simulate</a> digital circuits with SPICE, but to check a logic design it is more efficient to calculate only a boolean value for each node rather than a voltage, so many digital or logic simulators have been developed.<br>
+<p>It is possible to <a href="https://www.youtube.com/watch?v=kmUjuGaF8ew">simulate digital circuits</a> with SPICE, but to check a logic design it is more efficient to calculate only a boolean value for each node rather than a voltage, so many digital or logic simulators have been developed.<br>
 For this purpose, two hardware description languages have been created, named VHDL and Verilog (one would have been sufficient, there are two for historical reasons).<br>
 These languages are also used to drive logic optimizers, in the context of FPGA and digital integrated circuits design.</p>    
 
@@ -97,9 +102,11 @@ So nowadays (in 2023) LTSPICE is freely offered by <a href="https://www.analog.c
 Notice that the right mouse button allows to abort the current command and otherwise gives access to a context menu.<br>
 There is no "Edit" menu with "copy, paste, delete", instead in the toolbar there is a Duplicate Mode button and a Delete Mode button</p>
 
+<div class="nob">
 <h4>Components libraries</h4>
 <p>The toolbar has buttons for some frequently used components like ground, resistors, capacitors, etc... , then every other component can be found in the components libraries (the button representing an IC).<br>
 Note that the independant voltage source (providing DC, pulse, PWM, etc...) is simply  named "voltage".</p>
+</div>
 
 <h4>Labels</h4>
 <p>In order to be able to find the desired nodes for plotting, it is recommended to put a label on each one (using the Label Net button).<br>
@@ -128,10 +135,12 @@ The expression should be enclosed in curly braces <b>{}</b> (even if it contains
 <li>if desired, modify the outline of the symbol and the placement of the pins</li>
 </ol>
 <p>Then the new symbol is available to be inserted in a higher level schematic, it can be found in the component library, after changing the top directory to the relevant location.</p>
+<div class="nob">
 <p>A subcircuit containing one parameter (or more) can receive a parameter value from the higher level schematic, by adding a parameter value or expression to the symbol instance:</p>
 <pre>W=3.33
 K={2.0*N}</pre>
 <p>In the example above, W and K are parameters belonging to the subcircuit, while N is a higher level schematic parameter</p>
+</div>
 
 <div class="nob">
 <h3>3.2.2 Behavioral modeling</h3>
@@ -147,7 +156,7 @@ Likewise, the component named <b>bi</b> is a configurable current source.</p>
 <p>It is possible to display the FFT (Fast Fourier Transform, or Discrete Fourier Transform) of transient analysis results. While the waveform window is selected, use the command "FFT" in the View menu.<br>
 If the signal is periodic, try to frame exactly an integral number of periods. Otherwise, select a Windowing Function in order to smooth the discontinuities at the ends of the interval to be transformed.</p>
 
-
+<div class="nob">
 <h2>3.3 Simulation examples</h2>
 
 <h3>3.3.1 Transient simulation example</h3>
@@ -156,6 +165,7 @@ The circuit is made of R1 and C1, it is operated with a voltage step of 1 Volt g
 <p>For illustration, another voltage source V2 generates a voltage Vtang, the plot of which is supposed to be tangent to Vc, according to the theory.</p> 
 <img src="RC_sch.png">
 <a href="RC.asc">LTSPICE source file</a>
+</div>
 
 <div class="nob">
 <h4>Plot of the voltage Vc across C1 :</h4>
@@ -188,6 +198,7 @@ Likewise, I(R1) expose a high-pass filter function with the same cutoff frequenc
 By permutation of R1 and C1, a high pass filter with a voltage output could be obtained.</p>
 </div>
 
+<div class="nob">
 <h3>3.3.3 DC simulation example</h3>
 <p>This example demonstrates a bipolar junction transistor (BJT), NPN type, used to vary the power applied to a resistive load.<br>
 The typical current gain of this transistor is 200.
@@ -197,6 +208,7 @@ The transistor base current is driven by the simulation directive, from 0 to 0.5
 <a href="BC546_547.pdf">BC547 transistor datasheet</a>
 <p>Two behavioral voltage sources are added in order to compute the power dissipated in the transistor and in the load.<br>
 Note: the voltages at nodes P_Q1 and P_R1 represent watts of power.<br>
+</div>
 
 <div class="nob">
 We observe that the maximum power dissipated in the transistor exceeds the static power limit of this transistor (625mW), so this circuit is suitable for switching the load on and off but not for varying its power continuously.</p>

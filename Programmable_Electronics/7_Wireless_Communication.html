@@ -283,6 +283,7 @@ In this case, higher frequencies are freed from the γ disadvantage mentioned ab
 <li>ground antennas : 34 m, 70 m diameter, with liquid helium cooled LNAs
 </ul></div>
 
+<div class="nob">
 <h3>7.5.3 Other solutions to adapt the effective aperture of an antenna</h3>
 
 <div class="boite"><img class="rightim" src="helical_array.jpg">
@@ -303,7 +304,9 @@ Its directivity makes it useful for navigation radio-goniometers or direction fi
 <ul><li>the Ferrite antenna : like the loop antenna, it senses the magnetic field. The ferromagnetic material shapes the magnetic fiels, increasing the effective aperture. It has been much used for long waves and medium waves portable radio sets, and is also relevant for automatic direction finders (ADF).</li>
 </ul>
 </div>
+</div>
 
+<div class="nob">
 <h3>7.5.4 The horizon</h3>
 <p>Like light, radio waves propagate along a straight line, unless refracted, diffracted or reflected.</p>
 <img src="horizon.png">
@@ -314,7 +317,9 @@ Its directivity makes it useful for navigation radio-goniometers or direction fi
 <div class="boite"><img class="rightim" src="ionospheric_reflection.jpg">
 <p>The <a href="https://en.wikipedia.org/wiki/Ionosphere">Ionosphere</a> is a collection of ionized gas layers in the upper atmosphere, from 48 km to 965 km altitude. Ionized gases are conductive, so these layers may reflect radio waves. These reflexions, together with ground reflexions, may creates paths far beyond line-of-sight, possibly worldwide. This effect is unreliable and is rarely usable above 30 MHz, but is still considered as a emergency backup solution in case of failure of satellite communication. It is also used for Over-The-Horizon (OTH) radar.</p>
 </div>
+</div>
 
+<div class="nob">
 <h2>7.6 Channel separation</h2>
 <p>There is an obvious need for preventing radio users from interfering with each other, this is done at a global level by dividing the radio spectrum into bands reserved for distinct usages, like broadcasting, navigation, military, etc...</p>
 <p>In each of these bands, many channels may be needed, so further multiplexing solutions may be implemented</p>
@@ -329,7 +334,7 @@ Its directivity makes it useful for navigation radio-goniometers or direction fi
 <p>This technique consists of letting multiple stations transmit at the same time on the same carrier frequency,
 and let the receiver separate the contents by means of advanced signal processing, based on statistical properties of the code used by each station. This a spread spectrum technique, occupying a band much larger than the source bandwidth, but possibly compatible with extremely weak signal-to-noise ratios.</p>
 <p>A remarkable exemple is the <a href="https://en.wikipedia.org/wiki/GPS_signals">GPS system</a>, where multiple satellites transmit on the same frequency.</p>
-
+</div>
 <div class="nob">
 <h2>7.7 Challenges and tradeoffs of wireless transmission</h2>
 <p>In general the desired qualities of a radio transmission are some or all of these :</p>
@@ -342,7 +347,7 @@ and let the receiver separate the contents by means of advanced signal processin
 </ul>
 <p>It should be understood that for a given state-of-the-art, improving one of theses qualities can be done only at the expense of sacrifying one or more of the others</p>
 <p>Managing these trade-offs is made easier by the introduction of digital technologies</p>
-</div>
+
 <p>An intermediate parameter which helps understanding the interaction between these qualities is the signal-to-noise ratio SNR.</p>
 <p>As an example, let us consider how the range is affected by the other qualities :</p>
 <ul><li>the max range is determined by the minimum SNR required by the demodulator</li>
@@ -359,7 +364,7 @@ and let the receiver separate the contents by means of advanced signal processin
 </ul>
 <p>These constraints imply an extremely low SNR at the receiver, far below unity.
 This is compensated by sacrifying bandwidth (50 bits/s) and occupation of the spectrum (more than 1 MHz)</p>
-
+</div>
 </div>
 </body>
 </html>
