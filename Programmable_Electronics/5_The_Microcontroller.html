@@ -95,18 +95,44 @@ An 8-bit binary word is an octet or byte.</p>
 so the starting point was a code known as <a href="https://en.wikipedia.org/wiki/ASCII">ASCII</a>, representing all the characters of an american typewriter (for which 7 bits would have been sufficient).</p>
 <p>The first 32 codepoints are "non-printable characters" or "control characters", notably :</p>
 <ul>
-<li>NUL (0) : terminator for text strings</li>
-<li>TAB (9 = '\t' ) : skip to the next column</li>
-<li>LF (10 = 0x0A = '\n' = CTRL-J) : go to the next line</li>
-<li>CR (13 = 0x0D = '\r' = CTRL-M) : go to the first position in the line</li>
+<li>NUL (0) : terminator for text strings in programs</li>
+<li>TAB or HT (9 = <b><span style="font-family: courier">'\t'</span></b> ) : skip to the next column</li>
+<li>LF (10 = 0x0A = <b><span style="font-family: courier">'\n'</span></b>) : go to the next line</li>
+<li>CR (13 = 0x0D = <b><span style="font-family: courier">'\r'</span></b>) : go to the first position in the line</li>
 </ul>
-<p>CR and LF are a constant source of trouble, because there is no common agreement on how to terminate a text line:</p>
+</div>
+
+<style>
+table.asctb { border-collapse:collapse; border: 2px solid black; text-align: center; font-family: sans-serif }
+table.asctb td { border: 1px solid gray; padding: 4px }
+tr.ahead td { width: 5.88%; font-weight: bold; background-color:#DFD; }
+tr.asctr { background-color:#EEE; }
+td.asctr { background-color:#EEE; }
+td.ablue { background-color:#EFF; font-style: italic; }
+td.ahex { font-weight: bold; background-color:#FDD; }
+</style>
+<table class="asctb">
+<tr class="ahead"><td>HEX</td><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td></tr>
+<tr class="asctr"><td class="ahex">0</td><td class="ablue">NUL</td><td>SOH</td><td>STX</td><td>ETX</td><td>EOT</td><td>ENQ</td><td>ACK</td><td>BEL</td><td>BS</td><td class="ablue">HT</td><td class="ablue">LF</td><td>VT</td><td>FF</td><td class="ablue">CR</td><td>SO</td><td>SI</td></tr>
+
+<tr class="asctr"><td class="ahex">1</td><td>DLE</td><td>DC1</td><td>DC2</td><td>DC3</td><td>DC4</td><td>NAK</td><td>SYN</td><td>ETB</td><td>CAN</td><td>EM</td><td>SUB</td><td>ESC</td><td>FS</td><td>GS</td><td>RS</td><td>US</td></tr>
+<tr class="asctb"><td class="ahex">2</td><td> </td><td>!</td><td>"</td><td>#</td><td>$</td><td>%</td><td>&amp;</td><td>'</td><td>(</td><td>)</td><td>*</td><td>+</td><td>,</td><td>-</td><td>.</td><td>/</td></tr>
+<tr class="asctb"><td class="ahex">3</td><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>:</td><td>;</td><td>&lt;</td><td>=</td><td>></td><td>?</td></tr>
+<tr class="asctb"><td class="ahex">4</td><td>@</td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td><td>J</td><td>K</td><td>L</td><td>M</td><td>N</td><td>O</td></tr>
+<tr class="asctb"><td class="ahex">5</td><td>P</td><td>Q</td><td>R</td><td>S</td><td>T</td><td>U</td><td>V</td><td>W</td><td>X</td><td>Y</td><td>Z</td><td>[</td><td>\</td><td>]</td><td>^</td><td>_</td></tr>
+<tr class="asctb"><td class="ahex">6</td><td>`</td><td>a</td><td>b</td><td>c</td><td>d</td><td>e</td><td>f</td><td>g</td><td>h</td><td>i</td><td>j</td><td>k</td><td>l</td><td>m</td><td>n</td><td>o</td></tr>
+<tr class="asctb"><td class="ahex">7</td><td>p</td><td>q</td><td>r</td><td>s</td><td>t</td><td>u</td><td>v</td><td>w</td><td>x</td><td>y</td><td>z</td><td>{</td><td>|</td><td>}</td><td>~</td><td class="asctr">DEL</td></tr>
+</table>
+<p>In the table above, the top row (green) contains the first hex digit of the ASCII code (the three MSBs), and the leftmost column (red) gives the second hex digit (the four LSBs) of the code.</p>
+
+
+<p>CR (Carriage Return) and LF (Line Feed) are a constant source of trouble, because there is no common agreement on how to terminate a text line:</p>
 <ul><li>Microsoft Windows : CR-LF</li>
 <li>Unix, Linux : LF</li>
 <li>MAC-OS (old) : CR</li>
 </ul>
-<p>Several solutions were proposed to extend this code to non-latin languages, the most successful being UTF-8, which uses a variable-length code, compatible with ASCII.</p>
-</div>
+<p>Many solutions were proposed to extend this code to languages other than US english, the most successful one is <a href="https://en.wikipedia.org/wiki/UTF-8" target="_blank">UTF-8</a> (part of the Unicode Standard), which uses a variable-length code, with the shortest codes (1 byte) being compatible with ASCII.</p>
+
 </div>
 
 <div class="nob">
