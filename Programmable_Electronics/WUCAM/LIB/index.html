@@ -51,9 +51,6 @@ Note: constant FINE_TUNING in <b>cc1101_constant.h</b> should be adjusted, teste
 
 <p>A non-zero return value indicates that the packet was not transmitted because a packet was already in the process of reception or transmission. The user program should try again later.</p>
 
-<p>(This method replaces the older method <i>CC.tx_if_can( const unsigned char * tbuf, byte len )</i>, with the benefit of an interface more consistent with <i>CC.extract_rx()</i> and with indexes shown on the <a href="../wucam_spec.html#msg_fmt" target="_blank">packet diagram</a>.<br>
-Nevertheless it is still available but not recommended.)</p>
-  
 <h4>Utility functions</h4>
 
 <p>Method <i> CC.format_rx_to_Serial( byte * rxdata, byte text_option = 0 )</i> may be used to display the contents of a received packet on the Serial output. This display includes the rxdata bytes displayed as hexadecimal values, then as ascii text if the option is set, followed by 2 diagnostic values provided by the transceiver : the RSSI (Received Signal Strength Indicator) in dB, and the LQI (Link Quality Indicator) in arbitrary units (lower LQI means better link).</p>
